@@ -42,7 +42,7 @@
 
         <input
           type="text"
-          placeholder="Cari kota, keluarahan, atau kecamatan..."
+          placeholder="Pilih kota, keluarahan, atau kecamatan..."
           class="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-14 pr-5 text-lg outline-none transition focus:border-blue-600"
         />
       </div>
