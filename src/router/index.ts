@@ -122,7 +122,7 @@ router.beforeEach(async (to, from) => {
 
   // try to reauthenticate if not authenticated
   if (!authStore.isAuthenticated && to.path !== '/signin') {
-    await authStore.reauthenticate().catch(() => {});
+    // await authStore.reauthenticate().catch(() => {});
   }
 
   // check if user has permission to access route
@@ -141,9 +141,13 @@ router.beforeEach(async (to, from) => {
     }
   }
 
+  if (to.path !== '/admin/signin') {
+    return '/admin/signin';
+  }
+
   // redirect to signin page if not authenticated
-  return `/admin/signin?redirect=${encodeURIComponent(to.fullPath)}`;
   // if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    // return `/admin/signin?redirect=${encodeURIComponent(to.fullPath)}`;
   // }
 });
 
