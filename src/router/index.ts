@@ -63,8 +63,7 @@ const router = createRouter({
           children: [
             {
               path: '/admin',
-              component: () => import('@/pages/home.vue'),
-              meta: { requiresAuth: true },
+              redirect: '/admin/signin',
             },
             {
               path: '/admin/home',
@@ -141,9 +140,9 @@ router.beforeEach(async (to, from) => {
     }
   }
 
-  if (to.path === '/admin') {
-    return '/admin/signin';
-  }
+  // if (to.path === '/admin') {
+    // return '/admin/signin';
+  // }
 
   // redirect to signin page if not authenticated
   // if (to.meta.requiresAuth && !authStore.isAuthenticated) {
