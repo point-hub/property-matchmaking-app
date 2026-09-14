@@ -141,7 +141,7 @@ router.beforeEach(async (to, from) => {
     }
   }
 
-  if (to.path !== '/admin/signin' || to.path !== '/') {
+  if (to.path === '/admin') {
     return '/admin/signin';
   }
 
