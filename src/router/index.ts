@@ -60,11 +60,8 @@ const router = createRouter({
         {
           path: '/admin',
           component: () => import('@/layouts/admin.vue'),
+          meta: { requiresAuth: true },
           children: [
-            {
-              path: '/admin',
-              redirect: '/admin/signin',
-            },
             {
               path: '/admin/home',
               component: () => import('@/pages/home.vue'),
@@ -121,7 +118,7 @@ router.beforeEach(async (to, from) => {
 
   // try to reauthenticate if not authenticated
   if (!authStore.isAuthenticated && to.path !== '/signin') {
-    // await authStore.reauthenticate().catch(() => {});
+    await authStore.reauthenticate().catch(() => {});
   }
 
   // check if user has permission to access route
@@ -145,9 +142,9 @@ router.beforeEach(async (to, from) => {
   // }
 
   // redirect to signin page if not authenticated
-  // if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    // return `/admin/signin?redirect=${encodeURIComponent(to.fullPath)}`;
-  // }
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return `/admin/signin?redirect=${encodeURIComponent(to.fullPath)}`;
+  }
 });
 
 export default router;

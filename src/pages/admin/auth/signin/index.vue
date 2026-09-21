@@ -22,7 +22,7 @@ const onSubmit = async () => {
 
     await authStore.signin(form.data.value.username, form.data.value.password, form.data.value.remember_me);
 
-    router.replace(route.query.redirect?.toString() || '/');
+    router.replace(route.query.redirect?.toString() || '/admin');
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {
@@ -78,7 +78,7 @@ const onSubmit = async () => {
           </base-input>
           <div class="flex justify-between">
             <base-checkbox v-model="form.data.value.remember_me" text="Remember Me" :disabled="isLoading" />
-            <router-link class="text-blue-600" to="/forgot-password">Forgot Password</router-link>
+            <router-link class="text-blue-600" to="/admin/forgot-password">Forgot Password</router-link>
           </div>
           <div>
             <base-button @click="onSubmit" size="lg" type="submit" is-block :is-loading="isLoading" color="primary">
