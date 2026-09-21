@@ -11,15 +11,15 @@ const props = defineProps<{
 const route = useRoute();
 
 const breadcrumbs = computed<IBreadcrumb[]>(() => [
-  { name: 'Home', path: '/admin' },
+  { name: 'Home', path: '/admin/home' },
   { name: 'Land Titles', path: '/admin/land-titles' },
   {
     name: props.example_identifier ?? String(route.params.id),
-    path: `/land-titles/${route.params.id}`,
+    path: `/admin/land-titles/${route.params.id}`,
   },
   {
     name: 'Audits',
-    path: `/land-titles/${route.params.id}/audits`,
+    path: `/admin/land-titles/${route.params.id}/audits`,
   },
   {
     name: String(route.params.field),

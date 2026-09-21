@@ -6,7 +6,7 @@ interface IResponse {
 }
 
 export const updateExampleApi = async (id: string, data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.patch(`/v1/master/examples/${id}`, data);
+  const response = await apiRequest.patch(`/v1/master/land-titles/${id}`, data);
 
   return response.data;
 };

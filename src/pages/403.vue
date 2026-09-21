@@ -15,7 +15,7 @@
           </div>
 
           <div class="mt-4 flex gap-2">
-            <base-link href="/" color="primary">Go to Homepage</base-link>
+            <base-link href="/admin" color="primary">Go to Homepage</base-link>
           </div>
         </div>
       </base-card>

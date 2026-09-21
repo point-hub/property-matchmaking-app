@@ -21,18 +21,12 @@ const save = async () => {
     const response = await createExampleApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
-      await router.push(`/land-titles/${response.inserted_id}`);
+      await router.push(`/admin/land-titles/${response.inserted_id}`);
     }
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {
-      form.errors.code = errorResponse.errors.code || [];
       form.errors.name = errorResponse.errors.name || [];
-      form.errors.composite_unique_1 = errorResponse.errors.composite_unique_1 || [];
-      form.errors.composite_unique_2 = errorResponse.errors.composite_unique_2 || [];
-      form.errors.age = errorResponse.errors.age || [];
-      form.errors.gender = errorResponse.errors.gender || [];
-      form.errors.optional_unique = errorResponse.errors.optional_unique || [];
       form.errors.notes = errorResponse.errors.notes || [];
     }
     if (errorResponse.message) {

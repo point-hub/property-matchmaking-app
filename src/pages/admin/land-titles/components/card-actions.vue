@@ -25,7 +25,7 @@ const example = defineModel<IForm>('data');
 const onArchiveModal = () => {
   archiveModalRef.value.toggleModal({
     _id: example.value?._id,
-    label: `[${example.value?.code}] ${example.value?.name}`,
+    label: example.value?.name,
   });
 };
 
@@ -42,7 +42,7 @@ const onArchived = async () => {
 const onRestoreModal = () => {
   restoreModalRef.value.toggleModal({
     _id: example.value?._id,
-    label: `[${example.value?.code}] ${example.value?.name}`,
+    label: example.value?.name,
   });
 };
 
@@ -59,7 +59,7 @@ const onRestored = async () => {
 const onDeleteModal = () => {
   deleteModalRef.value.toggleModal({
     _id: example.value?._id,
-    label: `[${example.value?.code}] ${example.value?.name}`,
+    label: example.value?.name,
   });
 };
 
@@ -78,33 +78,33 @@ const onDeleted = async () => {
 
   <base-card class="py-3! gap-0!">
     <div class="flex gap-2 overflow-auto scrollbar-hidden">
-      <router-link v-if="authStore.hasPermission('examples:create')" :to="`/land-titles/create`">
+      <router-link v-if="authStore.hasPermission('land-titles:create')" :to="`/admin/land-titles/create`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-plus" /> CREATE
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('examples:update') && example?._id" :to="`/land-titles/${route.params.id}/edit`">
+      <router-link v-if="authStore.hasPermission('land-titles:update') && example?._id" :to="`/admin/land-titles/${route.params.id}/edit`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-pen" /> EDIT
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('examples:module')" :to="`/land-titles/${route.params.id}/histories`">
+      <router-link v-if="authStore.hasPermission('land-titles:module')" :to="`/admin/land-titles/${route.params.id}/histories`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:rectangle-history-circle-user" /> HISTORIES
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('audit-logs:module')" :to="`/land-titles/${route.params.id}/audits`">
+      <router-link v-if="authStore.hasPermission('audit-logs:module')" :to="`/admin/land-titles/${route.params.id}/audits`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-magnifying-glass" /> AUDITS
         </base-button>
       </router-link>
-      <base-button v-if="authStore.hasPermission('examples:delete') && example?._id" @click="onDeleteModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:delete') && example?._id" @click="onDeleteModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:trash-xmark" /> DELETE
       </base-button>
-      <base-button v-if="authStore.hasPermission('examples:update') && example?._id && !example.is_archived" @click="onArchiveModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:update') && example?._id && !example.is_archived" @click="onArchiveModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:box-archive" /> ARCHIVE
       </base-button>
-      <base-button v-if="authStore.hasPermission('examples:update') && example?._id && example.is_archived" @click="onRestoreModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:update') && example?._id && example.is_archived" @click="onRestoreModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:box-arrow-up" /> RESTORE
       </base-button>
     </div>

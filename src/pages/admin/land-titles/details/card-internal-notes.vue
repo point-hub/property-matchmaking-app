@@ -11,7 +11,7 @@ const data = defineModel<IForm>('data', {
 <template>
   <base-card title="Internal Notes">
     <div class="flex flex-col gap-2">
-      <base-textarea :min-height="128" v-model="data.notes" />
+      <base-textarea :min-height="128" v-model="data.notes" readonly />
     </div>
   </base-card>
 </template>

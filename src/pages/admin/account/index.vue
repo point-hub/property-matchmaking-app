@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import AppMenu, { type IMenu } from '@/components/app-menu.vue';
 
 const breadcrumbs = [
-  { name: 'Home', path: '/admin' },
+  { name: 'Home', path: '/admin/home' },
   { name: 'Account' },
 ];
 

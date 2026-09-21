@@ -77,24 +77,23 @@ onMounted(() => {
   sidebarMenuStore.onChooseApp(route.path);
 
   if (authStore.hasPermission('master:module')) {
-    // const masterMenu = {
-    //   name: 'Master',
-    //   submenu: [] as Array<{ name: string; path: string }>,
-    // };
-    // if (authStore.hasPermission('users:module')) { masterMenu.submenu?.push({ name: 'Users', path: '/master/users' }); }
-    // if (authStore.hasPermission('roles:module')) { masterMenu.submenu?.push({ name: 'Roles', path: '/master/roles' }); }
-    // if (authStore.hasPermission('examples:module')) { masterMenu.submenu?.push({ name: 'Examples', path: '/master/examples' }); }
-    // appMenu.value[0]?.menu?.push(masterMenu);
+    const masterMenu = {
+      name: 'Master',
+      submenu: [] as Array<{ name: string; path: string }>,
+    };
+    if (authStore.hasPermission('users:module')) { masterMenu.submenu?.push({ name: 'Users', path: '/master/users' }); }
+    if (authStore.hasPermission('roles:module')) { masterMenu.submenu?.push({ name: 'Roles', path: '/master/roles' }); }
+    appMenu.value[0]?.menu?.push(masterMenu);
   }
 
   if (authStore.hasPermission('administrator:module')) {
-    // const administratorMenu = {
-    //   name: 'Administrator',
-    //   submenu: [] as Array<{ name: string; path: string }>,
-    //   separator: true,
-    // };
-    // if (authStore.hasPermission('audit-logs:module')) { administratorMenu.submenu?.push({ name: 'Audit Logs', path: '/administrator/audit-logs' }); }
-    // appMenu.value[0]?.menu?.push(administratorMenu);
+    const administratorMenu = {
+      name: 'Administrator',
+      submenu: [] as Array<{ name: string; path: string }>,
+      separator: true,
+    };
+    if (authStore.hasPermission('audit-logs:module')) { administratorMenu.submenu?.push({ name: 'Audit Logs', path: '/administrator/audit-logs' }); }
+    appMenu.value[0]?.menu?.push(administratorMenu);
   }
 
   appMenu.value[0]?.menu?.push(

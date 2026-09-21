@@ -6,7 +6,7 @@ import AppBreadcrumb, { type IBreadcrumb } from '@/components/app-breadcrumb.vue
 const route = useRoute();
 
 const breadcrumbs: IBreadcrumb[] = [
-  { name: 'Home', path: '/admin' },
+  { name: 'Home', path: '/admin/home' },
   { name: 'Promos', path: '/admin/promos' },
   { name: route.params.id as string },
 ];

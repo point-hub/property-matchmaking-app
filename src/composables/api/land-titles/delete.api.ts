@@ -5,7 +5,7 @@ export interface IResponse {
 }
 
 export const deleteExampleApi = async (_id: string, delete_reason?: string): Promise<IResponse | undefined> => {
-  const response = await apiRequest.delete(`/v1/master/examples/${_id}`, {
+  const response = await apiRequest.delete(`/v1/master/land-titles/${_id}`, {
     data: {
       delete_reason,
     },

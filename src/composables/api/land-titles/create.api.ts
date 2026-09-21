@@ -5,7 +5,7 @@ export interface IResponse {
 }
 
 export const createExampleApi = async (data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.post('/v1/master/examples', data);
+  const response = await apiRequest.post('/v1/master/land-titles', data);
 
   return response.data;
 };

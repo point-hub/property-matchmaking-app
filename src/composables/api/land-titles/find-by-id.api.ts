@@ -26,7 +26,7 @@ export const findExampleApi = async (_id: string): Promise<IResponse> => {
 
   // Create a new AbortController for this request
   controller = new AbortController();
-  const response = await apiRequest.get(`/v1/master/examples/${_id}`, {
+  const response = await apiRequest.get(`/v1/master/land-titles/${_id}`, {
     signal: controller.signal,
   });
 

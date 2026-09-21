@@ -6,7 +6,7 @@ interface IResponse {
 }
 
 export const restoreExampleApi = async (id: string, data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.post(`/v1/master/examples/${id}/restore`, data);
+  const response = await apiRequest.post(`/v1/master/land-titles/${id}/restore`, data);
 
   return response.data;
 };

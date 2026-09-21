@@ -15,7 +15,7 @@
           </div>
 
           <div class="mt-4 flex gap-2">
-            <router-link to="/">
+            <router-link to="/admin">
               <base-button color="primary" size="lg">Go to Homepage</base-button>
             </router-link>
           </div>
