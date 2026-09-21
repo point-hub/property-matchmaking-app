@@ -15,8 +15,11 @@ const authStore = useAuthStore();
 const menus = ref<IMenu[]>([]);
 
 onMounted(() => {
-  if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Master', path: '/master', icon: 'i-fa7-solid:address-card' }); }
-  if (authStore.hasPermissions(['administrator:module'])) { menus.value.push({ name: 'Administrator', path: '/administrator', icon: 'i-fa7-solid:folder-gear' }); }
+  // if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Land Titles', path: '/master', icon: 'i-fa7-solid:address-card' }); }
+  // if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Facilities', path: '/master', icon: 'i-fa7-solid:address-card' }); }
+  // if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Problems', path: '/master', icon: 'i-fa7-solid:address-card' }); }
+  // if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Promos', path: '/master', icon: 'i-fa7-solid:address-card' }); }
+  // if (authStore.hasPermissions(['master:module'])) { menus.value.push({ name: 'Properties', path: '/master', icon: 'i-fa7-solid:address-card' }); }
 });
 </script>
 
