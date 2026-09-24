@@ -183,7 +183,7 @@ onMounted(async () => {
                 <router-link :to="`/facilities/${route.params.id}/field-histories/${auditLog.field}`" class="text-blue">{{ auditLog.field }}</router-link>
               </td>
               <td v-if="columns['actor']?.isVisible" class="text-right">
-                <router-link :to="`/master/users/${auditLog.actor_id}`" class="text-blue">{{ auditLog.actor_name }}</router-link>
+                <router-link :to="`/admin/master/users/${auditLog.actor_id}`" class="text-blue">{{ auditLog.actor_name }}</router-link>
               </td>
               <td v-if="columns['newest_created_at']?.isVisible" class="text-right w-40">{{ timeAgo(auditLog.newest_created_at) }}</td>
             </tr>

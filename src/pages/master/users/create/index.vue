@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import AppContainer from '@/components/app-container.vue';
 import { createUserApi } from '@/composables/api/master/users/create.api';
-import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -14,10 +13,19 @@ import CardInternalNotes from './card-internal-notes.vue';
 import CardPassword from './card-password.vue';
 import CardRole from './card-role.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
+import { useRouter } from 'vue-router';
 
 const form = useForm();
-
 const isSaving = ref(false);
+const authStore = useAuthStore();
+const router = useRouter();
+
+onMounted(() => {
+  if (!authStore.hasPermissions(['users:create'])) {
+    router.push('/403');
+  }
+})
 
 const onSave = async () => {
   try {
@@ -34,7 +42,7 @@ const onSave = async () => {
     const response = await createUserApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
-      await router.push(`/master/users/${response.inserted_id}`);
+      await router.push(`/admin/master/users/${response.inserted_id}`);
     }
   } catch (error) {
     const errorResponse = handleError(error);

@@ -31,6 +31,7 @@ const {
   columns: {
     name: { label: 'Name', isVisible: true, isSelectable: false },
     notes: { label: 'Notes', isVisible: false, isSelectable: true },
+    is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
 });
 
@@ -309,7 +310,7 @@ watch(sort, async () => {
                 placeholder="Search..."
                 title="Is Archived"
                 v-model:options="archivedOptions"
-                v-model:selectedValue="filter.is_archived"
+                v-model="filter.is_archived"
                 border="none"
                 paddingless
               />
@@ -380,6 +381,11 @@ watch(sort, async () => {
                 <router-link :to="`/admin/land-titles/${landTitle._id}`" class="text-blue">{{ landTitle.name }}</router-link>
               </td>
               <td v-if="columns['notes']?.isVisible">{{ landTitle.notes }}</td>
+              <td v-if="columns['is_archived']?.isVisible">
+                <base-badge v-if="landTitle.is_archived" variant="filled" color="danger" class="font-bold">
+                  <base-icon icon="i-fa7-solid:box-archive" /> ARCHIVED
+                </base-badge>
+              </td>
             </tr>
           </template>
         </tbody>

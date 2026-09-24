@@ -14,6 +14,7 @@ import CardInternalNotes from './card-internal-notes.vue';
 import CardReason from './card-reason.vue';
 import CardRole from './card-role.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
 
 const form = useForm();
 const route = useRoute();
@@ -22,8 +23,13 @@ const router = useRouter();
 const isSaving = ref(false);
 const isLoading = ref(false);
 const selectedRole = ref();
+const authStore = useAuthStore();
 
 onMounted(async () => {
+  if (!authStore.hasPermissions(['users:edit'])) {
+    router.push('/403');
+  }
+
   try {
     isLoading.value = true;
     const response = await findUserApi(route.params.id as string);
@@ -53,7 +59,7 @@ const onSave = async () => {
     isSaving.value = true;
     await updateUserApi(route.params.id as string, form.data);
     toast('Update success', { color: 'success' });
-    await router.push(`/master/users/${route.params.id}`);
+    await router.push(`/admin/master/users/${route.params.id}`);
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {

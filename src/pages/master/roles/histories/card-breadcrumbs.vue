@@ -7,9 +7,9 @@ const route = useRoute();
 
 const breadcrumbs: IBreadcrumb[] = [
   { name: 'Home', path: '/admin/home' },
-  { name: 'Master', path: '/master' },
-  { name: 'Roles', path: '/master/roles' },
-  { name: route.params.id as string, path: `/master/roles/${route.params.id}` },
+  { name: 'Master', path: '/admin/master' },
+  { name: 'Roles', path: '/admin/master/roles' },
+  { name: route.params.id as string, path: `/admin/master/roles/${route.params.id}` },
   { name: 'Histories' },
 ];
 </script>

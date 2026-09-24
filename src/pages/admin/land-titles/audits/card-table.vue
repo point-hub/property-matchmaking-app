@@ -89,7 +89,7 @@ const getFieldsSummary = async (page = 1) => {
     isLoading.value = true;
     const response = await getFieldsSummaryApi({
       filter: {
-        entity_type: 'Land Titles',
+        entity_type: 'land_titles',
         entity_id: route.params.id,
       },
       sort: 'field',
@@ -183,7 +183,7 @@ onMounted(async () => {
                 <router-link :to="`/admin/land-titles/${route.params.id}/field-histories/${auditLog.field}`" class="text-blue">{{ auditLog.field }}</router-link>
               </td>
               <td v-if="columns['actor']?.isVisible" class="text-right">
-                <router-link :to="`/master/users/${auditLog.actor_id}`" class="text-blue">{{ auditLog.actor_name }}</router-link>
+                <router-link :to="`/admin/master/users/${auditLog.actor_id}`" class="text-blue">{{ auditLog.actor_name }}</router-link>
               </td>
               <td v-if="columns['newest_created_at']?.isVisible" class="text-right w-40">{{ timeAgo(auditLog.newest_created_at) }}</td>
             </tr>

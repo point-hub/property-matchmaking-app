@@ -21,8 +21,20 @@ const onSave = async () => {
   try {
     isSaving.value = true;
 
-    if ((form.errors.new_password?.length ?? 0) > 0) {
-      return toast('Please use a strong password', { color: 'danger' });
+    if ((form.data.current_password?.length ?? 0) === 0) {
+      form.errors.current_password = ['The current password field is required.'];
+    }
+
+    if ((form.data.new_password?.length ?? 0) === 0) {
+      form.errors.new_password = ['The new password field is required.'];
+    }
+
+    if ((form.data.confirm_password?.length ?? 0) === 0) {
+      form.errors.confirm_password = ['The password confirmation field is required.'];
+    }
+
+    if ((form.data.current_password?.length ?? 0) === 0 || (form.data.new_password?.length ?? 0) === 0 || (form.data.confirm_password?.length ?? 0) === 0) {
+      return toast('Validation failed, Please check the highlighted fields.', { color: 'danger' });
     }
 
     if (!form.isPasswordConfirmed.value) {

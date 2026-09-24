@@ -358,18 +358,18 @@ watch(sort, async () => {
               <!-- AuditLog fields rendered conditionally based on column visibility -->
               <td v-if="columns['created_at']?.isVisible" class="whitespace-nowrap">{{ formatDate(auditLog.created_at) }}</td>
               <td v-if="columns['operation_id']?.isVisible">
-                <router-link :to="`/administrator/audit-logs/${auditLog.operation_id}`" class="text-blue-600">
+                <router-link :to="`/admin/administrator/audit-logs/${auditLog.operation_id}`" class="text-blue-600">
                   {{ auditLog.operation_id?.substring(0, 13) }}...
                 </router-link>
               </td>
               <td v-if="columns['actor_type']?.isVisible">{{ auditLog.actor_type }}</td>
               <td v-if="columns['actor_id']?.isVisible">
-                <a target="_blank" :href="`/master/users/${auditLog.actor_id}`" class="text-blue-600">
+                <a target="_blank" :href="`/admin/master/users/${auditLog.actor_id}`" class="text-blue-600">
                   {{ auditLog.actor_id }}
                 </a>
               </td>
               <td v-if="columns['actor_name']?.isVisible">
-                <a target="_blank" :href="`/master/users/${auditLog.actor_id}`" class="text-blue-600">
+                <a target="_blank" :href="`/admin/master/users/${auditLog.actor_id}`" class="text-blue-600">
                   {{ auditLog.actor_name }}
                 </a>
               </td>

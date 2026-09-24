@@ -12,15 +12,15 @@ const route = useRoute();
 
 const breadcrumbs = computed<IBreadcrumb[]>(() => [
   { name: 'Home', path: '/admin/home' },
-  { name: 'Master', path: '/master' },
-  { name: 'Users', path: '/master/users' },
+  { name: 'Master', path: '/admin/master' },
+  { name: 'Users', path: '/admin/master/users' },
   {
     name: props.user_identifier ?? String(route.params.id),
-    path: `/master/users/${route.params.id}`,
+    path: `/admin/master/users/${route.params.id}`,
   },
   {
     name: 'Audits',
-    path: `/master/users/${route.params.id}/audits`,
+    path: `/admin/master/users/${route.params.id}/audits`,
   },
   {
     name: String(route.params.field),

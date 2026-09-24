@@ -3,7 +3,7 @@ import AppBreadcrumb, { type IBreadcrumb } from '@/components/app-breadcrumb.vue
 
 const breadcrumbs: IBreadcrumb[] = [
   { name: 'Home', path: '/admin/home' },
-  { name: 'Account', path: '/account' },
+  { name: 'Account', path: '/admin/account' },
   { name: 'Username' },
 ];
 </script>

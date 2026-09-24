@@ -95,7 +95,7 @@ const getFieldsSummary = async (page = 1) => {
     isLoading.value = true;
     const response = await getFieldHistoriesApi({
       filter: {
-        entity_type: 'Land Titles',
+        entity_type: 'land_titles',
         entity_id: route.params.id,
         field: route.params.field,
       },
@@ -187,12 +187,8 @@ onMounted(async () => {
             <tr v-for="(example, index) in auditLogs" :key="index">
               <!-- Fields rendered conditionally based on column visibility -->
               <td v-if="columns['created_at']?.isVisible" class="w-40">{{ formatDate(example.created_at) }}</td>
-              <td v-if="columns['operation_id']?.isVisible">
-                <router-link :to="`/administrator/audit-logs/${example.operation_id}`" class="text-blue">{{ example.operation_id?.substring(0, 13) }}...</router-link>
-              </td>
-              <td v-if="columns['actor']?.isVisible">
-                <router-link :to="`/master/users/${example.actor_id}`" class="text-blue">{{ example.actor_name }}</router-link>
-              </td>
+              <td v-if="columns['operation_id']?.isVisible">{{ example.operation_id?.substring(0, 13) }}</td>
+              <td v-if="columns['actor']?.isVisible">{{ example.actor_name }}</td>
               <td v-if="columns['before']?.isVisible">{{ example.before }}</td>
               <td v-if="columns['after']?.isVisible">{{ example.after }}</td>
             </tr>

@@ -52,6 +52,11 @@ onMounted(async () => {
       <BaseTabList class="tablist">
         <BaseTab as="template" v-slot="{ selected }">
           <a class="tab" :class="{ 'border-b-2 !border-slate-500': selected }">
+            Features
+          </a>
+        </BaseTab>
+        <BaseTab as="template" v-slot="{ selected }">
+          <a class="tab" :class="{ 'border-b-2 !border-slate-500': selected }">
             Master
           </a>
         </BaseTab>
@@ -63,6 +68,67 @@ onMounted(async () => {
       </BaseTabList>
 
       <BaseTabPanels class="flex-1 text-sm p-4">
+        <!-- FEATURES -->
+        <BaseTabPanel>
+          <div class="flex flex-col gap-4">
+            <div v-if="availablePermissions['land-titles']" class="flex flex-col lg:flex-row lg:gap-8">
+              <p class="uppercase font-bold lg:w-48">Land Titles</p>
+              <div v-for="action in availablePermissions['land-titles']" :key="action">
+                <base-checkbox
+                  class="uppercase"
+                  :text="action"
+                  :model-value="hasPermission('land-titles', action)"
+                  disabled
+                />
+              </div>
+            </div>
+            <div v-if="availablePermissions['facilities']" class="flex flex-col lg:flex-row lg:gap-8">
+              <p class="uppercase font-bold lg:w-48">Facilities</p>
+              <div v-for="action in availablePermissions['facilities']" :key="action">
+                <base-checkbox
+                  class="uppercase"
+                  :text="action"
+                  :model-value="hasPermission('facilities', action)"
+                  disabled
+                />
+              </div>
+            </div>
+            <div v-if="availablePermissions['problems']" class="flex flex-col lg:flex-row lg:gap-8">
+              <p class="uppercase font-bold lg:w-48">Problems</p>
+              <div v-for="action in availablePermissions['problems']" :key="action">
+                <base-checkbox
+                  class="uppercase"
+                  :text="action"
+                  :model-value="hasPermission('problems', action)"
+                  disabled
+                />
+              </div>
+            </div>
+            <div v-if="availablePermissions['promos']" class="flex flex-col lg:flex-row lg:gap-8">
+              <p class="uppercase font-bold lg:w-48">Promos</p>
+              <div v-for="action in availablePermissions['promos']" :key="action">
+                <base-checkbox
+                  class="uppercase"
+                  :text="action"
+                  :model-value="hasPermission('promos', action)"
+                  disabled
+                />
+              </div>
+            </div>
+            <div v-if="availablePermissions['properties']" class="flex flex-col lg:flex-row lg:gap-8">
+              <p class="uppercase font-bold lg:w-48">Properties</p>
+              <div v-for="action in availablePermissions['properties']" :key="action">
+                <base-checkbox
+                  class="uppercase"
+                  :text="action"
+                  :model-value="hasPermission('properties', action)"
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+        </BaseTabPanel>
+        
         <!-- MASTER -->
         <BaseTabPanel>
           <div class="flex flex-col gap-4">

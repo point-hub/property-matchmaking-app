@@ -19,13 +19,10 @@ const menus = ref<IMenu[]>([]);
 
 onMounted(() => {
   if (authStore.hasPermissions(['users:module'])) {
-    menus.value.push({ name: 'Users', path: '/master/users', icon: 'i-fa7-solid:address-card' });
+    menus.value.push({ name: 'Users', path: '/admin/master/users', icon: 'i-fa7-solid:address-card' });
   }
   if (authStore.hasPermissions(['roles:module'])) {
-    menus.value.push({ name: 'Roles', path: '/master/roles', icon: 'i-fa7-solid:user-gear' });
-  }
-  if (authStore.hasPermissions(['examples:module'])) {
-    menus.value.push({ name: 'Examples', path: '/master/examples', icon: 'i-fa7-solid:books' });
+    menus.value.push({ name: 'Roles', path: '/admin/master/roles', icon: 'i-fa7-solid:user-gear' });
   }
 });
 </script>

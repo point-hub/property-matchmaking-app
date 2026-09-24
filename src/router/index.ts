@@ -9,6 +9,7 @@ import routesAdminFacilities from '@/pages/admin/facilities/routes';
 import routesAdminProblems from '@/pages/admin/problems/routes';
 import routesAdminPromos from '@/pages/admin/promos/routes';
 import routesAdminProperties from '@/pages/admin/properties/routes';
+import routesAdminMaster from '@/pages/master/routes';
 import { useAuthStore } from '@/stores/auth.store';
 
 const router = createRouter({
@@ -28,7 +29,7 @@ const router = createRouter({
           ],
         },
         {
-          path: 'property-recommendations',
+          path: '/property-recommendations',
           component: () => import('@/pages/property-recommendations.vue'),
         },
         {
@@ -78,6 +79,7 @@ const router = createRouter({
             routesAdminProblems,
             routesAdminPromos,
             routesAdminProperties,
+            routesAdminMaster,
           ],
         },
         {

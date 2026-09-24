@@ -44,7 +44,7 @@ const onSave = async () => {
     await updateUsernameUserApi(authStore.authUser?._id as string, form.data);
     toast('Update success', { color: 'success' });
 
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {

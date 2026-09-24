@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
 import StatusBanner from '@/components/status-banner.vue';
@@ -15,13 +15,19 @@ import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
 import CardRole from './card-role.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
 
 const form = useForm();
 const route = useRoute();
-
+const authStore = useAuthStore();
+const router = useRouter();
 const isLoading = ref(false);
 
 onMounted(async () => {
+  if (!authStore.hasPermissions(['users:read'])) {
+    router.push('/403');
+  }
+
   try {
     isLoading.value = true;
     const response = await findUserApi(route.params.id as string);

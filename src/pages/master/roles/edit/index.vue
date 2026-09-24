@@ -50,7 +50,7 @@ const update = async () => {
     const response = await updateRoleApi(route.params.id as string, form.data);
     if (response?.matched_count) {
       toast('Update success', { color: 'success' });
-      await router.push(`/master/roles/${route.params.id}`);
+      await router.push(`/admin/master/roles/${route.params.id}`);
     }
   } catch (error) {
     const errorResponse = handleError(error);

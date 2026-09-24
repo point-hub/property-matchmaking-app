@@ -188,10 +188,10 @@ onMounted(async () => {
               <!-- Fields rendered conditionally based on column visibility -->
               <td v-if="columns['created_at']?.isVisible" class="w-40">{{ formatDate(role.created_at) }}</td>
               <td v-if="columns['operation_id']?.isVisible">
-                <router-link :to="`/administrator/audit-logs/${role.operation_id}`" class="text-blue">{{ role.operation_id?.substring(0, 13) }}...</router-link>
+                <router-link :to="`/admin/administrator/audit-logs/${role.operation_id}`" class="text-blue">{{ role.operation_id?.substring(0, 13) }}...</router-link>
               </td>
               <td v-if="columns['actor']?.isVisible">
-                <router-link :to="`/master/users/${role.actor_id}`" class="text-blue">{{ role.actor_name }}</router-link>
+                <router-link :to="`/admin/master/users/${role.actor_id}`" class="text-blue">{{ role.actor_name }}</router-link>
               </td>
               <td v-if="columns['before']?.isVisible">{{ role.before }}</td>
               <td v-if="columns['after']?.isVisible">{{ role.after }}</td>

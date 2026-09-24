@@ -67,7 +67,7 @@ const onDeleteModal = () => {
  * Handler called after a successful deletion.
  */
 const onDeleted = async () => {
-  await router.push('/master/users');
+  await router.push('/admin/master/users');
 };
 </script>
 
@@ -78,22 +78,22 @@ const onDeleted = async () => {
 
   <base-card class="py-3! gap-0!">
     <div class="flex gap-2 overflow-auto scrollbar-hidden">
-      <router-link v-if="authStore.hasPermission('users:create')" :to="`/master/users/create`">
+      <router-link v-if="authStore.hasPermission('users:create')" :to="`/admin/master/users/create`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-plus" /> CREATE
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('users:update') && user?._id" :to="`/master/users/${route.params.id}/edit`">
+      <router-link v-if="authStore.hasPermission('users:update') && user?._id" :to="`/admin/master/users/${route.params.id}/edit`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-pen" /> EDIT
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('users:module')" :to="`/master/users/${route.params.id}/histories`">
+      <router-link v-if="authStore.hasPermission('users:module')" :to="`/admin/master/users/${route.params.id}/histories`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:rectangle-history-circle-user" /> HISTORIES
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('audit-logs:module')" :to="`/master/users/${route.params.id}/audits`">
+      <router-link v-if="authStore.hasPermission('audit-logs:module')" :to="`/admin/master/users/${route.params.id}/audits`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-magnifying-glass" /> AUDITS
         </base-button>

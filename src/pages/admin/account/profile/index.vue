@@ -49,7 +49,7 @@ const onSave = async () => {
     isSaving.value = true;
     await updateUserApi(authStore.authUser?._id as string, form.data);
     toast('Update success', { color: 'success' });
-    await router.push(`/master/users/${authStore.authUser?._id}`);
+    await router.push(`/admin/master/users/${authStore.authUser?._id}`);
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {

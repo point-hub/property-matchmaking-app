@@ -123,7 +123,7 @@ const getAuditLogs = async (page = 1) => {
         ...filter,
         created_at_from: formatDate(filter.created_at_from, { boundary: 'start-of-day' }),
         created_at_to: formatDate(filter.created_at_to, { boundary: 'end-of-day' }),
-        entity_type: 'Land Titles',
+        entity_type: 'land_titles',
         entity_id: String(route.params.id),
       },
       group_by_operation_id: true,
@@ -358,21 +358,13 @@ watch(sort, async () => {
               <!-- AuditLog fields rendered conditionally based on column visibility -->
               <td v-if="columns['created_at']?.isVisible" class="whitespace-nowrap">{{ formatDate(auditLog.created_at) }}</td>
               <td v-if="columns['operation_id']?.isVisible">
-                <router-link :to="`/administrator/audit-logs/${auditLog.operation_id}`" class="text-blue-600">
+                <router-link :to="`/admin/administrator/audit-logs/${auditLog.operation_id}`" class="text-blue-600">
                   {{ auditLog.operation_id?.substring(0, 13) }}...
                 </router-link>
               </td>
               <td v-if="columns['actor_type']?.isVisible">{{ auditLog.actor_type }}</td>
-              <td v-if="columns['actor_id']?.isVisible">
-                <a target="_blank" :href="`/master/users/${auditLog.actor_id}`" class="text-blue-600">
-                  {{ auditLog.actor_id }}
-                </a>
-              </td>
-              <td v-if="columns['actor_name']?.isVisible">
-                <a target="_blank" :href="`/master/users/${auditLog.actor_id}`" class="text-blue-600">
-                  {{ auditLog.actor_name }}
-                </a>
-              </td>
+              <td v-if="columns['actor_id']?.isVisible">{{ auditLog.actor_id }}</td>
+              <td v-if="columns['actor_name']?.isVisible">{{ auditLog.actor_name }}</td>
               <td v-if="columns['action']?.isVisible">{{ auditLog.action }}</td>
               <td v-if="columns['module']?.isVisible">{{ auditLog.module }}</td>
               <td v-if="columns['entity_type']?.isVisible">{{ auditLog.entity_type }}</td>

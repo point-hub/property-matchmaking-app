@@ -22,7 +22,7 @@ const save = async () => {
     const response = await createRoleApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
-      await router.push(`/master/roles/${response.inserted_id}`);
+      await router.push(`/admin/master/roles/${response.inserted_id}`);
     }
   } catch (error) {
     const errorResponse = handleError(error);

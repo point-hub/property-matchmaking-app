@@ -81,8 +81,8 @@ onMounted(() => {
       name: 'Master',
       submenu: [] as Array<{ name: string; path: string }>,
     };
-    if (authStore.hasPermission('users:module')) { masterMenu.submenu?.push({ name: 'Users', path: '/master/users' }); }
-    if (authStore.hasPermission('roles:module')) { masterMenu.submenu?.push({ name: 'Roles', path: '/master/roles' }); }
+    if (authStore.hasPermission('users:module')) { masterMenu.submenu?.push({ name: 'Users', path: '/admin/master/users' }); }
+    if (authStore.hasPermission('roles:module')) { masterMenu.submenu?.push({ name: 'Roles', path: '/admin/master/roles' }); }
     appMenu.value[0]?.menu?.push(masterMenu);
   }
 
@@ -92,7 +92,7 @@ onMounted(() => {
       submenu: [] as Array<{ name: string; path: string }>,
       separator: true,
     };
-    if (authStore.hasPermission('audit-logs:module')) { administratorMenu.submenu?.push({ name: 'Audit Logs', path: '/administrator/audit-logs' }); }
+    if (authStore.hasPermission('audit-logs:module')) { administratorMenu.submenu?.push({ name: 'Audit Logs', path: '/admin/administrator/audit-logs' }); }
     appMenu.value[0]?.menu?.push(administratorMenu);
   }
 
@@ -145,7 +145,7 @@ onMounted(() => {
         <header-menu v-model:is-open="isHeaderMenuOpen" :organization="account.organization" :username="account.username" :avatar="account.avatar">
           <header-menu-account :organization="account.organization" :username="account.username" :avatar="account.avatar" />
           <base-divider orientation="vertical" class="my-2!" />
-          <header-menu-link label="My Account" icon="i-ph:user-circle-gear-duotone" path="/account" @click="() => isHeaderMenuOpen = false" />
+          <header-menu-link label="My Account" icon="i-ph:user-circle-gear-duotone" path="/admin/account" @click="() => isHeaderMenuOpen = false" />
           <header-menu-dark-mode :on-toggle-dark-mode="toggleDarkMode" v-model:is-dark-mode="isDarkMode" />
           <base-divider orientation="vertical" class="my-2!" />
           <header-menu-signout :on-signout="onSignout" />

@@ -16,7 +16,7 @@ const breadcrumbs = [
 const menus = ref<IMenu[]>([]);
 
 onMounted(() => {
-  menus.value.push({ name: 'Audit Logs', path: '/administrator/audit-logs', icon: 'i-fa7-solid:file-magnifying-glass' });
+  menus.value.push({ name: 'Audit Logs', path: '/admin/administrator/audit-logs', icon: 'i-fa7-solid:file-magnifying-glass' });
 });
 </script>
 

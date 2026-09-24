@@ -263,7 +263,7 @@ watch(sort, async () => {
         </base-input>
       </div>
       <div class="flex gap-1">
-        <router-link v-if="authStore.hasPermission('roles:create')" to="/master/roles/create">
+        <router-link v-if="authStore.hasPermission('roles:create')" to="/admin/master/roles/create">
           <base-button color="primary" shape="sharp" class="font-bold">
             <base-icon class="i-lucide:square-plus" /> CREATE
           </base-button>
@@ -351,14 +351,14 @@ watch(sort, async () => {
                   <template #content>
                     <base-card class="p-0! gap-0! -mt-2" shadow>
                       <div class="flex flex-col">
-                        <router-link :to="`/master/roles/${role._id}`">
+                        <router-link :to="`/admin/master/roles/${role._id}`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-book-open-cover" />
                             <p class="flex-1">View</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <router-link v-if="authStore.hasPermission('roles:update')" :to="`/master/roles/${role._id}/edit`">
+                        <router-link v-if="authStore.hasPermission('roles:update')" :to="`/admin/master/roles/${role._id}/edit`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-file-pen" />
                             <p class="flex-1">Edit</p>
@@ -377,7 +377,7 @@ watch(sort, async () => {
 
               <!-- Role fields rendered conditionally based on column visibility -->
               <td v-if="columns['name']?.isVisible">
-                <router-link :to="`/master/roles/${role._id}`" class="text-blue">{{ role.name }}</router-link>
+                <router-link :to="`/admin/master/roles/${role._id}`" class="text-blue">{{ role.name }}</router-link>
               </td>
               <td v-if="columns['notes']?.isVisible">{{ role.notes }}</td>
               <td v-if="columns['is_archived']?.isVisible">

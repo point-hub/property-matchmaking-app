@@ -1,3 +1,4 @@
+```vue
 <script setup lang="ts">
 import { onMounted, ref, watchEffect } from 'vue';
 
@@ -13,6 +14,26 @@ const data = defineModel<IForm>('data', {
 
 const isSaving = defineModel('is-saving', { default: false });
 
+const SCOPE_MAP = {
+  master: ['master', 'users', 'roles', 'land-titles', 'facilities', 'problems', 'promos', 'properties'],
+  administrator: ['administrator', 'audit-logs'],
+} as const;
+
+const RESOURCE_LABELS: Record<string, string> = {
+  'master': 'Menu Master',
+  'users': 'Users',
+  'roles': 'Roles',
+  'land-titles': 'Land Titles',
+  'facilities': 'Facilities',
+  'problems': 'Problems',
+  'promos': 'Promos',
+  'properties': 'Properties',
+  'administrator': 'Menu Administrator',
+  'audit-logs': 'Audit Logs',
+};
+
+const availablePermissions = ref<Record<string, string[]>>({});
+
 watchEffect(() => {
   if (!Array.isArray(data.value.permissions)) {
     data.value.permissions = [];
@@ -24,9 +45,13 @@ const toResourceActions = (list: { name: string }[]) => {
 
   for (const { name } of list) {
     const [resource, action] = name.split(':');
-    if (!resource || !action) continue;
+
+    if (!resource || !action) {
+      continue;
+    }
 
     result[resource] ??= [];
+
     if (!result[resource].includes(action)) {
       result[resource].push(action);
     }
@@ -35,10 +60,8 @@ const toResourceActions = (list: { name: string }[]) => {
   return result;
 };
 
-const availablePermissions = ref<Record<string, string[]>>({});
-
 const hasPermission = (resource: string, action: string) => {
-  return data.value.permissions?.includes(`${resource}:${action}`);
+  return data.value.permissions?.includes(`${resource}:${action}`) ?? false;
 };
 
 const togglePermission = (
@@ -52,19 +75,22 @@ const togglePermission = (
     if (!data.value.permissions?.includes(key)) {
       data.value.permissions?.push(key);
     }
-  } else {
-    data.value.permissions = data.value.permissions?.filter(p => p !== key);
+
+    return;
   }
+
+  data.value.permissions = data.value.permissions?.filter(
+    permission => permission !== key,
+  );
 };
 
-const SCOPE_MAP = {
-  master: ['master', 'users', 'roles'],
-  administrator: ['administrator', 'audit-logs'],
-} as const;
-
-const checkAll = (scope: keyof typeof SCOPE_MAP, checked: boolean) => {
+const checkAll = (
+  scope: keyof typeof SCOPE_MAP,
+  checked: boolean,
+) => {
   for (const resource of SCOPE_MAP[scope]) {
     const actions = availablePermissions.value[resource] ?? [];
+
     for (const action of actions) {
       togglePermission(resource, action, checked);
     }
@@ -73,6 +99,7 @@ const checkAll = (scope: keyof typeof SCOPE_MAP, checked: boolean) => {
 
 onMounted(async () => {
   const response = await getPermissionsApi();
+
   availablePermissions.value = toResourceActions(response.data);
 });
 </script>
@@ -82,108 +109,82 @@ onMounted(async () => {
     <BaseTabGroup as="div" class="dark:bg-slate-800">
       <BaseTabList class="tablist">
         <BaseTab as="template" v-slot="{ selected }">
-          <a href="javascript:void(0)" class="tab" :class="{ 'border-b-2 !border-slate-500': selected }">
+          <a
+            href="javascript:void(0)"
+            class="tab"
+            :class="{ 'border-b-2 !border-slate-500': selected }"
+          >
             Master
           </a>
         </BaseTab>
+
         <BaseTab as="template" v-slot="{ selected }">
-          <a href="javascript:void(0)" class="tab" :class="{ 'border-b-2 !border-slate-500': selected }">
+          <a
+            href="javascript:void(0)"
+            class="tab"
+            :class="{ 'border-b-2 !border-slate-500': selected }"
+          >
             Administrator
           </a>
         </BaseTab>
       </BaseTabList>
 
       <BaseTabPanels class="flex-1 text-sm p-4">
-        <!-- MASTER -->
-        <BaseTabPanel>
+        <BaseTabPanel
+          v-for="scope in Object.keys(SCOPE_MAP) as Array<keyof typeof SCOPE_MAP>"
+          :key="scope"
+        >
           <div class="flex gap-2 pt-2 pb-8">
-            <base-button class="px-4!" size="xs" color="primary" @click="checkAll('master', true)">
+            <base-button
+              class="px-4!"
+              size="xs"
+              color="primary"
+              :disabled="isSaving"
+              @click="checkAll(scope, true)"
+            >
               Select All
             </base-button>
-            <base-button class="px-4!" size="xs" color="danger" @click="checkAll('master', false)">
+
+            <base-button
+              class="px-4!"
+              size="xs"
+              color="danger"
+              :disabled="isSaving"
+              @click="checkAll(scope, false)"
+            >
               Deselect All
             </base-button>
           </div>
 
           <div class="flex flex-col gap-4">
-            <div class="flex flex-col lg:flex-row lg:gap-8" v-if="availablePermissions.master">
-              <p class="uppercase font-bold lg:w-48">Menu Master</p>
-              <div v-for="action in availablePermissions.master" :key="action">
-                <base-checkbox
-                  class="uppercase"
-                  :text="action"
-                  :disabled="isSaving"
-                  :model-value="hasPermission('master', action)"
-                  @update:model-value="(v: boolean) => togglePermission('master', action, v)"
-                />
-              </div>
-            </div>
+            <template 
+              v-for="resource in SCOPE_MAP[scope]"
+              :key="resource">
+              <div
+                v-if="availablePermissions[resource]"
+                class="flex flex-col lg:flex-row lg:gap-8"
+              >
+                <p class="uppercase font-bold lg:w-48">
+                  {{ RESOURCE_LABELS[resource] ?? resource }}
+                </p>
 
-            <div class="flex flex-col lg:flex-row lg:gap-8" v-if="availablePermissions.users">
-              <p class="uppercase font-bold lg:w-48">Users</p>
-              <div v-for="action in availablePermissions.users" :key="action">
-                <base-checkbox
-                  class="uppercase"
-                  :text="action"
-                  :disabled="isSaving"
-                  :model-value="hasPermission('users', action)"
-                  @update:model-value="(v: boolean) => togglePermission('users', action, v)"
-                />
+                <div
+                  v-for="action in availablePermissions[resource]"
+                  :key="action"
+                >
+                  <base-checkbox
+                    class="uppercase"
+                    :text="action"
+                    :disabled="isSaving"
+                    :model-value="hasPermission(resource, action)"
+                    @update:model-value="
+                      (value: boolean) =>
+                        togglePermission(resource, action, value)
+                    "
+                  />
+                </div>
               </div>
-            </div>
-
-            <div class="flex flex-col lg:flex-row lg:gap-8" v-if="availablePermissions.roles">
-              <p class="uppercase font-bold lg:w-48">Roles</p>
-              <div v-for="action in availablePermissions.roles" :key="action">
-                <base-checkbox
-                  class="uppercase"
-                  :text="action"
-                  :disabled="isSaving"
-                  :model-value="hasPermission('roles', action)"
-                  @update:model-value="(v: boolean) => togglePermission('roles', action, v)"
-                />
-              </div>
-            </div>
-          </div>
-        </BaseTabPanel>
-
-        <!-- ADMINISTRATOR -->
-        <BaseTabPanel>
-          <div class="flex gap-2 pt-2 pb-8">
-            <base-button class="px-4!" size="xs" color="primary" @click="checkAll('administrator', true)">
-              Select All
-            </base-button>
-            <base-button class="px-4!" size="xs" color="danger" @click="checkAll('administrator', false)">
-              Deselect All
-            </base-button>
-          </div>
-
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col lg:flex-row lg:gap-8" v-if="availablePermissions.administrator">
-              <p class="uppercase font-bold lg:w-48">Menu Administrator</p>
-              <div v-for="action in availablePermissions.administrator" :key="action">
-                <base-checkbox
-                  class="uppercase"
-                  :text="action"
-                  :disabled="isSaving"
-                  :model-value="hasPermission('administrator', action)"
-                  @update:model-value="(v: boolean) => togglePermission('administrator', action, v)"
-                />
-              </div>
-            </div>
-
-            <div class="flex flex-col lg:flex-row lg:gap-8" v-if="availablePermissions['audit-logs']">
-              <p class="uppercase font-bold lg:w-48">Audit Logs</p>
-              <div v-for="action in availablePermissions['audit-logs']" :key="action">
-                <base-checkbox
-                  class="uppercase"
-                  :text="action"
-                  :disabled="isSaving"
-                  :model-value="hasPermission('audit-logs', action)"
-                  @update:model-value="(v: boolean) => togglePermission('audit-logs', action, v)"
-                />
-              </div>
-            </div>
+            </template>
           </div>
         </BaseTabPanel>
       </BaseTabPanels>
@@ -195,7 +196,9 @@ onMounted(async () => {
 .tablist {
   @apply flex overflow-x-auto pt-4 border-b border-slate-200 dark:border-[#191e3a];
 }
+
 .tab {
   @apply flex pb-2 px-4 gap-2 items-center -mb-[1px] whitespace-nowrap outline-none;
 }
 </style>
+```

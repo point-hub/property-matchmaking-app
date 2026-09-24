@@ -119,7 +119,7 @@ const getChangedKeys = (
             <tr>
               <td class="font-bold whitespace-nowrap">Actor ID</td>
               <td>
-                <a :href="`/master/users/${auditLogs?.data[0]?.actor_id}`" target="_blank" class="text-blue-600">
+                <a :href="`/admin/master/users/${auditLogs?.data[0]?.actor_id}`" target="_blank" class="text-blue-600">
                   {{ auditLogs?.data[0]?.actor_id }}
                 </a>
               </td>

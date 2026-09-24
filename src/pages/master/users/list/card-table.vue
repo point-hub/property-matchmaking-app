@@ -272,7 +272,7 @@ watch(sort, async () => {
         </base-input>
       </div>
       <div class="flex gap-1">
-        <router-link v-if="authStore.hasPermission('users:create')" to="/master/users/create">
+        <router-link v-if="authStore.hasPermission('users:create')" to="/admin/master/users/create">
           <base-button color="primary" shape="sharp" class="font-bold">
             <base-icon class="i-lucide:square-plus" /> CREATE
           </base-button>
@@ -369,14 +369,14 @@ watch(sort, async () => {
                   <template #content>
                     <base-card class="p-0! gap-0! -mt-2" shadow>
                       <div class="flex flex-col">
-                        <router-link :to="`/master/users/${user._id}`">
+                        <router-link :to="`/admin/master/users/${user._id}`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-book-open-cover" />
                             <p class="flex-1">View</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <router-link v-if="authStore.hasPermission('users:update')" :to="`/master/users/${user._id}/edit`">
+                        <router-link v-if="authStore.hasPermission('users:update')" :to="`/admin/master/users/${user._id}/edit`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-file-pen" />
                             <p class="flex-1">Edit</p>
@@ -395,13 +395,13 @@ watch(sort, async () => {
 
               <!-- User fields rendered conditionally based on column visibility -->
               <td v-if="columns['username']?.isVisible">
-                <router-link :to="`/master/users/${user._id}`" class="text-blue-600">{{ user.username }}</router-link>
+                <router-link :to="`/admin/master/users/${user._id}`" class="text-blue-600">{{ user.username }}</router-link>
               </td>
               <td v-if="columns['name']?.isVisible">
-                <router-link :to="`/master/users/${user._id}`" class="text-blue-600">{{ user.name }}</router-link>
+                <router-link :to="`/admin/master/users/${user._id}`" class="text-blue-600">{{ user.name }}</router-link>
               </td>
               <td v-if="columns['email']?.isVisible">
-                <router-link :to="`/master/users/${user._id}`" class="text-blue-600">{{ user.email }}</router-link>
+                <router-link :to="`/admin/master/users/${user._id}`" class="text-blue-600">{{ user.email }}</router-link>
               </td>
               <td v-if="columns['role.name']?.isVisible">{{ user.role.name }}</td>
               <td v-if="columns['notes']?.isVisible">{{ user.notes }}</td>
