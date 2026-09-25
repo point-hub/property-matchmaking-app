@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { IForm, IFormError } from './form';
 
-const data = defineModel<IForm>('data', {
+const data = defineModel<Partial<IForm>>('data', {
   default: () => ({
-    reason: undefined,
+    update_reason: undefined,
   }),
 });
-const errors = defineModel<IFormError>('errors', {
+const errors = defineModel<Partial<IFormError>>('errors', {
   default: () => ({
-    reason: [],
+    update_reason: [],
   }),
 });
 const isSaving = defineModel('is-saving', { default: false });

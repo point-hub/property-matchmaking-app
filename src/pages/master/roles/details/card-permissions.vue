@@ -6,7 +6,7 @@ import { getPermissionsApi } from '@/composables/api/master/permissions/get.api'
 
 import { type IForm } from './form';
 
-const data = defineModel<IForm>('data', {
+const data = defineModel<Partial<IForm>>('data', {
   default: () => ({
     permissions: [],
   }),

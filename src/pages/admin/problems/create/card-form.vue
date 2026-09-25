@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { type IForm, type IFormError } from './form';
 
-const data = defineModel<IForm>('data', {
+const data = defineModel<Partial<IForm>>('data', {
   default: () => ({
     name: undefined,
     description: undefined,
   }),
 });
-const errors = defineModel<IFormError>('errors', {
+const errors = defineModel<Partial<IFormError>>('errors', {
   default: () => ({
     name: [],
     description: [],

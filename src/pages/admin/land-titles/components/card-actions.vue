@@ -17,7 +17,7 @@ const router = useRouter();
 const archiveModalRef = ref();
 const restoreModalRef = ref();
 const deleteModalRef = ref();
-const landTitle = defineModel<IForm>('data');
+const landTitle = defineModel<Partial<IForm>>('data');
 
 /**
  * Opens the archive confirmation modal for a specific landTitle.

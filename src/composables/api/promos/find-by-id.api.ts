@@ -3,6 +3,7 @@ import { apiRequest } from '@/utils/api';
 export interface IResponse {
   _id: string
   name: string
+  description: string
   notes: string
   is_archived: boolean
   created_at: Date

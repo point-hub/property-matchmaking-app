@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const codes = ['AB0001','AC0002','AD0003'];
 const prices = ['Rp150.000.000','Rp400.000.000','Rp300.000.000'];
 const locations = ['Surabaya Timur','Malang','Surabaya Selatan'];
 </script>
@@ -211,7 +210,7 @@ const locations = ['Surabaya Timur','Malang','Surabaya Selatan'];
               <tr>
                 <th class="p-5 text-left">Property</th>
 
-                <th>AB0001</th>
+                <th></th>
                 <th>AC0002</th>
                 <th>AD0003</th>
               </tr>

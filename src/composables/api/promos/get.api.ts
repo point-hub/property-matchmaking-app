@@ -4,6 +4,7 @@ import { apiRequest } from '@/utils/api';
 export interface IPromosData {
   _id: string
   name: string
+  description: string
   notes: string
   is_archived: string
   created_at: Date

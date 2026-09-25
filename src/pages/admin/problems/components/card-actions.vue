@@ -17,7 +17,7 @@ const router = useRouter();
 const archiveModalRef = ref();
 const restoreModalRef = ref();
 const deleteModalRef = ref();
-const problem = defineModel<IForm>('data');
+const problem = defineModel<Partial<IForm>>('data');
 
 /**
  * Opens the archive confirmation modal for a specific problem.

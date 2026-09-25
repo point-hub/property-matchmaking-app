@@ -13,7 +13,6 @@ import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
 import ModalDelete from '../components/delete-modal/index.vue';
-import { genderOptions } from '../gender';
 
 /**
  * Setup table columns and visibility state using the useTableSetting composable.

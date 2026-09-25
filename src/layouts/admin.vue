@@ -60,13 +60,6 @@ const account = ref({
   avatar: 'https://placehold.co/150',
 });
 
-const organizations = ref([
-  {
-    name: 'Property Matchmaking',
-    link: '?org=abc',
-  },
-]);
-
 const onSignout = async () => {
   await authStore.signout();
   await router.push('/admin/signin');

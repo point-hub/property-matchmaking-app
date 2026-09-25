@@ -5,10 +5,10 @@ import { getRolesApi } from '@/composables/api/master/roles/get.api';
 
 import { type IForm, type IFormError } from './form';
 
-const data = defineModel<IForm>('data', {
+const data = defineModel<Partial<IForm>>('data', {
   default: () => ({ role_id: '' }),
 });
-const errors = defineModel<IFormError>('errors', {
+const errors = defineModel<Partial<IFormError>>('errors', {
   default: () => ({ role_id: [] }),
 });
 

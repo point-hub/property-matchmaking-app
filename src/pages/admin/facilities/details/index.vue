@@ -50,14 +50,6 @@ const onArchived = async () => {
 const onRestored = async () => {
   form.data.is_archived = false;
 };
-
-const deleteModalRef = ref();
-const onDeleteModal = () => {
-  deleteModalRef.value.toggleModal({
-    _id: form.data._id,
-    label: form.data.name,
-  });
-};
 </script>
 
 <template>

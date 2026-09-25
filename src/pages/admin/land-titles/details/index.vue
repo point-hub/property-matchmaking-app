@@ -50,14 +50,6 @@ const onArchived = async () => {
 const onRestored = async () => {
   form.data.is_archived = false;
 };
-
-const deleteModalRef = ref();
-const onDeleteModal = () => {
-  deleteModalRef.value.toggleModal({
-    _id: form.data._id,
-    label: form.data.name,
-  });
-};
 </script>
 
 <template>
@@ -68,7 +60,6 @@ const onDeleteModal = () => {
     <card-actions v-model:data="form.data" @restored="onRestored" @archived="onArchived" />
 
     <status-banner v-if="form.data.is_archived" status-type="danger" message="This data has been archived." />
-
 
     <base-card v-if="!form.data._id">
       Data Not Found

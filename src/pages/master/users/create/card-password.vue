@@ -8,13 +8,13 @@ defineProps<{
   validateNewPassword: () => void
 }>();
 
-const data = defineModel<IForm>('data', {
+const data = defineModel<Partial<IForm>>('data', {
   default: () => ({
     password: '',
     confirm_password: '',
   }),
 });
-const errors = defineModel<IFormError>('errors', {
+const errors = defineModel<Partial<IFormError>>('errors', {
   default: () => ({
     password: [],
     confirm_password: [],

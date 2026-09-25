@@ -3,10 +3,8 @@ import { useDarkMode, useScreenSize } from '@point-hub/papp';
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 
-import { toast } from '@/toast';
-
 import { toastRef } from './toast';
-const { loadDarkMode, setDarkMode } = useDarkMode();
+const { loadDarkMode } = useDarkMode();
 
 /**
  * Track breakpoint on screen change
