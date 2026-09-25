@@ -24,7 +24,7 @@ const route = useRoute();
 const router = useRouter();
 
 onMounted(async () => {
-  if (!authStore.hasPermissions(['roles:edit'])) {
+  if (!authStore.hasPermissions(['roles:update'])) {
     router.push('/403');
   }
 

@@ -4,27 +4,15 @@ import { useRoute } from 'vue-router';
 
 import AppBreadcrumb, { type IBreadcrumb } from '@/components/app-breadcrumb.vue';
 
-const props = defineProps<{
-  role_identifier: string
-}>();
-
 const route = useRoute();
 
 const breadcrumbs = computed<IBreadcrumb[]>(() => [
   { name: 'Home', path: '/admin/home' },
   { name: 'Master', path: '/admin/master' },
   { name: 'Roles', path: '/admin/master/roles' },
-  {
-    name: props.role_identifier ?? String(route.params.id),
-    path: `/admin/master/roles/${route.params.id}`,
-  },
-  {
-    name: 'Audits',
-    path: `/admin/master/roles/${route.params.id}/audits`,
-  },
-  {
-    name: String(route.params.field),
-  },
+  { name: String(route.params.id), path: `/admin/master/roles/${route.params.id}` },
+  { name: 'Audits', path: `/admin/master/roles/${route.params.id}/audits` },
+  { name: String(route.params.field) },
 ]);
 </script>
 

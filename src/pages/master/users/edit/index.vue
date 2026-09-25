@@ -26,7 +26,7 @@ const selectedRole = ref();
 const authStore = useAuthStore();
 
 onMounted(async () => {
-  if (!authStore.hasPermissions(['users:edit'])) {
+  if (!authStore.hasPermissions(['users:update'])) {
     router.push('/403');
   }
 

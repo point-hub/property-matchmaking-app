@@ -11,7 +11,7 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 onMounted(() => {
-  if (!authStore.hasPermissions(['read'])) {
+  if (!authStore.hasPermissions(['roles:read'])) {
     router.push('/403');
   }
 });

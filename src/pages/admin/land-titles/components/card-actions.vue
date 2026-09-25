@@ -88,7 +88,7 @@ const onDeleted = async () => {
           <base-icon icon="i-fa7-solid:file-pen" /> EDIT
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('land-titles:module')" :to="`/admin/land-titles/${route.params.id}/histories`">
+      <router-link v-if="authStore.hasPermission('audit-logs:module')" :to="`/admin/land-titles/${route.params.id}/histories`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:rectangle-history-circle-user" /> HISTORIES
         </base-button>

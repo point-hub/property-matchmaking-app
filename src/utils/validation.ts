@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateRequiredFields<T extends Record<string, any>>(
   data: T,
   requiredFields: (keyof T)[],
