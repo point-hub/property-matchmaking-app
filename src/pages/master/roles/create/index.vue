@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { createRoleApi } from '@/composables/api/master/roles/create.api';
-import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -11,10 +10,19 @@ import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
 import CardPermissions from './card-permissions.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
+import { useRouter } from 'vue-router';
 
 const form = useForm();
-
 const isSaving = ref(false);
+const authStore = useAuthStore();
+const router = useRouter();
+
+onMounted(() => {
+  if (!authStore.hasPermissions(['roles:create'])) {
+    router.push('/403');
+  }
+})
 
 const save = async () => {
   try {

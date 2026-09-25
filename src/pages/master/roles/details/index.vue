@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
 import { findRoleApi } from '@/composables/api/master/roles/find-by-id.api';
@@ -14,13 +14,19 @@ import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
 import CardPermissions from './card-permissions.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
 
-const route = useRoute();
 const form = useForm();
-
 const isLoading = ref(false);
+const route = useRoute();
+const authStore = useAuthStore();
+const router = useRouter();
 
 onMounted(async () => {
+  if (!authStore.hasPermissions(['roles:read'])) {
+    router.push('/403');
+  }
+
   try {
     isLoading.value = true;
     const response = await findRoleApi(route.params.id as string);

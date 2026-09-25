@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/auth.store';
 const breadcrumbs = [
   {
     name: 'Home',
-    path: '/',
+    path: '/admin/home',
   },
   {
     name: 'Master',

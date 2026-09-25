@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
 import { findRoleApi } from '@/composables/api/master/roles/find-by-id.api';
 import { updateRoleApi } from '@/composables/api/master/roles/update.api';
-import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -15,14 +14,20 @@ import CardInternalNotes from './card-internal-notes.vue';
 import CardPermissions from './card-permissions.vue';
 import CardReason from './card-reason.vue';
 import { useForm } from './form';
+import { useAuthStore } from '@/stores/auth.store.ts';
 
 const form = useForm();
-const route = useRoute();
-
 const isLoading = ref(false);
 const isSaving = ref(false);
+const authStore = useAuthStore();
+const route = useRoute();
+const router = useRouter();
 
 onMounted(async () => {
+  if (!authStore.hasPermissions(['roles:edit'])) {
+    router.push('/403');
+  }
+
   try {
     isLoading.value = true;
     const response = await findRoleApi(route.params.id as string);

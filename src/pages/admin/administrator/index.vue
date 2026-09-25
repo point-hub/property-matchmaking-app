@@ -6,7 +6,7 @@ import AppMenu, { type IMenu } from '@/components/app-menu.vue';
 const breadcrumbs = [
   {
     name: 'Home',
-    path: '/',
+    path: '/admin/home',
   },
   {
     name: 'Administrator',
