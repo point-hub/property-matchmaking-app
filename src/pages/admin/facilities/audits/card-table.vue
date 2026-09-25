@@ -89,7 +89,7 @@ const getFieldsSummary = async (page = 1) => {
     isLoading.value = true;
     const response = await getFieldsSummaryApi({
       filter: {
-        entity_type: 'Facilities',
+        entity_type: 'facilities',
         entity_id: route.params.id,
       },
       sort: 'field',
@@ -175,12 +175,12 @@ onMounted(async () => {
             </td>
           </tr>
 
-          <!-- Render rows of example data when available -->
+          <!-- Render rows of facility data when available -->
           <template v-if="!isLoading && auditLogs && auditLogs.length > 0">
             <tr v-for="(auditLog, index) in auditLogs" :key="index">
               <!-- Fields rendered conditionally based on column visibility -->
               <td v-if="columns['field']?.isVisible">
-                <router-link :to="`/facilities/${route.params.id}/field-histories/${auditLog.field}`" class="text-blue">{{ auditLog.field }}</router-link>
+                <router-link :to="`/admin/facilities/${route.params.id}/field-histories/${auditLog.field}`" class="text-blue">{{ auditLog.field }}</router-link>
               </td>
               <td v-if="columns['actor']?.isVisible" class="text-right">
                 <router-link :to="`/admin/master/users/${auditLog.actor_id}`" class="text-blue">{{ auditLog.actor_name }}</router-link>

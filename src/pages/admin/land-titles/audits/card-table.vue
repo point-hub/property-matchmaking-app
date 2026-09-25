@@ -175,7 +175,7 @@ onMounted(async () => {
             </td>
           </tr>
 
-          <!-- Render rows of example data when available -->
+          <!-- Render rows of landTitle data when available -->
           <template v-if="!isLoading && auditLogs && auditLogs.length > 0">
             <tr v-for="(auditLog, index) in auditLogs" :key="index">
               <!-- Fields rendered conditionally based on column visibility -->

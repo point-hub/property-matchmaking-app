@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import BaseConfirmActionModal from '@/components/base-confirm-action-modal.vue';
-import { restoreExampleApi } from '@/composables/api/land-titles/restore.api';
+import { restoreLandTitleApi } from '@/composables/api/land-titles/restore.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -28,10 +28,10 @@ const onRestore = async (reason: string) => {
   isRestoring.value = true;
 
   try {
-    await restoreExampleApi(_id.value as string, {
+    await restoreLandTitleApi(_id.value as string, {
       update_reason: reason,
     });
-    toast(`Restore Example "${label.value}" success`, { color: 'success' });
+    toast(`Restore Land Title "${label.value}" success`, { color: 'success' });
     emit('restored');
   } catch (error) {
     const errorResponse = handleError(error);
@@ -56,7 +56,7 @@ defineExpose({
 <template>
   <base-confirm-action-modal
     ref="confirmActionModalRef"
-    title="Restore Example"
+    title="Restore Land Title"
     require-reason
     @success="onRestore"
   >

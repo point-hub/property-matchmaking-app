@@ -8,7 +8,7 @@ const route = useRoute();
 const breadcrumbs: IBreadcrumb[] = [
   { name: 'Home', path: '/admin/home' },
   { name: 'Facilities', path: '/admin/facilities' },
-  { name: route.params.id as string, path: `/facilities/${route.params.id}` },
+  { name: route.params.id as string, path: `/admin/facilities/${route.params.id}` },
   { name: 'Audits' },
 ];
 </script>

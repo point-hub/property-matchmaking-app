@@ -5,7 +5,7 @@ interface IResponse {
   modified_count: string
 }
 
-export const updateExampleApi = async (id: string, data: unknown): Promise<IResponse> => {
+export const updateLandTitleApi = async (id: string, data: unknown): Promise<IResponse> => {
   const response = await apiRequest.patch(`/v1/master/land-titles/${id}`, data);
 
   return response.data;

@@ -17,15 +17,15 @@ const router = useRouter();
 const archiveModalRef = ref();
 const restoreModalRef = ref();
 const deleteModalRef = ref();
-const example = defineModel<IForm>('data');
+const landTitle = defineModel<IForm>('data');
 
 /**
- * Opens the archive confirmation modal for a specific example.
+ * Opens the archive confirmation modal for a specific landTitle.
  */
 const onArchiveModal = () => {
   archiveModalRef.value.toggleModal({
-    _id: example.value?._id,
-    label: example.value?.name,
+    _id: landTitle.value?._id,
+    label: landTitle.value?.name,
   });
 };
 
@@ -37,12 +37,12 @@ const onArchived = async () => {
 };
 
 /**
- * Opens the restore confirmation modal for a specific example.
+ * Opens the restore confirmation modal for a specific landTitle.
  */
 const onRestoreModal = () => {
   restoreModalRef.value.toggleModal({
-    _id: example.value?._id,
-    label: example.value?.name,
+    _id: landTitle.value?._id,
+    label: landTitle.value?.name,
   });
 };
 
@@ -54,12 +54,12 @@ const onRestored = async () => {
 };
 
 /**
- * Opens the delete confirmation modal for a specific example.
+ * Opens the delete confirmation modal for a specific landTitle.
  */
 const onDeleteModal = () => {
   deleteModalRef.value.toggleModal({
-    _id: example.value?._id,
-    label: example.value?.name,
+    _id: landTitle.value?._id,
+    label: landTitle.value?.name,
   });
 };
 
@@ -83,7 +83,7 @@ const onDeleted = async () => {
           <base-icon icon="i-fa7-solid:file-plus" /> CREATE
         </base-button>
       </router-link>
-      <router-link v-if="authStore.hasPermission('land-titles:update') && example?._id" :to="`/admin/land-titles/${route.params.id}/edit`">
+      <router-link v-if="authStore.hasPermission('land-titles:update') && landTitle?._id" :to="`/admin/land-titles/${route.params.id}/edit`">
         <base-button variant="filled" color="primary" size="sm" class="font-bold">
           <base-icon icon="i-fa7-solid:file-pen" /> EDIT
         </base-button>
@@ -98,13 +98,13 @@ const onDeleted = async () => {
           <base-icon icon="i-fa7-solid:file-magnifying-glass" /> AUDITS
         </base-button>
       </router-link>
-      <base-button v-if="authStore.hasPermission('land-titles:delete') && example?._id" @click="onDeleteModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:delete') && landTitle?._id" @click="onDeleteModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:trash-xmark" /> DELETE
       </base-button>
-      <base-button v-if="authStore.hasPermission('land-titles:update') && example?._id && !example.is_archived" @click="onArchiveModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:update') && landTitle?._id && !landTitle.is_archived" @click="onArchiveModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:box-archive" /> ARCHIVE
       </base-button>
-      <base-button v-if="authStore.hasPermission('land-titles:update') && example?._id && example.is_archived" @click="onRestoreModal" variant="filled" color="primary" size="sm" class="font-bold">
+      <base-button v-if="authStore.hasPermission('land-titles:update') && landTitle?._id && landTitle.is_archived" @click="onRestoreModal" variant="filled" color="primary" size="sm" class="font-bold">
         <base-icon icon="i-fa7-solid:box-arrow-up" /> RESTORE
       </base-button>
     </div>

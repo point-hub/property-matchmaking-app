@@ -3,8 +3,8 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
-import { findExampleApi } from '@/composables/api/land-titles/find-by-id.api';
-import { updateExampleApi } from '@/composables/api/land-titles/update.api';
+import { findLandTitleApi } from '@/composables/api/land-titles/find-by-id.api';
+import { updateLandTitleApi } from '@/composables/api/land-titles/update.api';
 import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
@@ -23,7 +23,7 @@ const isSaving = ref(false);
 onMounted(async () => {
   try {
     isLoading.value = true;
-    const response = await findExampleApi(route.params.id as string);
+    const response = await findLandTitleApi(route.params.id as string);
     if (response) {
       form.data.name = response.name;
       form.data.notes = response.notes;
@@ -44,7 +44,7 @@ onMounted(async () => {
 const update = async () => {
   try {
     isSaving.value = true;
-    const response = await updateExampleApi(route.params.id as string, form.data);
+    const response = await updateLandTitleApi(route.params.id as string, form.data);
     if (response?.matched_count) {
       toast('Update success', { color: 'success' });
       await router.push(`/admin/land-titles/${route.params.id}`);

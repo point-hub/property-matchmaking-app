@@ -123,7 +123,7 @@ const getAuditLogs = async (page = 1) => {
         ...filter,
         created_at_from: formatDate(filter.created_at_from, { boundary: 'start-of-day' }),
         created_at_to: formatDate(filter.created_at_to, { boundary: 'end-of-day' }),
-        entity_type: 'Facilities',
+        entity_type: 'facilities',
         entity_id: String(route.params.id),
       },
       group_by_operation_id: true,
@@ -363,16 +363,8 @@ watch(sort, async () => {
                 </router-link>
               </td>
               <td v-if="columns['actor_type']?.isVisible">{{ auditLog.actor_type }}</td>
-              <td v-if="columns['actor_id']?.isVisible">
-                <a target="_blank" :href="`/admin/master/users/${auditLog.actor_id}`" class="text-blue-600">
-                  {{ auditLog.actor_id }}
-                </a>
-              </td>
-              <td v-if="columns['actor_name']?.isVisible">
-                <a target="_blank" :href="`/admin/master/users/${auditLog.actor_id}`" class="text-blue-600">
-                  {{ auditLog.actor_name }}
-                </a>
-              </td>
+              <td v-if="columns['actor_id']?.isVisible">{{ auditLog.actor_id }}</td>
+              <td v-if="columns['actor_name']?.isVisible">{{ auditLog.actor_name }}</td>
               <td v-if="columns['action']?.isVisible">{{ auditLog.action }}</td>
               <td v-if="columns['module']?.isVisible">{{ auditLog.module }}</td>
               <td v-if="columns['entity_type']?.isVisible">{{ auditLog.entity_type }}</td>

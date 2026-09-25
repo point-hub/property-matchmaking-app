@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router';
 import AppBreadcrumb, { type IBreadcrumb } from '@/components/app-breadcrumb.vue';
 
 const props = defineProps<{
-  example_identifier: string
+  facility_identifier: string
 }>();
 
 const route = useRoute();
@@ -14,12 +14,12 @@ const breadcrumbs = computed<IBreadcrumb[]>(() => [
   { name: 'Home', path: '/admin/home' },
   { name: 'Facilities', path: '/admin/facilities' },
   {
-    name: props.example_identifier ?? String(route.params.id),
-    path: `/facilities/${route.params.id}`,
+    name: props.facility_identifier ?? String(route.params.id),
+    path: `/admin/facilities/${route.params.id}`,
   },
   {
     name: 'Audits',
-    path: `/facilities/${route.params.id}/audits`,
+    path: `/admin/facilities/${route.params.id}/audits`,
   },
   {
     name: String(route.params.field),

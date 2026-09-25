@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { createExampleApi } from '@/composables/api/land-titles/create.api';
+import { createLandTitleApi } from '@/composables/api/land-titles/create.api';
 import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
@@ -18,7 +18,7 @@ const isSaving = ref(false);
 const save = async () => {
   try {
     isSaving.value = true;
-    const response = await createExampleApi(form.data);
+    const response = await createLandTitleApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
       await router.push(`/admin/land-titles/${response.inserted_id}`);

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import BaseConfirmActionModal from '@/components/base-confirm-action-modal.vue';
-import { deleteExampleApi } from '@/composables/api/facilities/delete.api';
+import { deleteFacilityApi } from '@/composables/api/facilities/delete.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -28,8 +28,8 @@ const onDelete = async (reason: string) => {
   isDeleting.value = true;
 
   try {
-    await deleteExampleApi(_id.value as string, reason);
-    toast(`Delete Example "${label.value}" success`, { color: 'success' });
+    await deleteFacilityApi(_id.value as string, reason);
+    toast(`Delete Facility "${label.value}" success`, { color: 'success' });
     emit('deleted');
   } catch (error) {
     const errorResponse = handleError(error);
@@ -54,7 +54,7 @@ defineExpose({
 <template>
   <base-confirm-action-modal
     ref="confirmActionModalRef"
-    title="Delete Example"
+    title="Delete Facility"
     @success="onDelete"
   >
     <div>

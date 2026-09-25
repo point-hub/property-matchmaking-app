@@ -182,15 +182,15 @@ onMounted(async () => {
             </td>
           </tr>
 
-          <!-- Render rows of example data when available -->
+          <!-- Render rows of landTitle data when available -->
           <template v-if="!isLoading && auditLogs && auditLogs.length > 0">
-            <tr v-for="(example, index) in auditLogs" :key="index">
+            <tr v-for="(landTitle, index) in auditLogs" :key="index">
               <!-- Fields rendered conditionally based on column visibility -->
-              <td v-if="columns['created_at']?.isVisible" class="w-40">{{ formatDate(example.created_at) }}</td>
-              <td v-if="columns['operation_id']?.isVisible">{{ example.operation_id?.substring(0, 13) }}</td>
-              <td v-if="columns['actor']?.isVisible">{{ example.actor_name }}</td>
-              <td v-if="columns['before']?.isVisible">{{ example.before }}</td>
-              <td v-if="columns['after']?.isVisible">{{ example.after }}</td>
+              <td v-if="columns['created_at']?.isVisible" class="w-40">{{ formatDate(landTitle.created_at) }}</td>
+              <td v-if="columns['operation_id']?.isVisible">{{ landTitle.operation_id?.substring(0, 13) }}</td>
+              <td v-if="columns['actor']?.isVisible">{{ landTitle.actor_name }}</td>
+              <td v-if="columns['before']?.isVisible">{{ landTitle.before }}</td>
+              <td v-if="columns['after']?.isVisible">{{ landTitle.after }}</td>
             </tr>
           </template>
         </tbody>

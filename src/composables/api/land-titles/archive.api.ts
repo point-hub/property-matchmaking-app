@@ -5,7 +5,7 @@ interface IResponse {
   modified_count: string
 }
 
-export const archiveExampleApi = async (id: string, data: unknown): Promise<IResponse> => {
+export const archiveLandTitleApi = async (id: string, data: unknown): Promise<IResponse> => {
   const response = await apiRequest.post(`/v1/master/land-titles/${id}/archive`, data);
 
   return response.data;

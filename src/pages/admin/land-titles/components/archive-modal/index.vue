@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import BaseConfirmActionModal from '@/components/base-confirm-action-modal.vue';
-import { archiveExampleApi } from '@/composables/api/land-titles/archive.api';
+import { archiveLandTitleApi } from '@/composables/api/land-titles/archive.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -28,10 +28,10 @@ const onArchive = async (reason: string) => {
   isArchiving.value = true;
 
   try {
-    await archiveExampleApi(_id.value as string, {
+    await archiveLandTitleApi(_id.value as string, {
       update_reason: reason,
     });
-    toast(`Archive Example "${label.value}" success`, { color: 'success' });
+    toast(`Archive Land Title "${label.value}" success`, { color: 'success' });
     emit('archived');
   } catch (error) {
     const errorResponse = handleError(error);
@@ -56,7 +56,7 @@ defineExpose({
 <template>
   <base-confirm-action-modal
     ref="confirmActionModalRef"
-    title="Archive Example"
+    title="Archive Land Title"
     require-reason
     @success="onArchive"
   >

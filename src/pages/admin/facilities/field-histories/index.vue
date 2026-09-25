@@ -2,24 +2,24 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { findExampleApi } from '@/composables/api/facilities/find-by-id.api';
+import { findFacilityApi } from '@/composables/api/facilities/find-by-id.api';
 
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardTable from './card-table.vue';
 
 const route = useRoute();
-const example = ref();
+const facility = ref();
 
 onMounted(async () => {
-  const response = await findExampleApi(route.params.id as string);
+  const response = await findFacilityApi(route.params.id as string);
 
-  example.value = response;
+  facility.value = response;
 });
 </script>
 
 <template>
   <div class="content-container">
-    <card-breadcrumbs :example_identifier="`${example?.code} - ${example?.name}`" />
+    <card-breadcrumbs :facility_identifier="`${facility?.name}`" />
     <card-table />
   </div>
 </template>

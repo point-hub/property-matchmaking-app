@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import TableSettingModal from '@/components/table-setting-modal.vue';
-import { getDataApi, type ILandTitlesData } from '@/composables/api/land-titles/get.api';
+import { getLandTitlesApi, type ILandTitlesData } from '@/composables/api/land-titles/get.api';
 import { useQueryParams } from '@/composables/query-params';
 import { useTableFilter } from '@/composables/table-filter';
 import { useTableSetting } from '@/composables/table-setting';
@@ -115,7 +115,7 @@ const resetPageAndFetch = async () => {
 const getData = async (page = 1) => {
   try {
     isLoading.value = true;
-    const response = await getDataApi({
+    const response = await getLandTitlesApi({
       search: filter,
       sort: sortObjectToString(sort),
       page,

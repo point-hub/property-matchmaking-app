@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import TableSettingModal from '@/components/table-setting-modal.vue';
-import { getExamplesApi, type IExampleData } from '@/composables/api/facilities/get.api';
+import { getFacilitiesApi, type IFacilitiesData } from '@/composables/api/facilities/get.api';
 import { useQueryParams } from '@/composables/query-params';
 import { useTableFilter } from '@/composables/table-filter';
 import { useTableSetting } from '@/composables/table-setting';
@@ -13,7 +13,6 @@ import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
 import ModalDelete from '../components/delete-modal/index.vue';
-import { genderOptions } from '../gender.ts';
 
 /**
  * Setup table columns and visibility state using the useTableSetting composable.
@@ -31,6 +30,8 @@ const {
 } = useTableSetting({
   columns: {
     name: { label: 'Name', isVisible: true, isSelectable: false },
+    notes: { label: 'Notes', isVisible: false, isSelectable: true },
+    is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
 });
 
@@ -71,11 +72,11 @@ const authStore = useAuthStore();
 
 /**
  * Reactive references for:
- * - examples data retrieved from API
+ * - facilities data retrieved from API
  * - loading state
  * - control flags to prevent unnecessary watcher triggers
  */
-const examples = ref<IExampleData[]>();
+const facilities = ref<IFacilitiesData[]>();
 const isInitialSetup = ref(true);
 const isLoading = ref(false);
 const archivedOptions = ref([{ label: 'Yes', value: 'true' }, { label: 'No', value: 'false' }]);
@@ -92,7 +93,7 @@ const deleteModalRef = ref();
  */
 const onPageUpdate = async () => {
   if (!isInitialSetup.value) {
-    await getExamples(pagination.page);
+    await getData(pagination.page);
     await updateQueryParams({ 'page': pagination.page.toString() });
   }
 };
@@ -103,7 +104,7 @@ const onPageUpdate = async () => {
 const resetPageAndFetch = async () => {
   pagination.page = 1;
   await updateQueryParams({ page: 1 });
-  await getExamples();
+  await getData();
 };
 
 /**
@@ -111,33 +112,16 @@ const resetPageAndFetch = async () => {
  * Manages loading state and error handling with user notifications.
  * @param page - Current page number to fetch (default 1)
  */
-examples.value = [
-
-  { name: 'Facility 2' },
-  { name: 'Facility 3' },
-  { name: 'Facility 4' },
-  { name: 'Facility 5' },
-  { name: 'Facility 6' },
-  { name: 'Facility 7' },
-  { name: 'Facility 8' },
-  { name: 'Facility 9' },
-  { name: 'Facility 10' },
-  { name: 'Facility 11' },
-];
-pagination.page = 1;
-pagination.page_size = 10;
-pagination.total_document = 14;
-
-const getExamples = async (page = 1) => {
+const getData = async (page = 1) => {
   try {
     isLoading.value = true;
-    const response = await getExamplesApi({
+    const response = await getFacilitiesApi({
       search: filter,
       sort: sortObjectToString(sort),
       page,
       page_size: pagination.page_size,
     });
-    // examples.value = response.data;
+    facilities.value = response.data;
 
     Object.assign(pagination, response.pagination);
   } catch (error) {
@@ -169,22 +153,22 @@ const onResetFilter = async () => {
   resetFilter();
 
   // Fetch data without any filters applied
-  await getExamples();
+  await getData();
 
   setTimeout(() => { isInitialSetup.value = false; }, 1000);
 };
 
 /**
- * Opens the delete confirmation modal for a specific example.
+ * Opens the delete confirmation modal for a specific facility.
  * Also closes the row menu popover.
- * @param example - The data row to delete
+ * @param facility - The data row to delete
  * @param index - Index of the row for UI references
  */
-const onDeleteModal = (example: IExampleData, index: number) => {
+const onDeleteModal = (facility: IFacilitiesData, index: number) => {
   rowMenuRef.value[index].toggle(false);
   deleteModalRef.value.toggleModal({
-    _id: example._id,
-    label: `${example.name}`,
+    _id: facility._id,
+    label: `${facility.name}`,
   });
 };
 
@@ -193,7 +177,7 @@ const onDeleteModal = (example: IExampleData, index: number) => {
  * Refreshes the data list.
  */
 const onDeleted = async () => {
-  await getExamples();
+  await getData();
 };
 
 /**
@@ -218,7 +202,7 @@ onMounted(async () => {
   });
 
   // Fetch initial data
-  await getExamples(pagination.page);
+  await getData(pagination.page);
 
   setTimeout(() => { isInitialSetup.value = false; }, 1000);
 });
@@ -280,8 +264,7 @@ watch(sort, async () => {
         </base-input>
       </div>
       <div class="flex gap-1">
-        <!-- <router-link v-if="authStore.hasPermission('examples:create')" to="/admin/facilities/create"> -->
-        <router-link to="/admin/facilities/create">
+        <router-link v-if="authStore.hasPermission('facilities:create')" to="/admin/facilities/create">
           <base-button color="primary" shape="sharp" class="font-bold">
             <base-icon class="i-lucide:square-plus" /> CREATE
           </base-button>
@@ -319,30 +302,6 @@ watch(sort, async () => {
             <th v-if="columns['name']?.isVisible">
               <base-input v-model="filter.name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['address']?.isVisible">
-              <base-input v-model="filter.address" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['facility']?.isVisible">
-              <base-input v-model="filter.facility" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['facilities']?.isVisible">
-              <base-input v-model="filter.facilities" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['promo']?.isVisible">
-              <base-input v-model="filter.promo" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['developer_name']?.isVisible">
-              <base-input v-model="filter.developer_name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['whatsapp']?.isVisible">
-              <base-input v-model="filter.whatsapp" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['instagram']?.isVisible">
-              <base-input v-model="filter.instagram" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['mou']?.isVisible">
-              <base-input v-model="filter.mou" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
             <th v-if="columns['notes']?.isVisible">
               <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
@@ -351,7 +310,7 @@ watch(sort, async () => {
                 placeholder="Search..."
                 title="Is Archived"
                 v-model:options="archivedOptions"
-                v-model:selectedValue="filter.is_archived"
+                v-model="filter.is_archived"
                 border="none"
                 paddingless
               />
@@ -369,8 +328,8 @@ watch(sort, async () => {
             </td>
           </tr>
 
-          <!-- Show no data found message if no examples and query params exist -->
-          <tr v-if="!isLoading && examples?.length === 0 && route.query">
+          <!-- Show no data found message if no facilities and query params exist -->
+          <tr v-if="!isLoading && facilities?.length === 0 && route.query">
             <td :colspan="countVisibleColumns + 1">
               <div class="w-full flex-col p-10 items-center justify-center gap-2 text-center">
                 <p class="text-xl">Data Not Found</p>
@@ -381,22 +340,9 @@ watch(sort, async () => {
             </td>
           </tr>
 
-          <!-- <tr>
-            <td></td>
-            <td><router-link :to="`/facilities/`" class="text-blue">SHM</router-link></td>
-          </tr> -->
-          <!-- <tr>
-            <td></td>
-            <td><router-link :to="`/facilities/`" class="text-blue">HGB</router-link></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><router-link :to="`/facilities/`" class="text-blue">SPLID</router-link></td>
-          </tr> -->
-
-          <!-- Render rows of example data when available -->
-          <template v-if="!isLoading && examples && examples.length > 0">
-            <tr v-for="(example, index) in examples" :key="index">
+          <!-- Render rows of facility data when available -->
+          <template v-if="!isLoading && facilities && facilities.length > 0">
+            <tr v-for="(facility, index) in facilities" :key="index">
               <td>
                 <!-- Row action menu -->
                 <base-popover placement="bottom" ref="rowMenuRef">
@@ -406,21 +352,21 @@ watch(sort, async () => {
                   <template #content>
                     <base-card class="p-0! gap-0! -mt-2" shadow>
                       <div class="flex flex-col">
-                        <router-link :to="`/facilities/${example._id}`">
+                        <router-link :to="`/admin/facilities/${facility._id}`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-book-open-cover" />
                             <p class="flex-1">View</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <router-link v-if="authStore.hasPermission('examples:update')" :to="`/facilities/${example._id}/edit`">
+                        <router-link v-if="authStore.hasPermission('facilities:update')" :to="`/admin/facilities/${facility._id}/edit`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-file-pen" />
                             <p class="flex-1">Edit</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <base-button v-if="authStore.hasPermission('examples:delete')" @click="onDeleteModal(example, index)" variant="text" color="danger" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
+                        <base-button v-if="authStore.hasPermission('facilities:delete')" @click="onDeleteModal(facility, index)" variant="text" color="danger" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                           <base-icon icon="i-fa7-light-trash-xmark" />
                           <p class="flex-1">Delete</p>
                         </base-button>
@@ -430,9 +376,15 @@ watch(sort, async () => {
                 </base-popover>
               </td>
 
-              <!-- Example fields rendered conditionally based on column visibility -->
+              <!-- Fields rendered conditionally based on column visibility -->
               <td v-if="columns['name']?.isVisible">
-                <router-link :to="`/facilities/${example._id}`" class="text-blue">{{ example.name }}</router-link>
+                <router-link :to="`/admin/facilities/${facility._id}`" class="text-blue">{{ facility.name }}</router-link>
+              </td>
+              <td v-if="columns['notes']?.isVisible">{{ facility.notes }}</td>
+              <td v-if="columns['is_archived']?.isVisible">
+                <base-badge v-if="facility.is_archived" variant="filled" color="danger" class="font-bold">
+                  <base-icon icon="i-fa7-solid:box-archive" /> ARCHIVED
+                </base-badge>
               </td>
             </tr>
           </template>

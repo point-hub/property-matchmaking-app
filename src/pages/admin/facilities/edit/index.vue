@@ -3,8 +3,8 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
-import { findExampleApi } from '@/composables/api/facilities/find-by-id.api';
-import { updateExampleApi } from '@/composables/api/facilities/update.api';
+import { findFacilityApi } from '@/composables/api/facilities/find-by-id.api';
+import { updateFacilityApi } from '@/composables/api/facilities/update.api';
 import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
@@ -12,7 +12,6 @@ import { handleError } from '@/utils/api';
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
-import CardReason from './card-reason.vue';
 import { useForm } from './form.ts';
 
 const form = useForm();
@@ -24,7 +23,7 @@ const isSaving = ref(false);
 onMounted(async () => {
   try {
     isLoading.value = true;
-    const response = await findExampleApi(route.params.id as string);
+    const response = await findFacilityApi(route.params.id as string);
     if (response) {
       form.data.name = response.name;
       form.data.notes = response.notes;
@@ -45,10 +44,10 @@ onMounted(async () => {
 const update = async () => {
   try {
     isSaving.value = true;
-    const response = await updateExampleApi(route.params.id as string, form.data);
+    const response = await updateFacilityApi(route.params.id as string, form.data);
     if (response?.matched_count) {
       toast('Update success', { color: 'success' });
-      await router.push(`/facilities/${route.params.id}`);
+      await router.push(`/admin/facilities/${route.params.id}`);
     }
   } catch (error) {
     const errorResponse = handleError(error);
@@ -75,7 +74,6 @@ const update = async () => {
 
     <card-form v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
-    <!-- <card-reason v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" /> -->
     <div class="flex gap-2">
       <base-button class="flex-1" :is-loading="isSaving" color="primary" @click="update">Update</base-button>
     </div>

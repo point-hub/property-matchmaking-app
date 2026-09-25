@@ -18,7 +18,7 @@ export interface IResponse {
 // Use a shared controller that can be replaced
 let controller: AbortController | null = null;
 
-export const getDataApi = async (query?: IQuery): Promise<IResponse> => {
+export const getLandTitlesApi = async (query?: IQuery): Promise<IResponse> => {
   // Abort the previous request if it exists
   if (controller) {
     controller.abort();
