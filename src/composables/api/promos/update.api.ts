@@ -5,8 +5,8 @@ interface IResponse {
   modified_count: string
 }
 
-export const updateExampleApi = async (id: string, data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.patch(`/v1/master/examples/${id}`, data);
+export const updatePromoApi = async (id: string, data: unknown): Promise<IResponse> => {
+  const response = await apiRequest.patch(`/v1/master/promos/${id}`, data);
 
   return response.data;
 };

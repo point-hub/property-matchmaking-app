@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import TableSettingModal from '@/components/table-setting-modal.vue';
-import { getExamplesApi, type IExampleData } from '@/composables/api/promos/get.api';
+import { getPromosApi, type IPromosData } from '@/composables/api/promos/get.api';
 import { useQueryParams } from '@/composables/query-params';
 import { useTableFilter } from '@/composables/table-filter';
 import { useTableSetting } from '@/composables/table-setting';
@@ -13,7 +13,6 @@ import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
 import ModalDelete from '../components/delete-modal/index.vue';
-import { genderOptions } from '../gender.ts';
 
 /**
  * Setup table columns and visibility state using the useTableSetting composable.
@@ -32,6 +31,8 @@ const {
   columns: {
     name: { label: 'Name', isVisible: true, isSelectable: false },
     description: { label: 'Description', isVisible: true, isSelectable: false },
+    notes: { label: 'Notes', isVisible: false, isSelectable: true },
+    is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
 });
 
@@ -74,11 +75,11 @@ const authStore = useAuthStore();
 
 /**
  * Reactive references for:
- * - examples data retrieved from API
+ * - promos data retrieved from API
  * - loading state
  * - control flags to prevent unnecessary watcher triggers
  */
-const examples = ref<IExampleData[]>();
+const promos = ref<IPromosData[]>();
 const isInitialSetup = ref(true);
 const isLoading = ref(false);
 const archivedOptions = ref([{ label: 'Yes', value: 'true' }, { label: 'No', value: 'false' }]);
@@ -95,7 +96,7 @@ const deleteModalRef = ref();
  */
 const onPageUpdate = async () => {
   if (!isInitialSetup.value) {
-    await getExamples(pagination.page);
+    await getData(pagination.page);
     await updateQueryParams({ 'page': pagination.page.toString() });
   }
 };
@@ -106,7 +107,7 @@ const onPageUpdate = async () => {
 const resetPageAndFetch = async () => {
   pagination.page = 1;
   await updateQueryParams({ page: 1 });
-  await getExamples();
+  await getData();
 };
 
 /**
@@ -114,36 +115,16 @@ const resetPageAndFetch = async () => {
  * Manages loading state and error handling with user notifications.
  * @param page - Current page number to fetch (default 1)
  */
-examples.value = [
-  // { name: 'Promo 1', description: 'Description for Promo 1' },
-  { name: 'Promo 2', description: 'Description for Promo 2' },
-  { name: 'Promo 3', description: 'Description for Promo 3' },
-  { name: 'Promo 4', description: 'Description for Promo 4' },
-  { name: 'Promo 5', description: 'Description for Promo 5' },
-  { name: 'Promo 6', description: 'Description for Promo 6' },
-  { name: 'Promo 7', description: 'Description for Promo 7' },
-  { name: 'Promo 8', description: 'Description for Promo 8' },
-  { name: 'Promo 9', description: 'Description for Promo 9' },
-  { name: 'Promo 10', description: 'Description for Promo 10' },
-  { name: 'Promo 11', description: 'Description for Promo 11' },
-];
-// pagination.page = 1;
-// pagination.page_size = 10;
-// pagination.total_document = 1;
-pagination.page = 1;
-pagination.page_size = 10;
-pagination.total_document = 14;
-
-const getExamples = async (page = 1) => {
+const getData = async (page = 1) => {
   try {
     isLoading.value = true;
-    const response = await getExamplesApi({
+    const response = await getPromosApi({
       search: filter,
       sort: sortObjectToString(sort),
       page,
       page_size: pagination.page_size,
     });
-    // examples.value = response.data;
+    promos.value = response.data;
 
     Object.assign(pagination, response.pagination);
   } catch (error) {
@@ -175,22 +156,22 @@ const onResetFilter = async () => {
   resetFilter();
 
   // Fetch data without any filters applied
-  await getExamples();
+  await getData();
 
   setTimeout(() => { isInitialSetup.value = false; }, 1000);
 };
 
 /**
- * Opens the delete confirmation modal for a specific example.
+ * Opens the delete confirmation modal for a specific promo.
  * Also closes the row menu popover.
- * @param example - The data row to delete
+ * @param promo - The data row to delete
  * @param index - Index of the row for UI references
  */
-const onDeleteModal = (example: IExampleData, index: number) => {
+const onDeleteModal = (promo: IPromosData, index: number) => {
   rowMenuRef.value[index].toggle(false);
   deleteModalRef.value.toggleModal({
-    _id: example._id,
-    label: `${example.name}`,
+    _id: promo._id,
+    label: `${promo.name}`,
   });
 };
 
@@ -199,7 +180,7 @@ const onDeleteModal = (example: IExampleData, index: number) => {
  * Refreshes the data list.
  */
 const onDeleted = async () => {
-  await getExamples();
+  await getData();
 };
 
 /**
@@ -224,7 +205,7 @@ onMounted(async () => {
   });
 
   // Fetch initial data
-  await getExamples(pagination.page);
+  await getData(pagination.page);
 
   setTimeout(() => { isInitialSetup.value = false; }, 1000);
 });
@@ -286,8 +267,7 @@ watch(sort, async () => {
         </base-input>
       </div>
       <div class="flex gap-1">
-        <!-- <router-link v-if="authStore.hasPermission('examples:create')" to="/admin/promos/create"> -->
-        <router-link to="/admin/promos/create">
+        <router-link v-if="authStore.hasPermission('promos:create')" to="/admin/promos/create">
           <base-button color="primary" shape="sharp" class="font-bold">
             <base-icon class="i-lucide:square-plus" /> CREATE
           </base-button>
@@ -325,15 +305,18 @@ watch(sort, async () => {
             <th v-if="columns['name']?.isVisible">
               <base-input v-model="filter.name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['name']?.isVisible">
-              <base-input v-model="filter.name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            <th v-if="columns['description']?.isVisible">
+              <base-input v-model="filter.description" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['notes']?.isVisible">
+              <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
             <th v-if="columns['is_archived']?.isVisible">
               <base-choosen
                 placeholder="Search..."
                 title="Is Archived"
                 v-model:options="archivedOptions"
-                v-model:selectedValue="filter.is_archived"
+                v-model="filter.is_archived"
                 border="none"
                 paddingless
               />
@@ -351,8 +334,8 @@ watch(sort, async () => {
             </td>
           </tr>
 
-          <!-- Show no data found message if no examples and query params exist -->
-          <!-- <tr v-if="!isLoading && examples?.length === 0 && route.query">
+          <!-- Show no data found message if no promos and query params exist -->
+          <tr v-if="!isLoading && promos?.length === 0 && route.query">
             <td :colspan="countVisibleColumns + 1">
               <div class="w-full flex-col p-10 items-center justify-center gap-2 text-center">
                 <p class="text-xl">Data Not Found</p>
@@ -361,24 +344,11 @@ watch(sort, async () => {
                 </base-button>
               </div>
             </td>
-          </tr> -->
-
-          <!-- <tr>
-            <td></td>
-            <td><router-link :to="`/admin/promos/`" class="text-blue">SHM</router-link></td>
-          </tr> -->
-          <!-- <tr>
-            <td></td>
-            <td><router-link :to="`/admin/promos/`" class="text-blue">HGB</router-link></td>
           </tr>
-          <tr>
-            <td></td>
-            <td><router-link :to="`/admin/promos/`" class="text-blue">SPLID</router-link></td>
-          </tr> -->
 
-          <!-- Render rows of example data when available -->
-          <template v-if="!isLoading && examples && examples.length > 0">
-            <tr v-for="(example, index) in examples" :key="index">
+          <!-- Render rows of promo data when available -->
+          <template v-if="!isLoading && promos && promos.length > 0">
+            <tr v-for="(promo, index) in promos" :key="index">
               <td>
                 <!-- Row action menu -->
                 <base-popover placement="bottom" ref="rowMenuRef">
@@ -388,21 +358,21 @@ watch(sort, async () => {
                   <template #content>
                     <base-card class="p-0! gap-0! -mt-2" shadow>
                       <div class="flex flex-col">
-                        <router-link :to="`/admin/promos/${example._id}`">
+                        <router-link :to="`/admin/promos/${promo._id}`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-book-open-cover" />
                             <p class="flex-1">View</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <router-link v-if="authStore.hasPermission('examples:update')" :to="`/admin/promos/${example._id}/edit`">
+                        <router-link v-if="authStore.hasPermission('promos:update')" :to="`/admin/promos/${promo._id}/edit`">
                           <base-button variant="text" color="info" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                             <base-icon icon="i-fa7-light-file-pen" />
                             <p class="flex-1">Edit</p>
                           </base-button>
                         </router-link>
                         <base-divider orientation="vertical" class="my-0!" />
-                        <base-button v-if="authStore.hasPermission('examples:delete')" @click="onDeleteModal(example, index)" variant="text" color="danger" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
+                        <base-button v-if="authStore.hasPermission('promos:delete')" @click="onDeleteModal(promo, index)" variant="text" color="danger" class="w-full py-1! px-3! m-0! flex gap-2! items-center justify-start text-left!">
                           <base-icon icon="i-fa7-light-trash-xmark" />
                           <p class="flex-1">Delete</p>
                         </base-button>
@@ -412,12 +382,16 @@ watch(sort, async () => {
                 </base-popover>
               </td>
 
-              <!-- Example fields rendered conditionally based on column visibility -->
+              <!-- Fields rendered conditionally based on column visibility -->
               <td v-if="columns['name']?.isVisible">
-                <router-link :to="`/admin/promos/1`" class="text-blue">{{ example.name }}</router-link>
+                <router-link :to="`/admin/promos/${promo._id}`" class="text-blue">{{ promo.name }}</router-link>
               </td>
-              <td v-if="columns['description']?.isVisible">
-                <p class="text-gray-600">{{ example.description }}</p>
+              <td v-if="columns['description']?.isVisible">{{ promo.description }}</td>
+              <td v-if="columns['notes']?.isVisible">{{ promo.notes }}</td>
+              <td v-if="columns['is_archived']?.isVisible">
+                <base-badge v-if="promo.is_archived" variant="filled" color="danger" class="font-bold">
+                  <base-icon icon="i-fa7-solid:box-archive" /> ARCHIVED
+                </base-badge>
               </td>
             </tr>
           </template>

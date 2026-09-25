@@ -2,24 +2,24 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { findExampleApi } from '@/composables/api/promos/find-by-id.api';
+import { findPromoApi } from '@/composables/api/promos/find-by-id.api';
 
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardTable from './card-table.vue';
 
 const route = useRoute();
-const example = ref();
+const promo = ref();
 
 onMounted(async () => {
-  const response = await findExampleApi(route.params.id as string);
+  const response = await findPromoApi(route.params.id as string);
 
-  example.value = response;
+  promo.value = response;
 });
 </script>
 
 <template>
   <div class="content-container">
-    <card-breadcrumbs :example_identifier="`${example?.code} - ${example?.name}`" />
+    <card-breadcrumbs :promo_identifier="`${promo?.name}`" />
     <card-table />
   </div>
 </template>

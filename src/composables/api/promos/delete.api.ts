@@ -4,8 +4,8 @@ export interface IResponse {
   deleted_count: number
 }
 
-export const deleteExampleApi = async (_id: string, delete_reason?: string): Promise<IResponse | undefined> => {
-  const response = await apiRequest.delete(`/v1/master/examples/${_id}`, {
+export const deletePromoApi = async (_id: string, delete_reason?: string): Promise<IResponse | undefined> => {
+  const response = await apiRequest.delete(`/v1/master/promos/${_id}`, {
     data: {
       delete_reason,
     },

@@ -4,8 +4,8 @@ export interface IResponse {
   inserted_id: string
 }
 
-export const createExampleApi = async (data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.post('/v1/master/examples', data);
+export const createProblemApi = async (data: unknown): Promise<IResponse> => {
+  const response = await apiRequest.post('/v1/master/problems', data);
 
   return response.data;
 };

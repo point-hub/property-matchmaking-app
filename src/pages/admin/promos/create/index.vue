@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { createExampleApi } from '@/composables/api/promos/create.api';
+import { createPromoApi } from '@/composables/api/promos/create.api';
 import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
@@ -18,7 +18,7 @@ const isSaving = ref(false);
 const save = async () => {
   try {
     isSaving.value = true;
-    const response = await createExampleApi(form.data);
+    const response = await createPromoApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
       await router.push(`/admin/promos/${response.inserted_id}`);
@@ -26,13 +26,7 @@ const save = async () => {
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {
-      form.errors.code = errorResponse.errors.code || [];
       form.errors.name = errorResponse.errors.name || [];
-      form.errors.composite_unique_1 = errorResponse.errors.composite_unique_1 || [];
-      form.errors.composite_unique_2 = errorResponse.errors.composite_unique_2 || [];
-      form.errors.age = errorResponse.errors.age || [];
-      form.errors.gender = errorResponse.errors.gender || [];
-      form.errors.optional_unique = errorResponse.errors.optional_unique || [];
       form.errors.notes = errorResponse.errors.notes || [];
     }
     if (errorResponse.message) {

@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
-import { findExampleApi } from '@/composables/api/promos/find-by-id.api';
+import { findPromoApi } from '@/composables/api/promos/find-by-id.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -23,10 +23,11 @@ const isLoading = ref(false);
 onMounted(async () => {
   try {
     isLoading.value = true;
-    const response = await findExampleApi(route.params.id as string);
+    const response = await findPromoApi(route.params.id as string);
     if (response) {
       form.data._id = response._id;
       form.data.name = response.name;
+      form.data.description = response.description;
       form.data.notes = response.notes;
       form.data.is_archived = response.is_archived;
     }
@@ -40,10 +41,6 @@ onMounted(async () => {
     }
   } finally {
     isLoading.value = false;
-
-    form.data._id = route.params.id as string;
-    form.data.name = 'Promo 1A';
-    form.data.description = 'Description for Promo 1A';
   }
 });
 
@@ -58,8 +55,8 @@ const onRestored = async () => {
 const deleteModalRef = ref();
 const onDeleteModal = () => {
   deleteModalRef.value.toggleModal({
-    _id: '1',
-    label: 'Promo 1',
+    _id: form.data._id,
+    label: form.data.name,
   });
 };
 </script>
@@ -69,27 +66,10 @@ const onDeleteModal = () => {
   <app-container :is-loading="isLoading">
     <card-breadcrumbs />
 
-    <!-- <card-actions v-model:data="form.data" @restored="onRestored" @archived="onArchived" /> -->
+    <card-actions v-model:data="form.data" @restored="onRestored" @archived="onArchived" />
 
-    <!-- <status-banner v-if="form.data.is_archived" status-type="danger" message="This data has been archived." /> -->
+    <status-banner v-if="form.data.is_archived" status-type="danger" message="This data has been archived." />
 
-    <base-card class="py-3! gap-0!">
-      <div class="flex gap-2 overflow-auto scrollbar-hidden">
-        <router-link :to="`/admin/promos/create`">
-          <base-button variant="filled" color="primary" size="sm" class="font-bold">
-            <base-icon icon="i-fa7-solid:file-plus" /> CREATE
-          </base-button>
-        </router-link>
-        <router-link :to="`/admin/promos/${route.params.id}/edit`">
-          <base-button variant="filled" color="primary" size="sm" class="font-bold">
-            <base-icon icon="i-fa7-solid:file-pen" /> EDIT
-          </base-button>
-        </router-link>
-        <base-button variant="filled" color="primary" size="sm" class="font-bold" @click="onDeleteModal">
-          <base-icon icon="i-fa7-solid:trash-xmark" /> DELETE
-        </base-button>
-      </div>
-    </base-card>
 
     <base-card v-if="!form.data._id">
       Data Not Found

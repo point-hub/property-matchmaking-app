@@ -3,8 +3,8 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
-import { findExampleApi } from '@/composables/api/problems/find-by-id.api';
-import { updateExampleApi } from '@/composables/api/problems/update.api';
+import { findProblemApi } from '@/composables/api/problems/find-by-id.api';
+import { updateProblemApi } from '@/composables/api/problems/update.api';
 import router from '@/router';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
@@ -12,7 +12,6 @@ import { handleError } from '@/utils/api';
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
-import CardReason from './card-reason.vue';
 import { useForm } from './form.ts';
 
 const form = useForm();
@@ -24,9 +23,10 @@ const isSaving = ref(false);
 onMounted(async () => {
   try {
     isLoading.value = true;
-    const response = await findExampleApi(route.params.id as string);
+    const response = await findProblemApi(route.params.id as string);
     if (response) {
       form.data.name = response.name;
+      form.data.description = response.description;
       form.data.notes = response.notes;
     }
   } catch (error) {
@@ -45,7 +45,7 @@ onMounted(async () => {
 const update = async () => {
   try {
     isSaving.value = true;
-    const response = await updateExampleApi(route.params.id as string, form.data);
+    const response = await updateProblemApi(route.params.id as string, form.data);
     if (response?.matched_count) {
       toast('Update success', { color: 'success' });
       await router.push(`/admin/problems/${route.params.id}`);
@@ -75,7 +75,6 @@ const update = async () => {
 
     <card-form v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
-    <!-- <card-reason v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" /> -->
     <div class="flex gap-2">
       <base-button class="flex-1" :is-loading="isSaving" color="primary" @click="update">Update</base-button>
     </div>

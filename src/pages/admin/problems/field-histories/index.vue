@@ -2,24 +2,24 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { findExampleApi } from '@/composables/api/problems/find-by-id.api';
+import { findProblemApi } from '@/composables/api/problems/find-by-id.api';
 
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardTable from './card-table.vue';
 
 const route = useRoute();
-const example = ref();
+const problem = ref();
 
 onMounted(async () => {
-  const response = await findExampleApi(route.params.id as string);
+  const response = await findProblemApi(route.params.id as string);
 
-  example.value = response;
+  problem.value = response;
 });
 </script>
 
 <template>
   <div class="content-container">
-    <card-breadcrumbs :example_identifier="`${example?.code} - ${example?.name}`" />
+    <card-breadcrumbs :problem_identifier="`${problem?.name}`" />
     <card-table />
   </div>
 </template>
