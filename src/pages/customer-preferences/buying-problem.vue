@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const cashPurchase = ref(false)
+const cashPurchase = ref(false);
 </script>
 
 <template>

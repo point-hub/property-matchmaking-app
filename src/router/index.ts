@@ -4,8 +4,8 @@ import authConfig from '@/config/auth';
 import routesAdminAccount from '@/pages/admin/account/routes';
 import routesAdminAdministrator from '@/pages/admin/administrator/routes';
 import routesAdminAuth from '@/pages/admin/auth/routes';
-import routesAdminLandTitles from '@/pages/admin/land-titles/routes';
 import routesAdminFacilities from '@/pages/admin/facilities/routes';
+import routesAdminLandTitles from '@/pages/admin/land-titles/routes';
 import routesAdminProblems from '@/pages/admin/problems/routes';
 import routesAdminPromos from '@/pages/admin/promos/routes';
 import routesAdminProperties from '@/pages/admin/properties/routes';
@@ -65,7 +65,7 @@ const router = createRouter({
           children: [
             {
               path: '',
-              redirect: '/admin/home'
+              redirect: '/admin/home',
             },
             {
               path: '/admin/home',

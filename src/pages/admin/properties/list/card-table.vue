@@ -451,7 +451,7 @@ watch(sort, async () => {
                 </tbody>
               </table>
             </td>
-              <td class="min-w-48">
+            <td class="min-w-48">
               <ul class="space-y-1 text-sm">
                 <li>Land Title 1</li>
                 <li>Land Title 2</li>

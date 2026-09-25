@@ -3,10 +3,10 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { findUserApi } from '@/composables/api/master/users/find-by-id.api';
+import { useAuthStore } from '@/stores/auth.store.ts';
 
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardTable from './card-table.vue';
-import { useAuthStore } from '@/stores/auth.store.ts';
 
 const user = ref();
 const authStore = useAuthStore();

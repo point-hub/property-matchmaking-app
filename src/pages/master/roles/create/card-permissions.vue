@@ -157,7 +157,7 @@ onMounted(async () => {
           </div>
 
           <div class="flex flex-col gap-4">
-            <template 
+            <template
               v-for="resource in SCOPE_MAP[scope]"
               :key="resource">
               <div

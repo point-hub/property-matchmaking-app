@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 import AppContainer from '@/components/app-container.vue';
 import { findUserApi } from '@/composables/api/master/users/find-by-id.api';
 import { updateUserApi } from '@/composables/api/master/users/update.api';
+import { useAuthStore } from '@/stores/auth.store.ts';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -14,7 +15,6 @@ import CardInternalNotes from './card-internal-notes.vue';
 import CardReason from './card-reason.vue';
 import CardRole from './card-role.vue';
 import { useForm } from './form';
-import { useAuthStore } from '@/stores/auth.store.ts';
 
 const form = useForm();
 const route = useRoute();

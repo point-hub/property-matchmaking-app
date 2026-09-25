@@ -7,9 +7,9 @@ import { findExampleApi } from '@/composables/api/facilities/find-by-id.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
-import DeleteModal from '../components/delete-modal/index.vue';
 import StatusBanner from '../../../../components/status-banner.vue';
 import CardActions from '../components/card-actions.vue';
+import DeleteModal from '../components/delete-modal/index.vue';
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';
@@ -73,22 +73,22 @@ const onDeleteModal = () => {
     <!-- <status-banner v-if="form.data.is_archived" status-type="danger" message="This data has been archived." /> -->
 
     <base-card class="py-3! gap-0!">
-    <div class="flex gap-2 overflow-auto scrollbar-hidden">
-      <router-link :to="`/facilities/create`">
-        <base-button variant="filled" color="primary" size="sm" class="font-bold">
-          <base-icon icon="i-fa7-solid:file-plus" /> CREATE
+      <div class="flex gap-2 overflow-auto scrollbar-hidden">
+        <router-link :to="`/facilities/create`">
+          <base-button variant="filled" color="primary" size="sm" class="font-bold">
+            <base-icon icon="i-fa7-solid:file-plus" /> CREATE
+          </base-button>
+        </router-link>
+        <router-link :to="`/facilities/${route.params.id}/edit`">
+          <base-button variant="filled" color="primary" size="sm" class="font-bold">
+            <base-icon icon="i-fa7-solid:file-pen" /> EDIT
+          </base-button>
+        </router-link>
+        <base-button variant="filled" color="primary" size="sm" class="font-bold" @click="onDeleteModal">
+          <base-icon icon="i-fa7-solid:trash-xmark" /> DELETE
         </base-button>
-      </router-link>
-      <router-link :to="`/facilities/${route.params.id}/edit`">
-        <base-button variant="filled" color="primary" size="sm" class="font-bold">
-          <base-icon icon="i-fa7-solid:file-pen" /> EDIT
-        </base-button>
-      </router-link>
-      <base-button variant="filled" color="primary" size="sm" class="font-bold" @click="onDeleteModal">
-        <base-icon icon="i-fa7-solid:trash-xmark" /> DELETE
-      </base-button>
-    </div>
-  </base-card>
+      </div>
+    </base-card>
 
     <base-card v-if="!form.data._id">
       Data Not Found

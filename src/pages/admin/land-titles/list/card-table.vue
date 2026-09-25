@@ -122,7 +122,7 @@ const getData = async (page = 1) => {
       page_size: pagination.page_size,
     });
     landTitles.value = response.data;
-    
+
     Object.assign(pagination, response.pagination);
   } catch (error) {
     const errorResponse = handleError(error);

@@ -7,9 +7,9 @@ import { findExampleApi } from '@/composables/api/land-titles/find-by-id.api';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
-import DeleteModal from '../components/delete-modal/index.vue';
 import StatusBanner from '../../../../components/status-banner.vue';
 import CardActions from '../components/card-actions.vue';
+import DeleteModal from '../components/delete-modal/index.vue';
 import CardBreadcrumbs from './card-breadcrumbs.vue';
 import CardForm from './card-form.vue';
 import CardInternalNotes from './card-internal-notes.vue';

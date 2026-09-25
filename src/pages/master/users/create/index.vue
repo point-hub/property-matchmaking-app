@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import AppContainer from '@/components/app-container.vue';
 import { createUserApi } from '@/composables/api/master/users/create.api';
+import { useAuthStore } from '@/stores/auth.store.ts';
 import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
@@ -13,8 +15,6 @@ import CardInternalNotes from './card-internal-notes.vue';
 import CardPassword from './card-password.vue';
 import CardRole from './card-role.vue';
 import { useForm } from './form';
-import { useAuthStore } from '@/stores/auth.store.ts';
-import { useRouter } from 'vue-router';
 
 const form = useForm();
 const isSaving = ref(false);
@@ -25,7 +25,7 @@ onMounted(() => {
   if (!authStore.hasPermissions(['users:create'])) {
     router.push('/403');
   }
-})
+});
 
 const onSave = async () => {
   try {

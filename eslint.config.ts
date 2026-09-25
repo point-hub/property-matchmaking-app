@@ -2,7 +2,7 @@ import eslint from '@eslint/js';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import vitest from '@vitest/eslint-plugin';
-import cypress from 'eslint-plugin-cypress/flat';
+import cypress from 'eslint-plugin-cypress';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import vue from 'eslint-plugin-vue';
 import globals from 'globals';

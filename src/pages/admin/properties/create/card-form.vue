@@ -37,8 +37,8 @@ const isSaving = defineModel('is-saving', { default: false });
       <base-input layout="horizontal" label="Subdistrict" required v-model="data.subdistrict" :errors="['The subdistrict field is required.']" :disabled="isSaving" />
       <base-input layout="horizontal" label="District" required v-model="data.district" :errors="['The district field is required.']" :disabled="isSaving" />
       <base-input layout="horizontal" label="City" required v-model="data.city" :errors="['The city field is required.']" :disabled="isSaving" />
-      <base-input layout="horizontal" label="Google Map Link" v-model="data.google_map" :errors="[]" :disabled="isSaving" />  
-      <base-input layout="horizontal" label="Instagram" v-model="data.instagram" :errors="[]" :disabled="isSaving" />  
+      <base-input layout="horizontal" label="Google Map Link" v-model="data.google_map" :errors="[]" :disabled="isSaving" />
+      <base-input layout="horizontal" label="Instagram" v-model="data.instagram" :errors="[]" :disabled="isSaving" />
     </div>
   </base-card>
   <base-card title="Pricelist">
@@ -64,9 +64,9 @@ const isSaving = defineModel('is-saving', { default: false });
         </tbody>
       </base-table>
 
-      <base-input layout="horizontal" label="Land Area" required v-model="data.land_area" :errors="['The land area field is required.']" :disabled="isSaving" />  
-      <base-input layout="horizontal" label="Building Area" required v-model="data.building_area" :errors="['The building area field is required.']" :disabled="isSaving" />  
-      <base-input layout="horizontal" label="Price" required v-model="data.price" :errors="['The price field is required.']" :disabled="isSaving" />  
+      <base-input layout="horizontal" label="Land Area" required v-model="data.land_area" :errors="['The land area field is required.']" :disabled="isSaving" />
+      <base-input layout="horizontal" label="Building Area" required v-model="data.building_area" :errors="['The building area field is required.']" :disabled="isSaving" />
+      <base-input layout="horizontal" label="Price" required v-model="data.price" :errors="['The price field is required.']" :disabled="isSaving" />
       <base-form label=" ">
         <base-button color="primary">Add</base-button>
       </base-form>
@@ -81,7 +81,7 @@ const isSaving = defineModel('is-saving', { default: false });
           <base-checkbox text="Land Title 3" />
         </div>
       </base-form>
-      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />  
+      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />
     </div>
   </base-card>
   <base-card title="Facilities">
@@ -94,8 +94,8 @@ const isSaving = defineModel('is-saving', { default: false });
           <base-checkbox text="Facilities 4" />
         </div>
       </base-form>
-      
-      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />  
+
+      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />
     </div>
   </base-card>
   <base-card title="Promos">
@@ -109,7 +109,7 @@ const isSaving = defineModel('is-saving', { default: false });
         </div>
       </base-form>
 
-      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />  
+      <base-input layout="horizontal" label="Others" v-model="data.composite_unique_1" :errors="errors.composite_unique_1" :disabled="isSaving" />
     </div>
   </base-card>
   <base-card title="Info Developer">
@@ -195,7 +195,7 @@ const isSaving = defineModel('is-saving', { default: false });
       </div>
     </div>
   </base-card>
-  
+
   <base-card title="Photos - Building">
     <div class="flex flex-col gap-4 my-5">
       <div class="grid grid-cols-2 gap-5 lg:grid-cols-8">
@@ -241,7 +241,7 @@ const isSaving = defineModel('is-saving', { default: false });
             </button>
           </div>
         </div>
-        
+
         <!-- Upload Slot -->
         <label
           class="flex aspect-square cursor-pointer items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 transition hover:border-blue-400 hover:bg-blue-50"

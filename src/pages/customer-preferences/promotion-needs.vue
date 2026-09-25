@@ -62,7 +62,7 @@
             </p>
           </div>
         </label>
-        
+
         <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
           <input
             type="checkbox"
@@ -78,7 +78,7 @@
             </p>
           </div>
         </label>
-        
+
         <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
           <input
             type="checkbox"

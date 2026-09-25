@@ -278,7 +278,7 @@ const locations = ['Surabaya Timur','Malang','Surabaya Selatan'];
               <tr>
                 <td class="p-5">Facilities</td>
 
-                 <td class="min-w-72 p-4">
+                <td class="min-w-72 p-4">
                   <ul class="space-y-1 text-sm">
                     <li>✓ Mini Market</li>
                     <li>✓ Playground</li>
@@ -287,14 +287,14 @@ const locations = ['Surabaya Timur','Malang','Surabaya Selatan'];
                     <li>✓ Food Court</li>
                   </ul>
                 </td>
-                 <td class="min-w-72 p-4">
+                <td class="min-w-72 p-4">
                   <ul class="space-y-1 text-sm">
                     <li>✓ One Gate System</li>
                     <li>✓ PDAM Water</li>
                     <li>✓ Food Court</li>
                   </ul>
                 </td>
-                 <td class="min-w-72 p-4">
+                <td class="min-w-72 p-4">
                   <ul class="space-y-1 text-sm">
                     <li>✓ Mini Market</li>
                     <li>✓ Playground</li>

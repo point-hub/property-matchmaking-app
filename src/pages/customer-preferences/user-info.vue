@@ -42,7 +42,7 @@
         </div>
 
         <hr class="my-2 border-slate-200">
-      
+
         <!-- WA -->
         <div>
           <label class="mb-3 block text-lg font-semibold text-slate-900">

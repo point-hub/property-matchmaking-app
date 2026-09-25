@@ -128,7 +128,7 @@ onMounted(async () => {
             </div>
           </div>
         </BaseTabPanel>
-        
+
         <!-- MASTER -->
         <BaseTabPanel>
           <div class="flex flex-col gap-4">

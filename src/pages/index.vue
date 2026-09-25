@@ -17,7 +17,7 @@
         </p>
 
         <div class="mt-10 flex gap-4">
-          <router-link 
+          <router-link
             to="/customer-preferences/location"
             class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white hover:bg-blue-700"
           >

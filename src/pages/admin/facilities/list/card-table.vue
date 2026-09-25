@@ -112,7 +112,7 @@ const resetPageAndFetch = async () => {
  * @param page - Current page number to fetch (default 1)
  */
 examples.value = [
-  
+
   { name: 'Facility 2' },
   { name: 'Facility 3' },
   { name: 'Facility 4' },
@@ -138,7 +138,7 @@ const getExamples = async (page = 1) => {
       page_size: pagination.page_size,
     });
     // examples.value = response.data;
-    
+
     Object.assign(pagination, response.pagination);
   } catch (error) {
     const errorResponse = handleError(error);
