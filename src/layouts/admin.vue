@@ -113,12 +113,12 @@ onMounted(() => {
       path: '/admin/promos',
     },
   );
-  // appMenu.value[0]?.menu?.push(
-  //   {
-  //     name: 'Properties',
-  //     path: '/admin/properties',
-  //   },
-  // );
+  appMenu.value[0]?.menu?.push(
+    {
+      name: 'Properties',
+      path: '/admin/properties',
+    },
+  );
 });
 </script>
 
