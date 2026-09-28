@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { type IForm } from './form';
 
-const data = defineModel<Partial<IForm>>('data', {
+const data = defineModel<{
+  role: Pick<IForm['role'], 'code' | 'name'>;
+}>('data', {
   default: () => ({
     role: {
       code: '',
