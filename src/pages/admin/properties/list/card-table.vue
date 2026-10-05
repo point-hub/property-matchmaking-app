@@ -29,7 +29,12 @@ const {
   resetTableSetting,
 } = useTableSetting({
   columns: {
-    name: { label: 'Name', isVisible: true, isSelectable: false },
+    code: { label: 'Code', isVisible: true, isSelectable: false },
+    name: { label: 'Name', isVisible: true, isSelectable: true },
+    address: { label: 'Address', isVisible: true, isSelectable: true },
+    subdistrict: { label: 'Subdistrict', isVisible: true, isSelectable: true },
+    district: { label: 'District', isVisible: true, isSelectable: true },
+    city: { label: 'City', isVisible: true, isSelectable: true },
     notes: { label: 'Notes', isVisible: false, isSelectable: true },
     is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
@@ -51,12 +56,22 @@ const {
 } = useTableFilter({
   initialFilter: {
     all: '',
+    code: '',
     name: '',
+    address: '',
+    subdistrict: '',
+    district: '',
+    city: '',
     notes: '',
     is_archived: 'false',
   },
   initialSortKeys: {
+    code: 0,
     name: 0,
+    address: 0,
+    subdistrict: 0,
+    district: 0,
+    city: 0,
     notes: 0,
     is_archived: 0,
   },
@@ -299,8 +314,23 @@ watch(sort, async () => {
             <th class="w-1"></th>
 
             <!-- Render filter inputs for visible columns -->
+            <th v-if="columns['code']?.isVisible">
+              <base-input v-model="filter.code" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
             <th v-if="columns['name']?.isVisible">
               <base-input v-model="filter.name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['address']?.isVisible">
+              <base-input v-model="filter.address" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['subdistrict']?.isVisible">
+              <base-input v-model="filter.subdistrict" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['district']?.isVisible">
+              <base-input v-model="filter.district" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['city']?.isVisible">
+              <base-input v-model="filter.city" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
             <th v-if="columns['notes']?.isVisible">
               <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
@@ -377,9 +407,14 @@ watch(sort, async () => {
               </td>
 
               <!-- Fields rendered conditionally based on column visibility -->
-              <td v-if="columns['name']?.isVisible">
-                <router-link :to="`/admin/properties/${property._id}`" class="text-blue">{{ property.name }}</router-link>
+              <td v-if="columns['code']?.isVisible">
+                <router-link :to="`/admin/properties/${property._id}`" class="text-blue">{{ property.code }}</router-link>
               </td>
+              <td v-if="columns['name']?.isVisible">{{ property.name }}</td>
+              <td v-if="columns['address']?.isVisible">{{ property.address }}</td>
+              <td v-if="columns['subdistrict']?.isVisible">{{ property.subdistrict }}</td>
+              <td v-if="columns['district']?.isVisible">{{ property.district }}</td>
+              <td v-if="columns['city']?.isVisible">{{ property.city }}</td>
               <td v-if="columns['notes']?.isVisible">{{ property.notes }}</td>
               <td v-if="columns['is_archived']?.isVisible">
                 <base-badge v-if="property.is_archived" variant="filled" color="danger" class="font-bold">
