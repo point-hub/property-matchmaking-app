@@ -104,8 +104,6 @@ const uploadToPresignedUrl = (
       <base-input layout="horizontal" label="Whatsapp" required v-model="data.whatsapp" :errors="errors.whatsapp" :disabled="isSaving" />
 
       <base-file-upload layout="horizontal" label="MOU"  @change="onFileSelect" :disabled="isSaving" accept=".pdf,.doc,.docx" />
-
-      {{ data }}
     </div>
   </base-card>
 </template>
