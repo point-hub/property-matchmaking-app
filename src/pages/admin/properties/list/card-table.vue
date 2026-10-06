@@ -513,7 +513,7 @@ watch(sort, async () => {
               <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>
               <td v-if="columns['whatsapp']?.isVisible">{{ property.whatsapp }}</td>
               <td v-if="columns['mou']?.isVisible">
-                <a :href="property.mou" target="_blank" v-if="property.mou" class="flex items-center gap-1">
+                <a :href="property.mou" target="_blank" v-if="property.mou" class="flex items-center gap-1 text-blue-600">
                   <base-icon icon="i-fa-solid:file-pdf" /> MOU
                 </a>
               </td>
