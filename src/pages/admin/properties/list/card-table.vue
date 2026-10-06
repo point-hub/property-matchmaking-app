@@ -365,15 +365,11 @@ watch(sort, async () => {
             <th v-if="columns['city']?.isVisible">
               <base-input v-model="filter.city" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['google_map_link']?.isVisible">
-              <base-input v-model="filter.google_map_link" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
+            <th v-if="columns['google_map_link']?.isVisible"></th>
             <th v-if="columns['instagram']?.isVisible">
               <base-input v-model="filter.instagram" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['pricelists']?.isVisible">
-              <base-input v-model="filter.pricelists" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
+            <th v-if="columns['pricelists']?.isVisible"></th>
             <th v-if="columns['land_titles']?.isVisible">
               <base-input v-model="filter.land_titles" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
@@ -516,7 +512,11 @@ watch(sort, async () => {
               </td>
               <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>
               <td v-if="columns['whatsapp']?.isVisible">{{ property.whatsapp }}</td>
-              <td v-if="columns['mou']?.isVisible">{{ property.mou }}</td>
+              <td v-if="columns['mou']?.isVisible">
+                <a :href="property.mou" target="_blank" v-if="property.mou" class="flex items-center gap-1">
+                  <base-icon icon="i-fa-solid:file-pdf" /> MOU
+                </a>
+              </td>
               <td v-if="columns['photos_gate']?.isVisible">
                 <template v-if="property.photos_gate?.length">
                   <a :href="property.photos_gate[0]" target="_blank">

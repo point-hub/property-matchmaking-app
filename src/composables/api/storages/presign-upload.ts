@@ -6,8 +6,8 @@ interface IResponse {
   path: string;
 }
 
-export const presignUploadApi = async (): Promise<IResponse> => {
-  const response = await apiRequest.post('/v1/storages/presign-upload');
+export const presignUploadApi = async (extension?: string): Promise<IResponse> => {
+  const response = await apiRequest.post('/v1/storages/presign-upload', { extension });
 
   return response.data;
 };

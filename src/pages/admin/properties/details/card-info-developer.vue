@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type IForm, type IFormError } from './form';
+import { type IForm } from './form';
 
 const data = defineModel<Partial<IForm>>('data', {
   default: () => ({

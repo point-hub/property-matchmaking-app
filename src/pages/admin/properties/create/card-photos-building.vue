@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 import { presignUploadApi } from '@/composables/api/storages/presign-upload.ts';
+import { getFileExtension, isValidFile } from '@/utils/file';
 
 import { type IForm, type IFormError } from './form';
 
@@ -147,8 +148,13 @@ const uploadPhoto = async (photo: IPhoto): Promise<void> => {
   try {
     const webpFile = await convertToWebp(photo.file);
 
-    const response =
-      await presignUploadApi();
+    if (!isValidFile(webpFile, ['jpg', 'jpeg', 'png', 'webp'])) {
+      return;
+    }
+
+    const extension = getFileExtension(webpFile.name);
+
+    const response = await presignUploadApi(extension);
 
     photo.status = 'uploading';
 

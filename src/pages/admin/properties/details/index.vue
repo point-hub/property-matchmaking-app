@@ -32,7 +32,7 @@ onMounted(async () => {
     isLoading.value = true;
     const response = await findPropertyApi(route.params.id as string);
     if (response) {
-      form.data = response;
+      Object.assign(form.data, response);
     }
   } catch (error) {
     const errorResponse = handleError(error);

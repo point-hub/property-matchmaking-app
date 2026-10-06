@@ -17,9 +17,9 @@ export interface IForm {
   land_titles?: string[]
   facilities?: string[]
   promos?: { name: string, description: string }[]
-  developer_name?: string[]
-  whatsapp?: string[]
-  mou?: string[]
+  developer_name?: string
+  whatsapp?: string
+  mou?: string
   photos_gate?: string[]
   photos_building?: string[]
   notes?: string

@@ -14,7 +14,7 @@ export interface IPropertiesData {
   pricelists?: { land_area: number, building_area: number, type: string, price: number }[]
   land_titles?: string[]
   facilities?: string[]
-  promos?: []
+  promos?: { name: string, description: string }[]
   developer_name?: string
   whatsapp?: string
   mou?: string

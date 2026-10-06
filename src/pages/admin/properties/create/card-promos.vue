@@ -3,14 +3,9 @@ import { onMounted, ref } from 'vue';
 
 import { getPromosApi } from '@/composables/api/promos/get.api';
 
-import { type IForm, type IFormError } from './form';
+import { type IForm } from './form';
 
 const data = defineModel<Partial<IForm>>('data', {
-  default: () => ({
-    promos: [],
-  }),
-});
-const errors = defineModel<Partial<IFormError>>('errors', {
   default: () => ({
     promos: [],
   }),
@@ -98,7 +93,7 @@ const addPromo = () => {
         <base-input layout="horizontal" label="Name" v-model="name" :errors="errorName" class="w-full" />
         <base-input layout="horizontal" label="Description" v-model="description" :errors="errorDescription" class="w-full" />
         <base-form layout="horizontal" label="&nbsp;">
-          <base-button class="flex-0" color="info" @click="addPromo">Add</base-button>
+          <base-button class="flex-0" color="info" @click="addPromo" :disabled="isSaving">Add</base-button>
         </base-form>
       </div>
     </div>
