@@ -64,7 +64,10 @@ const addPromo = () => {
     description: description.value,
   });
 
-  data.value.promos?.push(name.value);
+  data.value.promos?.push({
+    name: name.value,
+    description: description.value,
+  });
   name.value = '';
   description.value = '';
 };
@@ -77,7 +80,7 @@ const addPromo = () => {
         <table class="w-full border-separate border-spacing-y-3"">
           <template v-for="promo in promos" >
             <tr>
-              <td class="w-1 align-top pt-1"><base-checkbox v-model="data.promos" :true-value="promo.name" /></td>
+              <td class="w-1 align-top pt-1"><base-checkbox v-model="data.promos" :true-value="{ name: promo.name, description: promo.description }" /></td>
               <td>
                 <b>{{ promo.name }}</b>
                 <br>

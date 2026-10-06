@@ -511,7 +511,7 @@ watch(sort, async () => {
               </td>
               <td v-if="columns['promos']?.isVisible">
                 <div class="flex flex-col">
-                  <span v-for="promo in property.promos">- {{ promo }}</span>
+                  <span v-for="promo in property.promos">- {{ promo.name }}</span>
                 </div>
               </td>
               <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>

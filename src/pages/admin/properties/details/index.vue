@@ -11,8 +11,15 @@ import StatusBanner from '../../../../components/status-banner.vue';
 import CardActions from '../components/card-actions.vue';
 import DeleteModal from '../components/delete-modal/index.vue';
 import CardBreadcrumbs from './card-breadcrumbs.vue';
+import CardFacilities from './card-facilities.vue';
 import CardForm from './card-form.vue';
+import CardInfoDeveloper from './card-info-developer.vue';
 import CardInternalNotes from './card-internal-notes.vue';
+import CardLandTitles from './card-land-titles.vue';
+import CardPhotosBuilding from './card-photos-building.vue';
+import CardPhotosGate from './card-photos-gate.vue';
+import CardPricelists from './card-pricelists.vue';
+import CardPromos from './card-promos.vue';
 import { useForm } from './form.ts';
 
 const route = useRoute();
@@ -25,10 +32,7 @@ onMounted(async () => {
     isLoading.value = true;
     const response = await findPropertyApi(route.params.id as string);
     if (response) {
-      form.data._id = response._id;
-      form.data.name = response.name;
-      form.data.notes = response.notes;
-      form.data.is_archived = response.is_archived;
+      form.data = response;
     }
   } catch (error) {
     const errorResponse = handleError(error);
@@ -61,12 +65,18 @@ const onRestored = async () => {
 
     <status-banner v-if="form.data.is_archived" status-type="danger" message="This data has been archived." />
 
-
     <base-card v-if="!form.data._id">
       Data Not Found
     </base-card>
     <template v-else>
       <card-form v-model:data="form.data" />
+      <card-pricelists v-model:data="form.data" />
+      <card-land-titles v-model:data="form.data" />
+      <card-facilities v-model:data="form.data" />
+      <card-promos v-model:data="form.data" />
+      <card-info-developer v-model:data="form.data" />
+      <card-photos-gate v-model:data="form.data" />
+      <card-photos-building v-model:data="form.data" />
       <card-internal-notes v-model:data="form.data" />
     </template>
   </app-container>
