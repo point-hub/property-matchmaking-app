@@ -98,6 +98,9 @@ const onDeletePricelist = (index: number): void => {
 
 <template>
   <base-card title="Pricelists">
+    <div v-if="errors.pricelists?.length" class="bg-red-100 p-3">
+      {{ errors.pricelists[0] }}
+    </div>
     <div class="my-5 flex flex-col gap-4">
       <base-table>
         <thead>

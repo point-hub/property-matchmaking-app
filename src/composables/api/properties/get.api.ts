@@ -3,7 +3,22 @@ import { apiRequest } from '@/utils/api';
 
 export interface IPropertiesData {
   _id: string
-  name: string
+  code?: string
+  name?: string
+  address?: string
+  subdistrict?: string
+  district?: string
+  city?: string
+  google_map_link?: string
+  instagram?: string
+  pricelists?: []
+  land_titles?: string[]
+  facilities?: string[]
+  promos?: []
+  developer_name?: string
+  whatsapp?: string
+  mou?: string
+  photos_gate?: string[]
   notes: string
   is_archived: string
   created_at: Date

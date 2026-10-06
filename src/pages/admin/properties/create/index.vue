@@ -12,6 +12,7 @@ import CardForm from './card-form.vue';
 import CardInfoDeveloper from './card-info-developer.vue';
 import CardInternalNotes from './card-internal-notes.vue';
 import CardLandTitles from './card-land-titles.vue';
+import CardPhotosBuilding from './card-photos-building.vue';
 import CardPhotosGate from './card-photos-gate.vue';
 import CardPricelists from './card-pricelists.vue';
 import CardPromos from './card-promos.vue';
@@ -71,6 +72,7 @@ const save = async () => {
     <card-promos v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-info-developer v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-photos-gate v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-photos-building v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <!-- {{ form.data }} -->
     <div class="flex gap-2">

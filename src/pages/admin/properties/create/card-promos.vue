@@ -61,7 +61,7 @@ const addPromo = () => {
 
   promos.value.push({
     name: name.value,
-    description: name.value,
+    description: description.value,
   });
 
   data.value.promos?.push(name.value);

@@ -35,6 +35,16 @@ const {
     subdistrict: { label: 'Subdistrict', isVisible: true, isSelectable: true },
     district: { label: 'District', isVisible: true, isSelectable: true },
     city: { label: 'City', isVisible: true, isSelectable: true },
+    google_map_link: { label: 'Google Map Link', isVisible: true, isSelectable: true },
+    instagram: { label: 'Instagram', isVisible: true, isSelectable: true },
+    pricelists: { label: 'Pricelists', isVisible: true, isSelectable: true },
+    land_titles: { label: 'Land Titles', isVisible: true, isSelectable: true },
+    facilities: { label: 'Facilities', isVisible: true, isSelectable: true },
+    promos: { label: 'Promos', isVisible: true, isSelectable: true },
+    developer_name: { label: 'Developer Name', isVisible: true, isSelectable: true },
+    whatsapp: { label: 'Whatsapp', isVisible: true, isSelectable: true },
+    mou: { label: 'MOU', isVisible: true, isSelectable: true },
+    photos_gate: { label: 'Photos Gate', isVisible: true, isSelectable: true },
     notes: { label: 'Notes', isVisible: false, isSelectable: true },
     is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
@@ -62,6 +72,16 @@ const {
     subdistrict: '',
     district: '',
     city: '',
+    google_map_link: '',
+    instagram: '',
+    pricelists: '',
+    land_titles: '',
+    facilities: '',
+    promos: '',
+    developer_name: '',
+    whatsapp: '',
+    mou: '',
+    photos_gate: '',
     notes: '',
     is_archived: 'false',
   },
@@ -72,6 +92,16 @@ const {
     subdistrict: 0,
     district: 0,
     city: 0,
+    google_map_link: 0,
+    instagram: 0,
+    pricelists: 0,
+    land_titles: 0,
+    facilities: 0,
+    promos: 0,
+    developer_name: 0,
+    whatsapp: 0,
+    mou: 0,
+    photos_gate: 0,
     notes: 0,
     is_archived: 0,
   },
@@ -332,6 +362,36 @@ watch(sort, async () => {
             <th v-if="columns['city']?.isVisible">
               <base-input v-model="filter.city" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
+            <th v-if="columns['google_map_link']?.isVisible">
+              <base-input v-model="filter.google_map_link" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['instagram']?.isVisible">
+              <base-input v-model="filter.instagram" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['pricelists']?.isVisible">
+              <base-input v-model="filter.pricelists" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['land_titles']?.isVisible">
+              <base-input v-model="filter.land_titles" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['facilities']?.isVisible">
+              <base-input v-model="filter.facilities" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['promos']?.isVisible">
+              <base-input v-model="filter.promos" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['developer_name']?.isVisible">
+              <base-input v-model="filter.developer_name" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['whatsapp']?.isVisible">
+              <base-input v-model="filter.whatsapp" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['mou']?.isVisible">
+              <base-input v-model="filter.mou" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
+            <th v-if="columns['photos_gate']?.isVisible">
+              <base-input v-model="filter.photos_gate" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
             <th v-if="columns['notes']?.isVisible">
               <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
@@ -415,6 +475,16 @@ watch(sort, async () => {
               <td v-if="columns['subdistrict']?.isVisible">{{ property.subdistrict }}</td>
               <td v-if="columns['district']?.isVisible">{{ property.district }}</td>
               <td v-if="columns['city']?.isVisible">{{ property.city }}</td>
+              <td v-if="columns['google_map_link']?.isVisible">{{ property.google_map_link }}</td>
+              <td v-if="columns['instagram']?.isVisible">{{ property.instagram }}</td>
+              <td v-if="columns['pricelists']?.isVisible">{{ property.pricelists }}</td>
+              <td v-if="columns['land_titles']?.isVisible">{{ property.land_titles }}</td>
+              <td v-if="columns['facilities']?.isVisible">{{ property.facilities }}</td>
+              <td v-if="columns['promos']?.isVisible">{{ property.promos }}</td>
+              <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>
+              <td v-if="columns['whatsapp']?.isVisible">{{ property.whatsapp }}</td>
+              <td v-if="columns['mou']?.isVisible">{{ property.mou }}</td>
+              <td v-if="columns['photos_gate']?.isVisible">{{ property.photos_gate }}</td>
               <td v-if="columns['notes']?.isVisible">{{ property.notes }}</td>
               <td v-if="columns['is_archived']?.isVisible">
                 <base-badge v-if="property.is_archived" variant="filled" color="danger" class="font-bold">
