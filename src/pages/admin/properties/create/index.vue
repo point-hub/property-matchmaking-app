@@ -28,7 +28,7 @@ const save = async () => {
     const response = await createPropertyApi(form.data);
     if (response?.inserted_id) {
       toast('Create success', { color: 'success' });
-      await router.push(`/admin/properties/${response.inserted_id}`);
+      await router.push('/admin/properties');
     }
   } catch (error) {
     const errorResponse = handleError(error);
@@ -74,7 +74,6 @@ const save = async () => {
     <card-photos-gate v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-photos-building v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
-    <!-- {{ form.data }} -->
     <div class="flex gap-2">
       <base-button class="flex-1" :is-loading="isSaving" color="primary" @click="save">Save</base-button>
     </div>

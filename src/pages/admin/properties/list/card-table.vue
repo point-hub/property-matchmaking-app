@@ -45,6 +45,7 @@ const {
     whatsapp: { label: 'Whatsapp', isVisible: true, isSelectable: true },
     mou: { label: 'MOU', isVisible: true, isSelectable: true },
     photos_gate: { label: 'Photos Gate', isVisible: true, isSelectable: true },
+    photos_building: { label: 'Photos Building', isVisible: true, isSelectable: true },
     notes: { label: 'Notes', isVisible: false, isSelectable: true },
     is_archived: { label: 'Is Archived', isVisible: false, isSelectable: true },
   },
@@ -82,6 +83,7 @@ const {
     whatsapp: '',
     mou: '',
     photos_gate: '',
+    photos_building: '',
     notes: '',
     is_archived: 'false',
   },
@@ -102,6 +104,7 @@ const {
     whatsapp: 0,
     mou: 0,
     photos_gate: 0,
+    photos_building: 0,
     notes: 0,
     is_archived: 0,
   },
@@ -392,6 +395,9 @@ watch(sort, async () => {
             <th v-if="columns['photos_gate']?.isVisible">
               <base-input v-model="filter.photos_gate" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
+            <th v-if="columns['photos_building']?.isVisible">
+              <base-input v-model="filter.photos_building" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            </th>
             <th v-if="columns['notes']?.isVisible">
               <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
@@ -484,7 +490,18 @@ watch(sort, async () => {
               <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>
               <td v-if="columns['whatsapp']?.isVisible">{{ property.whatsapp }}</td>
               <td v-if="columns['mou']?.isVisible">{{ property.mou }}</td>
-              <td v-if="columns['photos_gate']?.isVisible">{{ property.photos_gate }}</td>
+              <td v-if="columns['photos_gate']?.isVisible">
+                <template v-if="property.photos_gate?.length">
+                  <img :src="property.photos_gate[0]" alt="Gate">
+                  {{ property.photos_gate[0] }}
+                </template>
+              </td>
+              <td v-if="columns['photos_building']?.isVisible">
+                <template v-if="property.photos_building?.length">
+                  <img :src="property.photos_building[0]" alt="Gate">
+                  {{ property.photos_building[0] }}
+                </template>
+              </td>
               <td v-if="columns['notes']?.isVisible">{{ property.notes }}</td>
               <td v-if="columns['is_archived']?.isVisible">
                 <base-badge v-if="property.is_archived" variant="filled" color="danger" class="font-bold">
