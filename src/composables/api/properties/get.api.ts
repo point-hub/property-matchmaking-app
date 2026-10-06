@@ -6,7 +6,7 @@ export interface IPropertiesData {
   code?: string
   name?: string
   address?: string
-  subdistrict?: string
+  village?: string
   district?: string
   city?: string
   google_map_link?: string

@@ -36,7 +36,7 @@ const save = async () => {
       form.errors.code = errorResponse.errors.code || [];
       form.errors.name = errorResponse.errors.name || [];
       form.errors.address = errorResponse.errors.address || [];
-      form.errors.subdistrict = errorResponse.errors.subdistrict || [];
+      form.errors.village = errorResponse.errors.village || [];
       form.errors.district = errorResponse.errors.district || [];
       form.errors.city = errorResponse.errors.city || [];
       form.errors.notes = errorResponse.errors.notes || [];

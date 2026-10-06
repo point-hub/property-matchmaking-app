@@ -4,7 +4,7 @@ export interface IForm {
   code?: string
   name?: string
   address?: string
-  subdistrict?: string
+  village?: string
   district?: string
   city?: string
   google_map_link?: string
@@ -29,7 +29,7 @@ export interface IFormError {
   code?: string[]
   name?: string[]
   address?: string[]
-  subdistrict?: string[]
+  village?: string[]
   district?: string[]
   city?: string[]
   google_map_link?: string[]
@@ -51,7 +51,7 @@ export function useForm() {
     code: undefined,
     name: undefined,
     address: undefined,
-    subdistrict: undefined,
+    village: undefined,
     district: undefined,
     city: undefined,
     google_map_link: undefined,
@@ -72,7 +72,7 @@ export function useForm() {
     code: [],
     name: [],
     address: [],
-    subdistrict: [],
+    village: [],
     district: [],
     city: [],
     google_map_link: [],

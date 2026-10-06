@@ -32,7 +32,7 @@ const {
     code: { label: 'Code', isVisible: true, isSelectable: false },
     name: { label: 'Name', isVisible: true, isSelectable: true },
     address: { label: 'Address', isVisible: true, isSelectable: true },
-    subdistrict: { label: 'Subdistrict', isVisible: true, isSelectable: true },
+    village: { label: 'Village', isVisible: true, isSelectable: true },
     district: { label: 'District', isVisible: true, isSelectable: true },
     city: { label: 'City', isVisible: true, isSelectable: true },
     google_map_link: { label: 'Google Map Link', isVisible: true, isSelectable: true },
@@ -70,7 +70,7 @@ const {
     code: '',
     name: '',
     address: '',
-    subdistrict: '',
+    village: '',
     district: '',
     city: '',
     google_map_link: '',
@@ -91,7 +91,7 @@ const {
     code: 0,
     name: 0,
     address: 0,
-    subdistrict: 0,
+    village: 0,
     district: 0,
     city: 0,
     google_map_link: 0,
@@ -356,8 +356,8 @@ watch(sort, async () => {
             <th v-if="columns['address']?.isVisible">
               <base-input v-model="filter.address" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['subdistrict']?.isVisible">
-              <base-input v-model="filter.subdistrict" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
+            <th v-if="columns['village']?.isVisible">
+              <base-input v-model="filter.village" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
             <th v-if="columns['district']?.isVisible">
               <base-input v-model="filter.district" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
@@ -468,7 +468,7 @@ watch(sort, async () => {
               </td>
               <td v-if="columns['name']?.isVisible">{{ property.name }}</td>
               <td v-if="columns['address']?.isVisible">{{ property.address }}</td>
-              <td v-if="columns['subdistrict']?.isVisible">{{ property.subdistrict }}</td>
+              <td v-if="columns['village']?.isVisible">{{ property.village }}</td>
               <td v-if="columns['district']?.isVisible">{{ property.district }}</td>
               <td v-if="columns['city']?.isVisible">{{ property.city }}</td>
               <td v-if="columns['google_map_link']?.isVisible">{{ property.google_map_link }}</td>

@@ -6,7 +6,7 @@ const data = defineModel<Partial<IForm>>('data', {
     code: undefined,
     name: undefined,
     address: undefined,
-    subdistrict: undefined,
+    village: undefined,
     district: undefined,
     city: undefined,
     google_map_link: undefined,
@@ -18,7 +18,7 @@ const errors = defineModel<Partial<IFormError>>('errors', {
     code: [],
     name: [],
     address: [],
-    subdistrict: [],
+    village: [],
     district: [],
     city: [],
     google_map_link: [],
@@ -34,7 +34,7 @@ const isSaving = defineModel('is-saving', { default: false });
       <base-input layout="horizontal" label="Code" required v-model="data.code" :errors="errors.code" :disabled="isSaving" />
       <base-input layout="horizontal" label="Name" required v-model="data.name" :errors="errors.name" :disabled="isSaving" />
       <base-input layout="horizontal" label="Address" required v-model="data.address" :errors="errors.address" :disabled="isSaving" />
-      <base-input layout="horizontal" label="Subdistrict" required v-model="data.subdistrict" :errors="errors.subdistrict" :disabled="isSaving" />
+      <base-input layout="horizontal" label="Village" required v-model="data.village" :errors="errors.village" :disabled="isSaving" />
       <base-input layout="horizontal" label="District" required v-model="data.district" :errors="errors.district" :disabled="isSaving" />
       <base-input layout="horizontal" label="City" required v-model="data.city" :errors="errors.city" :disabled="isSaving" />
       <base-input layout="horizontal" label="Google Map Link" v-model="data.google_map_link" :errors="errors.google_map_link" :disabled="isSaving" />
