@@ -389,15 +389,9 @@ watch(sort, async () => {
             <th v-if="columns['whatsapp']?.isVisible">
               <base-input v-model="filter.whatsapp" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
-            <th v-if="columns['mou']?.isVisible">
-              <base-input v-model="filter.mou" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['photos_gate']?.isVisible">
-              <base-input v-model="filter.photos_gate" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
-            <th v-if="columns['photos_building']?.isVisible">
-              <base-input v-model="filter.photos_building" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
-            </th>
+            <th v-if="columns['mou']?.isVisible"></th>
+            <th v-if="columns['photos_gate']?.isVisible"></th>
+            <th v-if="columns['photos_building']?.isVisible"></th>
             <th v-if="columns['notes']?.isVisible">
               <base-input v-model="filter.notes" placeholder="Search..." :readonly="isLoading" border="none" paddingless />
             </th>
@@ -483,23 +477,58 @@ watch(sort, async () => {
               <td v-if="columns['city']?.isVisible">{{ property.city }}</td>
               <td v-if="columns['google_map_link']?.isVisible">{{ property.google_map_link }}</td>
               <td v-if="columns['instagram']?.isVisible">{{ property.instagram }}</td>
-              <td v-if="columns['pricelists']?.isVisible">{{ property.pricelists }}</td>
-              <td v-if="columns['land_titles']?.isVisible">{{ property.land_titles }}</td>
-              <td v-if="columns['facilities']?.isVisible">{{ property.facilities }}</td>
-              <td v-if="columns['promos']?.isVisible">{{ property.promos }}</td>
+              <td v-if="columns['pricelists']?.isVisible">
+                <template v-if="property.pricelists?.length">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="whitespace-nowrap text-right">Land Area</th>
+                        <th class="whitespace-nowrap text-right">Building Area</th>
+                        <th class="whitespace-nowrap text-right">Type</th>
+                        <th class="whitespace-nowrap text-right">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="pricelist in property.pricelists">
+                        <td class="whitespace-nowrap text-right">{{ pricelist.land_area }} m²</td>
+                        <td class="whitespace-nowrap text-right">{{ pricelist.building_area }} m²</td>
+                        <td class="whitespace-nowrap text-right">{{ pricelist.building_area }} / {{ pricelist.land_area }}</td>
+                        <td class="whitespace-nowrap text-right">{{ pricelist.price }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </template>
+              </td>
+              <td v-if="columns['land_titles']?.isVisible">
+                <div class="flex flex-col">
+                  <span v-for="landTitle in property.land_titles">- {{ landTitle }}</span>
+                </div>
+              </td>
+              <td v-if="columns['facilities']?.isVisible">
+                <div class="flex flex-col">
+                  <span v-for="facility in property.facilities">- {{ facility }}</span>
+                </div>
+              </td>
+              <td v-if="columns['promos']?.isVisible">
+                <div class="flex flex-col">
+                  <span v-for="promo in property.promos">- {{ promo }}</span>
+                </div>
+              </td>
               <td v-if="columns['developer_name']?.isVisible">{{ property.developer_name }}</td>
               <td v-if="columns['whatsapp']?.isVisible">{{ property.whatsapp }}</td>
               <td v-if="columns['mou']?.isVisible">{{ property.mou }}</td>
               <td v-if="columns['photos_gate']?.isVisible">
                 <template v-if="property.photos_gate?.length">
-                  <img :src="property.photos_gate[0]" alt="Gate">
-                  {{ property.photos_gate[0] }}
+                  <a :href="property.photos_gate[0]" target="_blank">
+                    <img :src="property.photos_gate[0]" alt="Gate" class="w-32 h-32 object-cover">
+                  </a>
                 </template>
               </td>
               <td v-if="columns['photos_building']?.isVisible">
                 <template v-if="property.photos_building?.length">
-                  <img :src="property.photos_building[0]" alt="Gate">
-                  {{ property.photos_building[0] }}
+                  <a :href="property.photos_building[0]" target="_blank">
+                    <img :src="property.photos_building[0]" alt="Building" class="w-32 h-32 object-cover">
+                  </a>
                 </template>
               </td>
               <td v-if="columns['notes']?.isVisible">{{ property.notes }}</td>

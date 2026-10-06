@@ -11,7 +11,7 @@ export interface IPropertiesData {
   city?: string
   google_map_link?: string
   instagram?: string
-  pricelists?: []
+  pricelists?: { land_area: number, building_area: number, type: string, price: number }[]
   land_titles?: string[]
   facilities?: string[]
   promos?: []
@@ -19,6 +19,7 @@ export interface IPropertiesData {
   whatsapp?: string
   mou?: string
   photos_gate?: string[]
+  photos_building?: string[]
   notes: string
   is_archived: string
   created_at: Date
