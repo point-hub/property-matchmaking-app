@@ -5,12 +5,34 @@ export interface ICustomerPreference {
   location?: string;
   budget_min?: number;
   budget_max?: number;
+  down_payment_min?: number;
+  down_payment_max?: number;
+  monthly_payment_min?: number;
+  monthly_payment_max?: number;
+  age?: number;
+  marital_status?: string;
+  dependents?: number;
+  problems?: string[];
+  promos?: string[];
+  name?: string;
+  whatsapp?: number;
 }
 
 const defaultData = (): ICustomerPreference => ({
   location: undefined,
   budget_min: undefined,
   budget_max: undefined,
+  down_payment_min: undefined,
+  down_payment_max: undefined,
+  monthly_payment_min: undefined,
+  monthly_payment_max: undefined,
+  age: undefined,
+  marital_status: undefined,
+  dependents: undefined,
+  problems: [],
+  promos: [],
+  name: undefined,
+  whatsapp: undefined,
 });
 
 export const useCustomerPreferenceStore = defineStore('customer-preference', () => {
@@ -20,20 +42,9 @@ export const useCustomerPreferenceStore = defineStore('customer-preference', () 
     Object.assign(data, defaultData());
   };
 
-  const setLocation = (location?: string) => {
-    data.location = location;
-  };
-
-  const setBudget = (budgetMin?: number, budgetMax?: number) => {
-    data.budget_min = budgetMin;
-    data.budget_max = budgetMax;
-  };
-
   return {
     data,
     reset,
-    setLocation,
-    setBudget,
   };
 }, {
   persist: {

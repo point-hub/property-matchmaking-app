@@ -6,10 +6,13 @@ import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
 const preference = useCustomerPreferenceStore();
 
 const cashPurchase = ref(false);
+
+const chooseMaritalStatus = (status: string) => {
+  preference.data.marital_status = status;
+};
 </script>
 
 <template>
-  {{ preference }}
   <main class="mx-auto max-w-3xl px-8 py-12">
     <!-- Progress -->
     <div class="mb-12">
@@ -54,11 +57,11 @@ const cashPurchase = ref(false);
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
-            </div>
 
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.budget_min" border="none" align="left" />
+              </div>
+            </div>
           </div>
 
           <div>
@@ -68,9 +71,9 @@ const cashPurchase = ref(false);
 
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.budget_max" border="none" align="left" />
+              </div>
             </div>
           </div>
         </div>
@@ -109,9 +112,9 @@ const cashPurchase = ref(false);
 
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.down_payment_min" border="none" align="left" />
+              </div>
             </div>
           </div>
 
@@ -121,9 +124,9 @@ const cashPurchase = ref(false);
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.down_payment_max" border="none" align="left" />
+              </div>
             </div>
           </div>
         </div>
@@ -145,9 +148,9 @@ const cashPurchase = ref(false);
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.monthly_payment_min" border="none" align="left" />
+              </div>
             </div>
           </div>
 
@@ -157,9 +160,9 @@ const cashPurchase = ref(false);
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
-              <input
-                class="w-full bg-transparent px-3 py-3 outline-none"
-              >
+              <div class="w-full bg-transparent py-1 outline-none">
+                <base-input-number v-model="preference.data.monthly_payment_max" border="none" align="left" />
+              </div>
             </div>
           </div>
         </div>
@@ -190,6 +193,8 @@ const cashPurchase = ref(false);
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
             <input
+              type="number"
+              v-model="preference.data.age"
               class="w-full bg-transparent px-3 py-3 outline-none"
             >
           </div>
@@ -211,31 +216,37 @@ const cashPurchase = ref(false);
           <div class="grid gap-4 md:grid-cols-2">
 
             <button
+              @click="chooseMaritalStatus('Belum Menikah')"
               class="rounded-2xl border border-slate-300 px-5 py-4 text-left transition hover:border-blue-600 hover:bg-blue-50"
+              :class="{'bg-blue-400! text-white!': preference.data.marital_status === 'Belum Menikah'}"
             >
               Belum Menikah
             </button>
 
             <button
+              @click="chooseMaritalStatus('Menikah')"
               class="rounded-2xl border border-slate-300 px-5 py-4 text-left transition hover:border-blue-600 hover:bg-blue-50"
+              :class="{'bg-blue-400! text-white!': preference.data.marital_status === 'Menikah'}"
             >
               Menikah
             </button>
 
             <button
+              @click="chooseMaritalStatus('Cerai')"
               class="rounded-2xl border border-slate-300 px-5 py-4 text-left transition hover:border-blue-600 hover:bg-blue-50"
+              :class="{'bg-blue-400! text-white!': preference.data.marital_status === 'Cerai'}"
             >
               Cerai
             </button>
 
             <button
+              @click="chooseMaritalStatus('Duda / Janda')"
               class="rounded-2xl border border-slate-300 px-5 py-4 text-left transition hover:border-blue-600 hover:bg-blue-50"
+              :class="{'bg-blue-400! text-white!': preference.data.marital_status === 'Duda / Janda'}"
             >
               Duda / Janda
             </button>
-
           </div>
-
         </div>
 
         <!-- Jumlah Tanggungan -->
@@ -250,24 +261,12 @@ const cashPurchase = ref(false);
             Termasuk anak, orang tua, atau anggota keluarga yang menjadi tanggungan Anda.
           </p>
 
-          <div class="flex w-32 items-center justify-between rounded-2xl border border-slate-300 p-2">
-
-            <button
-              class="flex h-6 w-6 items-center justify-center rounded-xl bg-slate-100 text-2xl hover:bg-slate-200"
+          <div class="flex items-center rounded-xl border border-slate-300 px-4">
+            <input
+              type="number"
+              v-model="preference.data.dependents"
+              class="w-full bg-transparent px-3 py-3 outline-none"
             >
-              −
-            </button>
-
-            <span class="text-xl font-bold text-slate-900">
-              2
-            </span>
-
-            <button
-              class="flex h-6 w-6 items-center justify-center rounded-xl bg-blue-600 text-2xl text-white hover:bg-blue-700"
-            >
-              +
-            </button>
-
           </div>
         </div>
       </div>

@@ -1,8 +1,35 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
+import { getPromosApi } from '@/composables/api/promos/get.api';
+import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+
+const preference = useCustomerPreferenceStore();
+
+const isLoading = ref(false);
+const promos = ref();
+
+const getData = async (page = 1) => {
+  try {
+    isLoading.value = true;
+    const response = await getPromosApi({
+      page,
+      page_size: 10,
+    });
+    promos.value = response.data;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+onMounted(async () => {
+  await getData();
+});
 </script>
 
 <template>
   <main class="mx-auto max-w-3xl px-8 py-12">
+    <pre><code>{{ preference.data }}</code></pre>
     <!-- Progress -->
     <div class="mb-12">
       <div class="mb-3 flex justify-between text-sm text-slate-500">
@@ -30,67 +57,20 @@
     <div class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
 
       <div class="flex flex-col gap-4">
-        <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
-          <input
-            type="checkbox"
+        <label v-for="promo in promos" class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
+          <base-checkbox
+            v-model="preference.data.promos"
+            :true-value="promo.name"
             class="mt-1 h-5 w-5 rounded border-slate-300"
-          >
+          />
 
           <div>
             <div class="text-xl font-semibold">
-              DP dicicil
+              {{ promo.name }}
             </div>
 
             <p class="mt-2 text-slate-500">
-              Tampilkan promo atau DP ringan.
-            </p>
-          </div>
-        </label>
-
-        <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
-          <input
-            type="checkbox"
-            class="mt-1 h-5 w-5 rounded border-slate-300"
-          >
-          <div>
-            <div class="text-xl font-semibold">
-              Sewa dulu, beli kemudian
-            </div>
-
-            <p class="mt-2 text-slate-500">
-              Nikmati fleksibilitas untuk menyewa terlebih dahulu sebelum memutuskan membeli rumah.
-            </p>
-          </div>
-        </label>
-
-        <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
-          <input
-            type="checkbox"
-            class="mt-1 h-5 w-5 rounded border-slate-300"
-          >
-          <div>
-            <div class="text-xl font-semibold">
-              Cicilan in-house
-            </div>
-
-            <p class="mt-2 text-slate-500">
-              Cicilan in-house dengan suku bunga rendah.
-            </p>
-          </div>
-        </label>
-
-        <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
-          <input
-            type="checkbox"
-            class="mt-1 h-5 w-5 rounded border-slate-300"
-          >
-          <div>
-            <div class="text-xl font-semibold">
-              Bonus Furniture
-            </div>
-
-            <p class="mt-2 text-slate-500">
-              Dapatkan furnitur gratis saat membeli properti.
+              {{ promo.description }}
             </p>
           </div>
         </label>

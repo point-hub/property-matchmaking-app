@@ -1,8 +1,29 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
+import { createCustomerPreferenceApi } from '@/composables/api/customer-preferences/create.api';
+import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+
+const preference = useCustomerPreferenceStore();
+
+const isSaving = ref(false);
+
+const onSubmit = async () => {
+  try {
+    isSaving.value = true;
+    const response = await createCustomerPreferenceApi(preference.data);
+    if (response?.inserted_id) {
+      window.location.href = `https://wa.me/${6281357747377}?text=Halo Kahu, saya ${preference.data.name} tolong diinfokan rekomendasi rumah yang cocok dengan preferensi saya.`;
+    }
+  } finally {
+    isSaving.value = false;
+  }
+};
 </script>
 
 <template>
   <main class="mx-auto max-w-3xl px-8 py-12">
+    <pre><code>{{ preference.data }}</code></pre>
     <!-- Progress -->
     <div class="mb-12">
       <div class="mb-3 flex justify-between text-sm text-slate-500">
@@ -37,7 +58,7 @@
           </label>
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
-            <input class="w-full bg-transparent px-3 py-3 outline-none">
+            <input v-model="preference.data.name" class="w-full bg-transparent px-3 py-3 outline-none">
           </div>
         </div>
 
@@ -50,7 +71,7 @@
           </label>
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
-            <input class="w-full bg-transparent px-3 py-3 outline-none">
+            <input v-model="preference.data.whatsapp" class="w-full bg-transparent px-3 py-3 outline-none">
           </div>
 
           <p class="mt-2 text-sm text-slate-500">
@@ -69,16 +90,14 @@
         Back
       </router-link>
 
-      <a
-        href="https://wa.me/6281234567890?text=Halo Kahu, saya Sarah tolong diinfokan rekomendasi rumah yang cocok dengan preferensi saya."
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        @click="onSubmit"
         class="rounded-xl bg-orange-300 px-8 py-3 font-semibold text-white hover:bg-blue-700"
       >
         <div class="i-logos-whatsapp-icon h-5 w-5"></div>
 
         Dapatkan hasil rekomendasi
-      </a>
+      </button>
     </div>
   </main>
 </template>
