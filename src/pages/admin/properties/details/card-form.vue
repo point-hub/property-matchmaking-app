@@ -21,9 +21,9 @@ const data = defineModel<Partial<IForm>>('data', {
       <base-input layout="horizontal" label="Code" v-model="data.code" readonly />
       <base-input layout="horizontal" label="Name" v-model="data.name" readonly />
       <base-input layout="horizontal" label="Address" v-model="data.address" readonly />
-      <base-input layout="horizontal" label="City" v-model="data.city" readonly />
-      <base-input layout="horizontal" label="District" v-model="data.district" readonly />
-      <base-input layout="horizontal" label="Village" v-model="data.village" readonly />
+      <base-input layout="horizontal" label="City" description="Kota" v-model="data.city" readonly />
+      <base-input layout="horizontal" label="District" description="Kecamatan" v-model="data.district" readonly />
+      <base-input layout="horizontal" label="Village" description="Kelurahan / Desa" v-model="data.village" readonly />
       <base-input layout="horizontal" label="Google Map Link" v-model="data.google_map_link" readonly />
       <base-input layout="horizontal" label="Instagram" v-model="data.instagram" readonly />
     </div>

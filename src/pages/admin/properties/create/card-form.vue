@@ -175,6 +175,7 @@ watch(() => data.value.village, () => {
       <base-select
         layout="horizontal"
         label="City"
+        description="Kota"
         placeholder="Select"
         required
         v-model="data.city"
@@ -184,6 +185,7 @@ watch(() => data.value.village, () => {
       <base-select
         layout="horizontal"
         label="District"
+        description="Kecamatan"
         placeholder="Select"
         required
         v-model="data.district"
@@ -193,6 +195,7 @@ watch(() => data.value.village, () => {
       <base-select
         layout="horizontal"
         label="Village"
+        description="Kelurahan / Desa"
         placeholder="Select"
         required
         v-model="data.village"

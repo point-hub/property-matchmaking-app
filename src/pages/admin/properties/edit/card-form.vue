@@ -181,6 +181,7 @@ onMounted(async () => {
       <base-select
         layout="horizontal"
         label="City"
+        description="Kota"
         placeholder="Select"
         required
         v-model="data.city"
@@ -190,6 +191,7 @@ onMounted(async () => {
       <base-select
         layout="horizontal"
         label="District"
+        description="Kecamatan"
         placeholder="Select"
         required
         v-model="data.district"
@@ -199,6 +201,7 @@ onMounted(async () => {
       <base-select
         layout="horizontal"
         label="Village"
+        description="Kelurahan / Desa"
         placeholder="Select"
         required
         v-model="data.village"
