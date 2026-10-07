@@ -19,7 +19,7 @@ export interface IForm {
   promos?: { name: string, description: string }[]
   developer_name?: string[]
   whatsapp?: string[]
-  mou?: string[]
+  mou?: string
   photos_gate?: string[]
   photos_building?: string[]
   notes?: string

@@ -10,8 +10,15 @@ import { toast } from '@/toast';
 import { handleError } from '@/utils/api';
 
 import CardBreadcrumbs from './card-breadcrumbs.vue';
+import CardFacilities from './card-facilities.vue';
 import CardForm from './card-form.vue';
+import CardInfoDeveloper from './card-info-developer.vue';
 import CardInternalNotes from './card-internal-notes.vue';
+import CardLandTitles from './card-land-titles.vue';
+import CardPhotosBuilding from './card-photos-building.vue';
+import CardPhotosGate from './card-photos-gate.vue';
+import CardPricelists from './card-pricelists.vue';
+import CardPromos from './card-promos.vue';
 import { useForm } from './form.ts';
 
 const form = useForm();
@@ -25,8 +32,7 @@ onMounted(async () => {
     isLoading.value = true;
     const response = await findPropertyApi(route.params.id as string);
     if (response) {
-      form.data.name = response.name;
-      form.data.notes = response.notes;
+      Object.assign(form.data, response);
     }
   } catch (error) {
     const errorResponse = handleError(error);
@@ -73,6 +79,13 @@ const update = async () => {
     <card-breadcrumbs />
 
     <card-form v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-pricelists v-model:data="form.data" />
+    <card-land-titles v-model:data="form.data" />
+    <card-facilities v-model:data="form.data" />
+    <card-promos v-model:data="form.data" />
+    <card-info-developer v-model:data="form.data" />
+    <card-photos-gate v-model:data="form.data" />
+    <card-photos-building v-model:data="form.data" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <div class="flex gap-2">
       <base-button class="flex-1" :is-loading="isSaving" color="primary" @click="update">Update</base-button>
