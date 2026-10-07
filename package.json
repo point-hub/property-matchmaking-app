@@ -18,7 +18,7 @@
   "dependencies": {
     "@ably/chat": "^1.4.0",
     "@point-hub/js-utils": "^0.0.6",
-    "@point-hub/papp": "^0.3.6",
+    "@point-hub/papp": "^0.3.7",
     "@point-hub/vue-cookie": "^0.2.2",
     "ably": "^2.29.0",
     "axios": "^1.20.0",
