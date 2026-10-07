@@ -5,6 +5,7 @@ import 'virtual:uno.css';
 
 import { PluginBaseComponents, PluginInputMask, PluginTooltip } from '@point-hub/papp';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { createApp } from 'vue';
 
 import Main from './main.vue';
@@ -13,6 +14,7 @@ import router from './router';
 
 const app = createApp(Main);
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 app.use(pinia);
 app.use(router);

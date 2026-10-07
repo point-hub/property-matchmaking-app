@@ -23,6 +23,7 @@
     "ably": "^2.29.0",
     "axios": "^1.20.0",
     "pinia": "^4.0.3",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "ua-parser-js": "^2.0.10",
     "vue": "^3.5.43",
     "vue-router": "^5.3.1"

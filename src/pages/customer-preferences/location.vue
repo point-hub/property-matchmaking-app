@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+
+const preference = useCustomerPreferenceStore();
+</script>
+
 <template>
   <main class="mx-auto max-w-3xl px-8 py-12">
     <!-- Progress -->
@@ -42,7 +48,8 @@
 
         <input
           type="text"
-          placeholder="Pilih kota, keluarahan, atau kecamatan..."
+          v-model="preference.data.location"
+          placeholder="Search kota, kecamatan, atau kelurahan..."
           class="w-full rounded-2xl border border-slate-300 bg-white py-4 pl-14 pr-5 text-lg outline-none transition focus:border-blue-600"
         />
       </div>
@@ -81,9 +88,15 @@
         Back
       </router-link>
 
-      <!-- to="/customer-preferences/budget" -->
-      <!-- class="rounded-xl bg-gray-300 px-8 py-3 font-semibold text-white hover:bg-blue-700" -->
       <router-link
+        v-if="preference.data.location"
+        to="/customer-preferences/budget"
+        class="rounded-xl bg-primary px-8 py-3 font-semibold text-white"
+      >
+        Continue
+      </router-link>
+      <router-link
+        v-else
         to="#"
         class="rounded-xl bg-gray-300 px-8 py-3 font-semibold text-white"
       >

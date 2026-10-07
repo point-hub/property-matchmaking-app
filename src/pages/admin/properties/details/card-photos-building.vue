@@ -9,7 +9,7 @@ const data = defineModel<Partial<IForm>>('data', {
 </script>
 
 <template>
-  <base-card title="Photos - Gate">
+  <base-card title="Photos - Building">
     <div class="my-5">
       <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
         <!-- Photos -->

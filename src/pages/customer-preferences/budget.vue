@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+
+const preference = useCustomerPreferenceStore();
+
 const cashPurchase = ref(false);
 </script>
 
 <template>
+  {{ preference }}
   <main class="mx-auto max-w-3xl px-8 py-12">
     <!-- Progress -->
     <div class="mb-12">
