@@ -96,7 +96,7 @@ const onSubmit = async () => {
 
       <button
         @click="onSubmit"
-        disabled
+        :disabled="!preference.data.name || !preference.data.whatsapp"
         class="rounded-xl bg-orange-300 px-8 py-3 font-semibold text-white hover:bg-blue-700"
         :class="{ 'bg-gray-300!': !preference.data.name || !preference.data.whatsapp }"
       >

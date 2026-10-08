@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 
 export interface ICustomerPreference {
-  location?: string;
+  locations?: string[];
   budget_min?: number;
   budget_max?: number;
   down_payment_min?: number;
@@ -19,7 +19,7 @@ export interface ICustomerPreference {
 }
 
 const defaultData = (): ICustomerPreference => ({
-  location: undefined,
+  locations: [],
   budget_min: undefined,
   budget_max: undefined,
   down_payment_min: undefined,

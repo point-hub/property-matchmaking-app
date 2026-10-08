@@ -18,7 +18,7 @@
   "dependencies": {
     "@ably/chat": "^1.4.0",
     "@point-hub/js-utils": "^0.0.6",
-    "@point-hub/papp": "^0.3.7",
+    "@point-hub/papp": "^0.3.8",
     "@point-hub/vue-cookie": "^0.2.2",
     "ably": "^2.29.0",
     "axios": "^1.20.0",
@@ -26,7 +26,7 @@
     "pinia-plugin-persistedstate": "^4.7.1",
     "ua-parser-js": "^2.0.10",
     "vue": "^3.5.43",
-    "vue-router": "^5.3.1"
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^28.0.0",
@@ -55,7 +55,7 @@
     "jsdom": "^30.1.2",
     "mochawesome": "^8.1.1",
     "npm-run-all2": "^9.0.3",
-    "start-server-and-test": "^3.0.12",
+    "start-server-and-test": "^3.0.13",
     "typescript": "5.9",
     "unocss": "^66.10.5",
     "vite": "^8.3.3",
