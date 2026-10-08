@@ -2,7 +2,20 @@ import { apiRequest } from '@/utils/api';
 
 export interface IResponse {
   _id: string
-  name: string
+  locations: string[];
+  budget_min: number;
+  budget_max: number;
+  down_payment_min: number;
+  down_payment_max: number;
+  monthly_payment_min: number;
+  monthly_payment_max: number;
+  age: number;
+  marital_status: string;
+  dependents: number;
+  problems: string[];
+  promos: string[];
+  name: string;
+  whatsapp: number;
   notes: string
   is_archived: boolean
   created_at: Date
@@ -20,7 +33,7 @@ export const findCustomerPreferenceApi = async (_id: string): Promise<IResponse>
 
   // Create a new AbortController for this request
   controller = new AbortController();
-  const response = await apiRequest.get(`/v1/master/customer-preferences/${_id}`, {
+  const response = await apiRequest.get(`/v1/customer-preferences/${_id}`, {
     signal: controller.signal,
   });
 

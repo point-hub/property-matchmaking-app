@@ -5,7 +5,7 @@ export interface IResponse {
 }
 
 export const deleteCustomerPreferenceApi = async (_id: string, delete_reason?: string): Promise<IResponse | undefined> => {
-  const response = await apiRequest.delete(`/v1/master/customer-preferences/${_id}`, {
+  const response = await apiRequest.delete(`/v1/customer-preferences/${_id}`, {
     data: {
       delete_reason,
     },

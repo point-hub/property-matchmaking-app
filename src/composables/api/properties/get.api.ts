@@ -45,6 +45,7 @@ export const getPropertiesApi = async (query?: IQuery): Promise<IResponse> => {
   const response = await apiRequest.get('/v1/master/properties', {
     params: {
       search: query?.search,
+      preferences: query?.preferences,
       page: query?.page || 1,
       page_size: query?.page_size || 10,
       sort: query?.sort || '-_id',

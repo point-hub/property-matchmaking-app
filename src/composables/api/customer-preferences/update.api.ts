@@ -6,7 +6,7 @@ interface IResponse {
 }
 
 export const updateCustomerPreferenceApi = async (id: string, data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.patch(`/v1/master/customer-preferences/${id}`, data);
+  const response = await apiRequest.patch(`/v1/customer-preferences/${id}`, data);
 
   return response.data;
 };

@@ -26,7 +26,7 @@ export const getCustomerPreferencesApi = async (query?: IQuery): Promise<IRespon
 
   // Create a new AbortController for this request
   controller = new AbortController();
-  const response = await apiRequest.get('/v1/master/customer-preferences', {
+  const response = await apiRequest.get('/v1/customer-preferences', {
     params: {
       search: query?.search,
       page: query?.page || 1,

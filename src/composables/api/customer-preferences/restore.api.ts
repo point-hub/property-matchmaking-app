@@ -6,7 +6,7 @@ interface IResponse {
 }
 
 export const restoreCustomerPreferenceApi = async (id: string, data: unknown): Promise<IResponse> => {
-  const response = await apiRequest.post(`/v1/master/customer-preferences/${id}/restore`, data);
+  const response = await apiRequest.post(`/v1/customer-preferences/${id}/restore`, data);
 
   return response.data;
 };
