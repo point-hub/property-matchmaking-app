@@ -23,7 +23,6 @@ const onSubmit = async () => {
 
 <template>
   <main class="mx-auto max-w-3xl px-8 py-12">
-    <pre><code>{{ preference.data }}</code></pre>
     <!-- Progress -->
     <div class="mb-12">
       <div class="mb-3 flex justify-between text-sm text-slate-500">
@@ -49,16 +48,18 @@ const onSubmit = async () => {
 
     <!-- Form Card -->
     <div class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
-
       <div class="flex flex-col gap-4">
         <!-- Nama -->
         <div>
           <label class="mb-3 block text-lg font-semibold text-slate-900">
-            Nama
+            Nama <span class="text-red-500">*</span>
           </label>
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
-            <input v-model="preference.data.name" class="w-full bg-transparent px-3 py-3 outline-none">
+            <input
+              v-model="preference.data.name"
+              class="w-full bg-transparent px-3 py-3 outline-none"
+            >
           </div>
         </div>
 
@@ -67,11 +68,14 @@ const onSubmit = async () => {
         <!-- WA -->
         <div>
           <label class="mb-3 block text-lg font-semibold text-slate-900">
-            Nomer WhatsApp
+            Nomer WhatsApp <span class="text-red-500">*</span>
           </label>
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
-            <input v-model="preference.data.whatsapp" class="w-full bg-transparent px-3 py-3 outline-none">
+            <input
+              v-model="preference.data.whatsapp"
+              class="w-full bg-transparent px-3 py-3 outline-none"
+            >
           </div>
 
           <p class="mt-2 text-sm text-slate-500">
@@ -92,7 +96,9 @@ const onSubmit = async () => {
 
       <button
         @click="onSubmit"
+        disabled
         class="rounded-xl bg-orange-300 px-8 py-3 font-semibold text-white hover:bg-blue-700"
+        :class="{ 'bg-gray-300!': !preference.data.name || !preference.data.whatsapp }"
       >
         <div class="i-logos-whatsapp-icon h-5 w-5"></div>
 

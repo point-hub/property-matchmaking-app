@@ -1,35 +1,74 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-import { getPromosApi } from '@/composables/api/promos/get.api';
+import { getPublicPromosApi } from '@/composables/api/promos/get-public.api';
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
 
 const preference = useCustomerPreferenceStore();
 
 const isLoading = ref(false);
 const promos = ref();
+const isOtherSelected = ref(false);
+const otherPromo = ref('');
+
+watch(
+  [isOtherSelected, otherPromo],
+  () => {
+    const currentPromos = preference.data.promos ?? [];
+
+    const normalPromos = currentPromos.filter(
+      (promo) => !promo.startsWith('Others:'),
+    );
+
+    if (
+      isOtherSelected.value &&
+      otherPromo.value.trim()
+    ) {
+      normalPromos.push(
+        `Others: ${otherPromo.value.trim()}`,
+      );
+    }
+
+    preference.data.promos = normalPromos;
+  },
+);
 
 const getData = async (page = 1) => {
   try {
     isLoading.value = true;
-    const response = await getPromosApi({
+
+    const response = await getPublicPromosApi({
       page,
       page_size: 10,
     });
+
     promos.value = response.data;
   } finally {
     isLoading.value = false;
   }
 };
 
+const restoreOtherPromo = (): void => {
+  const otherValue = preference.data.promos?.find(
+    (promo) => promo.startsWith('Others:'),
+  );
+
+  if (!otherValue) {
+    return;
+  }
+
+  isOtherSelected.value = true;
+  otherPromo.value = otherValue.replace(/^Others:\s*/, '');
+};
+
 onMounted(async () => {
+  restoreOtherPromo();
   await getData();
 });
 </script>
 
 <template>
   <main class="mx-auto max-w-3xl px-8 py-12">
-    <pre><code>{{ preference.data }}</code></pre>
     <!-- Progress -->
     <div class="mb-12">
       <div class="mb-3 flex justify-between text-sm text-slate-500">
@@ -49,15 +88,19 @@ onMounted(async () => {
       </h1>
 
       <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-500">
-        Pilih promo yang sesuai dengan kebutuhan Anda agar kami dapat memberikan rekomendasi terbaik.
+        Pilih promo yang sesuai dengan kebutuhan Anda agar kami dapat
+        memberikan rekomendasi terbaik.
       </p>
     </div>
 
     <!-- Form Card -->
     <div class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
-
       <div class="flex flex-col gap-4">
-        <label v-for="promo in promos" class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
+        <label
+          v-for="promo in promos"
+          :key="promo.name"
+          class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md"
+        >
           <base-checkbox
             v-model="preference.data.promos"
             :true-value="promo.name"
@@ -75,21 +118,24 @@ onMounted(async () => {
           </div>
         </label>
 
-        <label class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md">
+        <label
+          class="flex cursor-pointer items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-blue-500 hover:shadow-md"
+        >
           <input
+            v-model="isOtherSelected"
             type="checkbox"
             class="mt-1 h-5 w-5 rounded border-slate-300"
           >
 
           <div class="w-full">
-
             <div class="text-xl font-semibold">
               Lainnya
             </div>
 
             <textarea
+              v-model="otherPromo"
               rows="4"
-              placeholder="Beritahu kami kendala atau kebutuhan Anda"
+              placeholder="Beritahu kami kebutuhan promo Anda"
               class="mt-4 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-600"
             />
           </div>
