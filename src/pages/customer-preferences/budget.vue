@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
 
 const preference = useCustomerPreferenceStore();
-
-const cashPurchase = ref(false);
 
 const chooseMaritalStatus = (status: string) => {
   preference.data.marital_status = status;
@@ -81,7 +77,7 @@ const chooseMaritalStatus = (status: string) => {
         <div class="mt-4 flex items-center justify-end gap-3 text-xs">
           <input
             type="checkbox"
-            v-model="cashPurchase"
+            v-model="preference.data.is_cash"
             id="cashPurchase"
             name="cashPurchase"
             class="h-3 w-3 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
@@ -93,10 +89,10 @@ const chooseMaritalStatus = (status: string) => {
         </div>
       </section>
 
-      <hr v-if="!cashPurchase" class="my-10 border-slate-200">
+      <hr v-if="!preference.data.is_cash" class="my-10 border-slate-200">
 
       <!-- Down Payment -->
-      <section v-if="!cashPurchase">
+      <section v-if="!preference.data.is_cash">
         <h2 class="text-2xl font-bold text-slate-900">
           Uang Muka (DP)
         </h2>
@@ -133,7 +129,7 @@ const chooseMaritalStatus = (status: string) => {
       </section>
 
       <!-- Monthly Payment -->
-      <section v-if="!cashPurchase">
+      <section v-if="!preference.data.is_cash">
         <h2 class="text-2xl font-bold text-slate-900 mt-10">
           Cicilan Bulanan
         </h2>
@@ -168,10 +164,10 @@ const chooseMaritalStatus = (status: string) => {
         </div>
       </section>
 
-      <hr v-if="!cashPurchase" class="my-10 border-slate-200">
+      <hr v-if="!preference.data.is_cash" class="my-10 border-slate-200">
 
       <!-- Informasi Pribadi -->
-      <div v-if="!cashPurchase">
+      <div v-if="!preference.data.is_cash">
 
         <h2 class="text-2xl font-bold text-slate-900">
           Tentang Anda
@@ -183,7 +179,7 @@ const chooseMaritalStatus = (status: string) => {
 
       </div>
 
-      <div class="mt-8 grid gap-8" v-if="!cashPurchase">
+      <div class="mt-8 grid gap-8" v-if="!preference.data.is_cash">
 
         <!-- Usia -->
         <div>

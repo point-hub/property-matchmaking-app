@@ -5,6 +5,7 @@ export interface ICustomerPreference {
   locations?: string[];
   budget_min?: number;
   budget_max?: number;
+  is_cash?: boolean;
   down_payment_min?: number;
   down_payment_max?: number;
   monthly_payment_min?: number;
@@ -22,6 +23,7 @@ const defaultData = (): ICustomerPreference => ({
   locations: [],
   budget_min: undefined,
   budget_max: undefined,
+  is_cash: false,
   down_payment_min: undefined,
   down_payment_max: undefined,
   monthly_payment_min: undefined,
