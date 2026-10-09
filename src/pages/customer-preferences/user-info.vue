@@ -13,7 +13,9 @@ const onSubmit = async () => {
     isSaving.value = true;
     const response = await createCustomerPreferenceApi(preference.data);
     if (response?.inserted_id) {
-      window.location.href = `https://wa.me/${6281357747377}?text=Halo Kahu, saya ${preference.data.name} tolong diinfokan rekomendasi rumah yang cocok dengan preferensi saya.`;
+      const name = preference.data.name;
+      preference.reset();
+      window.location.href = `https://wa.me/${6281357747377}?text=Halo Kahu, saya ${name} tolong diinfokan rekomendasi rumah yang cocok dengan preferensi saya.`;
     }
   } finally {
     isSaving.value = false;
