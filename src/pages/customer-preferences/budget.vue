@@ -81,7 +81,7 @@ const isCompleted = () => {
         <div class="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Minimal
+              Minimal <span class="text-red-500">*</span>
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
@@ -94,7 +94,7 @@ const isCompleted = () => {
 
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Maksimal
+              Maksimal <span class="text-red-500">*</span>
             </label>
 
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
@@ -135,7 +135,7 @@ const isCompleted = () => {
         <div class="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Minimal
+              Minimal <span class="text-red-500">*</span>
             </label>
 
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
@@ -148,7 +148,7 @@ const isCompleted = () => {
 
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Maksimal
+              Maksimal <span class="text-red-500">*</span>
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
@@ -172,7 +172,7 @@ const isCompleted = () => {
         <div class="mt-6 grid gap-6 md:grid-cols-2">
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Minimal
+              Minimal <span class="text-red-500">*</span>
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
@@ -184,7 +184,7 @@ const isCompleted = () => {
 
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-500">
-              Maksimal
+              Maksimal <span class="text-red-500">*</span>
             </label>
             <div class="flex items-center rounded-xl border border-slate-300 px-4">
               <span class="text-slate-500">Rp</span>
@@ -216,7 +216,7 @@ const isCompleted = () => {
         <!-- Usia -->
         <div>
           <label class="mb-3 block text-lg font-semibold text-slate-900">
-            Berapa usia Anda?
+            Berapa usia Anda? <span class="text-red-500">*</span>
           </label>
 
           <div class="flex items-center rounded-xl border border-slate-300 px-4">
@@ -238,7 +238,7 @@ const isCompleted = () => {
         <div>
 
           <label class="mb-4 block text-lg font-semibold text-slate-900">
-            Apa status pernikahan Anda?
+            Apa status pernikahan Anda? <span class="text-red-500">*</span>
           </label>
 
           <div class="grid gap-4 md:grid-cols-2">
@@ -282,7 +282,7 @@ const isCompleted = () => {
         <div>
 
           <label class="mb-3 block text-lg font-semibold text-slate-900">
-            Berapa jumlah tanggungan Anda?
+            Berapa jumlah tanggungan Anda? <span class="text-red-500">*</span>
           </label>
 
           <p class="mb-5 text-sm text-slate-500">
