@@ -89,7 +89,7 @@ watchDebounced(
     <!-- Search -->
     <div class="mb-10">
       <div class="relative">
-        <div class="w-full rounded-2xl border border-slate-300 bg-white text-lg outline-none transition focus:border-blue-600">
+        <div class="w-full rounded-2xl border py-1 border-slate-300 bg-white text-lg outline-none transition focus:border-blue-600">
           <base-select
             placeholder="Pilih lokasi yang Anda inginkan"
             v-model="city"

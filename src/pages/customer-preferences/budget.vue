@@ -6,6 +6,38 @@ const preference = useCustomerPreferenceStore();
 const chooseMaritalStatus = (status: string) => {
   preference.data.marital_status = status;
 };
+
+const isCompleted = () => {
+  if (!preference.data.budget_min || !preference.data.budget_max) {
+    return false;
+  }
+
+  if (!preference.data.is_cash && (
+    !preference.data.down_payment_min
+    || !preference.data.down_payment_max
+    || !preference.data.monthly_payment_min
+    || !preference.data.monthly_payment_max
+    || !preference.data.age
+    || !preference.data.marital_status
+    || !preference.data.dependents
+  )) {
+    return false;
+  }
+
+  if (!preference.data.is_cash && !preference.data.down_payment_max) {
+    return false;
+  }
+
+  if (!preference.data.is_cash && !preference.data.monthly_payment_min) {
+    return false;
+  }
+
+  if (!preference.data.is_cash && !preference.data.monthly_payment_max) {
+    return false;
+  }
+
+  return true;
+};
 </script>
 
 <template>
@@ -278,8 +310,16 @@ const chooseMaritalStatus = (status: string) => {
       </router-link>
 
       <router-link
+        v-if="isCompleted()"
         to="/customer-preferences/buying-problem"
-        class="rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white hover:bg-blue-700"
+        class="rounded-xl bg-primary px-8 py-3 font-semibold text-white"
+      >
+        Continue
+      </router-link>
+      <router-link
+        v-else
+        to="#"
+        class="rounded-xl bg-gray-300 px-8 py-3 font-semibold text-white"
       >
         Continue
       </router-link>
