@@ -133,7 +133,7 @@ const isPriceMatched = (property: IProperty): boolean => {
 
       <!-- Comparison -->
 
-      <section class="mt-20">
+      <section v-if="properties.data.length" class="mt-20">
 
         <h2 class="text-3xl font-bold">
           Compare Our Top Picks
@@ -230,6 +230,44 @@ const isPriceMatched = (property: IProperty): boolean => {
               </tr>
             </tbody>
           </base-table>
+        </div>
+      </section>
+
+      <section v-else class="mx-auto py-12">
+        <div class="rounded-3xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm sm:px-12">
+          <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-blue-50">
+            <base-icon icon="i-fa7-solid:triangle-exclamation" class="w-12 h-12 text-gray-500" />
+          </div>
+
+          <p class="mt-6 text-sm font-semibold uppercase tracking-wider text-blue-600">
+            Property Search Results
+          </p>
+
+          <h2 class="mt-3 text-3xl font-bold text-slate-900">
+            Belum ada properti yang sesuai
+          </h2>
+
+          <p class="mx-auto mt-4 max-w-xl leading-7 text-slate-500 mb-10">
+            Kami belum menemukan properti yang sesuai dengan kriteria Anda saat ini. Jangan khawatir — Anda mungkin bisa menemukan lebih banyak pilihan dengan menyesuaikan lokasi atau anggaran Anda.
+          </p>
+
+          <div class="flex gap-2 items-center justify-center">
+            <router-link
+              to="/customer-preferences/location"
+              class="rounded-xl bg-blue-600 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-700"
+            >
+              Mulai Konsultasi Gratis
+            </router-link>
+
+            <a
+              href="https://wa.me/6281357747377"
+              class="rounded-xl bg-orange-300 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-700"
+            >
+              <div class="i-logos-whatsapp-icon h-5 w-5"></div>
+
+              Hubungi via Whatsapp
+            </a>
+          </div>
         </div>
       </section>
 
