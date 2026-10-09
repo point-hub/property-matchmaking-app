@@ -4,7 +4,7 @@ import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 
 import { toastRef } from './toast';
-const { loadDarkMode } = useDarkMode();
+const { loadDarkMode, setDarkMode } = useDarkMode();
 
 /**
  * Track breakpoint on screen change
@@ -19,6 +19,7 @@ onMounted(() => {
   /**
    * load dark mode configuration
    */
+  setDarkMode('light');
   loadDarkMode();
 });
 </script>
