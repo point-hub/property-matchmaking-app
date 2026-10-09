@@ -35,7 +35,8 @@ onMounted(async () => {
   if (id) {
     preference.value = await findCustomerPreferenceApi(id);
     properties.value = await getPropertiesApi({
-      sort: '',
+      sort: '-match_score',
+      page_size: 10,
       preferences: {
         locations: preference.value.locations,
         budget_min: preference.value.budget_min,
