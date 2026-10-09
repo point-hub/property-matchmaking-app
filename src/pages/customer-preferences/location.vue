@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 import { getCitiesApi } from '@/composables/api/locations/get-cities.api';
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+import { toast }from '@/toast';
 
 const preference = useCustomerPreferenceStore();
 const isLoading = defineModel<boolean>('is-loading', { default: false });
@@ -134,13 +135,16 @@ watchDebounced(
       >
         Continue
       </router-link>
-      <router-link
+      <a
         v-else
-        to="#"
+        href="javascript:void(0)"
+        @click="toast('Please fill all required fields', {
+          color: 'danger',
+        });"
         class="rounded-xl bg-gray-300 px-8 py-3 font-semibold text-white"
       >
         Continue
-      </router-link>
+      </a>
     </div>
   </main>
 </template>

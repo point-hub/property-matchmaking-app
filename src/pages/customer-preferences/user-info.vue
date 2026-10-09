@@ -3,12 +3,20 @@ import { ref } from 'vue';
 
 import { createCustomerPreferenceApi } from '@/composables/api/customer-preferences/create.api';
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
+import { toast } from '@/toast';
 
 const preference = useCustomerPreferenceStore();
 
 const isSaving = ref(false);
 
 const onSubmit = async () => {
+
+  if (!preference.data.name || !preference.data.whatsapp) {
+    toast('Please fill all required fields', {
+      color: 'danger',
+    });
+  }
+
   try {
     isSaving.value = true;
     const response = await createCustomerPreferenceApi(preference.data);
@@ -98,7 +106,6 @@ const onSubmit = async () => {
 
       <button
         @click="onSubmit"
-        :disabled="!preference.data.name || !preference.data.whatsapp"
         class="rounded-xl bg-orange-300 px-8 py-3 font-semibold text-white hover:bg-blue-700"
         :class="{ 'bg-gray-300!': !preference.data.name || !preference.data.whatsapp }"
       >
