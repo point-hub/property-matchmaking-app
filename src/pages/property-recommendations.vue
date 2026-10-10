@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { findCustomerPreferenceApi } from '@/composables/api/customer-preferences/find-by-id.api';
-import { getPropertiesApi } from '@/composables/api/properties/get.api';
+import { getPropertyRecommendationsApi } from '@/composables/api/properties/get-recommendations.api';
 
 const route = useRoute();
 const id = route.query.id?.toString();
@@ -34,7 +34,7 @@ interface IProperty {
 onMounted(async () => {
   if (id) {
     preference.value = await findCustomerPreferenceApi(id);
-    properties.value = await getPropertiesApi({
+    properties.value = await getPropertyRecommendationsApi({
       sort: '-match_score',
       page_size: 10,
       preferences: {
@@ -112,7 +112,7 @@ const isPriceMatched = (property: IProperty): boolean => {
 
         <div class="rounded-2xl bg-white p-6 shadow-sm">
           <div class="text-sm text-slate-500">Location</div>
-          <div class="mt-2 font-semibold">{{ preference.locations.join(', ') }}</div>
+          <div class="mt-2 font-semibold">{{ preference.locations?.join(', ') }}</div>
         </div>
 
         <div class="rounded-2xl bg-white p-6 shadow-sm">
@@ -122,12 +122,12 @@ const isPriceMatched = (property: IProperty): boolean => {
 
         <div class="rounded-2xl bg-white p-6 shadow-sm">
           <div class="text-sm text-slate-500">Buying Problems</div>
-          <div class="mt-2 font-semibold">{{ preference.problems.join(', ') }}</div>
+          <div class="mt-2 font-semibold">{{ preference.problems?.join(', ') }}</div>
         </div>
 
         <div class="rounded-2xl bg-white p-6 shadow-sm">
           <div class="text-sm text-slate-500">Promotion Needs</div>
-          <div class="mt-2 font-semibold">{{ preference.promos.join(', ') }}</div>
+          <div class="mt-2 font-semibold">{{ preference.promos?.join(', ') }}</div>
         </div>
       </section>
 
