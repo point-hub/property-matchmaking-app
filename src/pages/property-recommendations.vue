@@ -10,13 +10,9 @@ import { getPropertyRecommendationsApi } from '@/composables/api/properties/get-
 interface IProperty {
   _id?: string;
   code?: string;
-  name?: string;
-  address?: string;
   village?: string;
   district?: string;
   city?: string;
-  google_map_link?: string;
-  instagram?: string;
   pricelists?: {
     building_area: number;
     land_area: number;
@@ -24,18 +20,15 @@ interface IProperty {
   }[];
   land_titles?: string[];
   facilities?: string[];
-  promos?: string[];
-  developer_name?: string;
-  whatsapp?: string;
-  mou?: string;
+  promos?: { name: string, description: string }[];
   photos_gate?: string[];
   photos_building?: string[];
 }
 
 interface ICustomerPreference {
-  locations?: string[];
-  budget_min?: number;
-  budget_max?: number;
+  locations: string[];
+  budget_min: number;
+  budget_max: number;
   problems?: string[];
   promos?: string[];
 }
@@ -236,30 +229,15 @@ const propertyImages = (property: IProperty): string[] => {
           <article
             v-for="(property, index) in properties"
             :key="property._id ?? property.code ?? index"
-            class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+            class="overflow-hidden border border-slate-200 bg-white shadow-sm -mx-4"
           >
             <div class="p-4 sm:p-5">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
-                  <p class="text-xs font-semibold uppercase tracking-wide text-blue-600">
-                    Property {{ index + 1 }}
-                  </p>
                   <h3 class="mt-1 break-words text-lg font-bold">
-                    {{ property.name || property.code || 'Property' }}
+                    {{ property.code }}
                   </h3>
-                  <p class="mt-1 text-sm text-slate-500">
-                    {{ property.code || 'Property details' }}
-                  </p>
                 </div>
-                <a
-                  v-if="property.google_map_link"
-                  :href="property.google_map_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="shrink-0 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50"
-                >
-                  Map
-                </a>
               </div>
 
               <div
@@ -276,77 +254,55 @@ const propertyImages = (property: IProperty): string[] => {
                 >
                   <img
                     :src="photo"
-                    :alt="`${property.name || property.code || 'Property'} photo ${photoIndex + 1}`"
+                    :alt="`${property.code}`"
                     class="h-28 w-36 rounded-xl object-cover sm:h-36 sm:w-48"
                     loading="lazy"
                   />
                 </a>
               </div>
 
-              <div class="mt-4 grid grid-cols-2 gap-3">
+              <div class="mt-4 gap-3">
+                <h4 class="font-semibold">Lokasi</h4>
                 <div
-                  class="min-w-0 rounded-xl p-3"
-                  :class="isLocationMatched(property) ? 'border border-green-200 bg-green-50' : 'border border-red-200 bg-red-50'"
+                  class="mt-3 px-4 py-2 -mx-4"
+                  :class="isLocationMatched(property) ? 'border border-green-200 bg-green-100' : 'border border-red-200 bg-red-100'"
                 >
-                  <p class="text-xs text-slate-500">Location</p>
-                  <p class="mt-1 break-words text-sm font-semibold">
-                    {{ [property.village, property.district, property.city].filter(Boolean).join(', ') || 'Not specified' }}
-                  </p>
-                  <p
-                    class="mt-2 text-xs font-semibold"
-                    :class="isLocationMatched(property) ? 'text-green-700' : 'text-red-700'"
-                  >
-                    {{ isLocationMatched(property) ? 'Matches location' : 'Outside location' }}
-                  </p>
-                </div>
-
-                <div
-                  class="min-w-0 rounded-xl p-3"
-                  :class="isPriceMatched(property) ? 'border border-green-200 bg-green-50' : 'border border-red-200 bg-red-50'"
-                >
-                  <p class="text-xs text-slate-500">Budget</p>
-                  <p class="mt-1 text-sm font-semibold">
-                    {{ isPriceMatched(property) ? 'Within budget' : 'No price match' }}
-                  </p>
-                  <p
-                    class="mt-2 text-xs font-semibold"
-                    :class="isPriceMatched(property) ? 'text-green-700' : 'text-red-700'"
-                  >
-                    {{ isPriceMatched(property) ? 'Matches budget' : 'Outside budget' }}
+                  <p class="mt-1 break-words text-sm">
+                    {{ [property.city].filter(Boolean).join(', ') || 'Not specified' }}
                   </p>
                 </div>
               </div>
 
               <div class="mt-5">
-                <h4 class="font-semibold">Available Prices</h4>
+                <h4 class="font-semibold">Harga</h4>
+
                 <div
                   v-if="property.pricelists?.length"
-                  class="mt-3 space-y-3"
+                  class="mt-3 overflow-x-auto border border-slate-200 -mx-4"
                 >
-                  <div
-                    v-for="(pricelist, priceIndex) in property.pricelists"
-                    :key="priceIndex"
-                    class="rounded-xl border border-slate-200 p-3"
-                  >
-                    <div class="flex items-start justify-between gap-3">
-                      <span class="text-sm text-slate-600">
-                        Type {{ pricelist.building_area }}/{{ pricelist.land_area }}
-                      </span>
-                      <span class="text-right text-sm font-bold">
-                        {{ formatPrice(pricelist.price) }}
-                      </span>
-                    </div>
-                    <span
-                      v-if="preference.budget_min != null && preference.budget_max != null && pricelist.price >= preference.budget_min && pricelist.price <= preference.budget_max"
-                      class="mt-2 inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-800"
-                    >
-                      Within your budget
-                    </span>
-                  </div>
+                  <table class="w-full text-sm">
+                    <tbody class="divide-y divide-slate-200">
+                      <tr
+                        v-for="(pricelist, priceIndex) in property.pricelists"
+                        :key="priceIndex"
+                        class="bg-red-100"
+                        :class="{
+                          'bg-green-100!':
+                            pricelist.price >= preference.budget_min &&
+                            pricelist.price <= preference.budget_max,
+                        }"
+                      >
+                        <td class="px-4 py-2 text-slate-600">
+                          Tipe {{ pricelist.building_area }}/{{ pricelist.land_area }}
+                        </td>
+
+                        <td class="px-4 py-2 text-right font-medium whitespace-nowrap">
+                          {{ formatPrice(pricelist.price) }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <p v-else class="mt-2 text-sm text-slate-500">
-                  Price information is not available.
-                </p>
               </div>
 
               <div v-if="property.land_titles?.length" class="mt-5">
@@ -380,7 +336,7 @@ const propertyImages = (property: IProperty): string[] => {
               <div v-if="property.promos?.length" class="mt-5">
                 <h4 class="font-semibold">Promotions</h4>
                 <ul class="mt-2 space-y-1 text-sm text-slate-600">
-                  <li v-for="promo in property.promos" :key="promo">
+                  <li v-for="promo in property.promos" :key="promo.name">
                     <span class="mr-1 text-green-600">✓</span> {{ promo.name }}
                   </li>
                 </ul>
@@ -402,7 +358,7 @@ const propertyImages = (property: IProperty): string[] => {
                     :key="property._id ?? property.code ?? index"
                     class="min-w-64 border-b border-slate-200 p-4 text-left font-semibold"
                   >
-                    {{ property.code || property.name || `Property ${index + 1}` }}
+                    {{ property.code }}
                   </th>
                 </tr>
               </thead>
