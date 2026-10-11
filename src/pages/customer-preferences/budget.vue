@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
 import { toast } from '@/toast';
 
 const preference = useCustomerPreferenceStore();
+const showErrors = ref<boolean>(false);
 
 const chooseMaritalStatus = (status: string) => {
   preference.data.marital_status = status;
@@ -58,6 +61,8 @@ const isCompleted = () => {
 };
 
 const continueWithValidation = () => {
+  showErrors.value = true;
+
   const data = preference.data;
 
   if (!isCompleted()) {
@@ -121,7 +126,7 @@ const continueWithValidation = () => {
     </div>
 
     <!-- Form Card -->
-    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-6 lg:p-10">
+    <div class="border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-6 lg:p-10 -mx-4">
       <!-- Home Budget -->
       <section>
         <h2 class="text-xl font-bold text-slate-900 sm:text-2xl">
@@ -151,11 +156,10 @@ const continueWithValidation = () => {
             </div>
 
             <p
-              v-if="preference.data.budget_min == null || preference.data.budget_min <= 0"
-              class="mt-2 flex items-start gap-1.5 text-xs leading-5 text-red-600 sm:text-sm"
+              v-if="showErrors && (preference.data.budget_min == null || preference.data.budget_min <= 0)"
+              class="mt-2 text-xs leading-5 bg-red-100 px-4 py-2 sm:text-sm -mx-4"
             >
-              <span class="shrink-0">!</span>
-              Masukkan anggaran minimum lebih dari Rp0.
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" /> Anggaran minimum harus lebih dari Rp0
             </p>
           </div>
 
@@ -177,15 +181,15 @@ const continueWithValidation = () => {
             </div>
 
             <p
-              v-if="preference.data.budget_max == null || preference.data.budget_max <= 0"
+              v-if="showErrors && (preference.data.budget_max == null || preference.data.budget_max <= 0)"
               class="mt-2 flex items-start gap-1.5 text-xs leading-5 text-red-600 sm:text-sm"
             >
               <span class="shrink-0">!</span>
-              Masukkan anggaran maksimum lebih dari Rp0.
+              Anggaran maksimum harus lebih dari Rp0
             </p>
 
             <p
-              v-else-if="preference.data.budget_min != null && preference.data.budget_min > preference.data.budget_max"
+              v-else-if="showErrors && ((preference.data.budget_min ?? 0) > (preference.data.budget_max ?? 0))"
               class="mt-2 flex items-start gap-1.5 text-xs leading-5 text-red-600 sm:text-sm"
             >
               <span class="shrink-0">!</span>
@@ -204,7 +208,7 @@ const continueWithValidation = () => {
             class="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
           />
           <span class="text-sm leading-6 text-slate-600">
-            Saya ingin membeli rumah secara tunai tanpa cicilan KPR.
+            Saya ingin membeli rumah secara tunai.
           </span>
         </label>
       </section>
@@ -483,7 +487,7 @@ const continueWithValidation = () => {
         to="/customer-preferences/location"
         class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100 sm:px-6 sm:text-base"
       >
-        Kembali
+        Back
       </router-link>
 
       <router-link
@@ -491,7 +495,7 @@ const continueWithValidation = () => {
         to="/customer-preferences/buying-problem"
         class="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white sm:px-8 sm:text-base"
       >
-        Lanjutkan
+        Continue
       </router-link>
 
       <button
@@ -500,7 +504,7 @@ const continueWithValidation = () => {
         class="inline-flex min-h-11 items-center justify-center rounded-xl bg-gray-300 px-6 py-3 text-sm font-semibold text-white sm:px-8 sm:text-base"
         @click="continueWithValidation"
       >
-        Lanjutkan
+        Continue
       </button>
     </div>
   </main>

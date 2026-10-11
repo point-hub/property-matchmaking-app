@@ -159,19 +159,17 @@ onMounted(async () => {
     </div>
 
     <!-- Footer -->
-    <div
-      class="mt-8 flex flex-col-reverse gap-3 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
-    >
+    <div class="mt-8 flex items-center justify-between gap-3 border-t border-slate-200 pt-6 sm:mt-12 sm:pt-8">
       <router-link
         to="/customer-preferences/budget"
-        class="flex min-h-12 w-full items-center justify-center rounded-xl border border-slate-300 px-6 py-3 text-base font-medium transition hover:bg-slate-100 sm:w-auto"
+        class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100 sm:px-6 sm:text-base"
       >
         Back
       </router-link>
 
       <router-link
         to="/customer-preferences/promotion-needs"
-        class="flex min-h-12 w-full items-center justify-center rounded-xl bg-blue-600 px-8 py-3 text-base font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
+        class="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white sm:px-8 sm:text-base"
       >
         Continue
       </router-link>

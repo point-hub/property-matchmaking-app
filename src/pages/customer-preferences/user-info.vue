@@ -129,11 +129,6 @@ const onSubmit = async () => {
             Anda saat menemukan properti yang sesuai.
           </p>
         </div>
-
-        <p class="text-sm text-slate-500">
-          <span class="text-red-500">*</span>
-          Wajib diisi
-        </p>
       </div>
     </div>
 
