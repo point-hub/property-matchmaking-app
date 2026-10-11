@@ -4,17 +4,25 @@ import { ref } from 'vue';
 
 import { getCitiesApi } from '@/composables/api/locations/get-cities.api';
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
-import { toast }from '@/toast';
+import { toast } from '@/toast';
+
+interface ICityOption {
+  _id: string;
+  label: string;
+  value: string;
+}
 
 const preference = useCustomerPreferenceStore();
 const isLoading = defineModel<boolean>('is-loading', { default: false });
 
 const city = ref('');
 const searchCity = ref('');
-const optionsCity = ref<object>([]);
+const optionsCity = ref<ICityOption[]>([]);
+
 const getCities = async () => {
   try {
     isLoading.value = true;
+
     const response = await getCitiesApi({
       search: {
         city_name: searchCity.value,
@@ -24,7 +32,7 @@ const getCities = async () => {
       page_size: 50,
     });
 
-    optionsCity.value = response.data.map((item) => ({
+    optionsCity.value = response.data.map(item => ({
       _id: item._id,
       label: item.city_name,
       value: item.city_name,
@@ -42,6 +50,7 @@ const selectLocation = () => {
   }
 
   city.value = '';
+  searchCity.value = '';
 };
 
 const removeLocation = (location: string) => {
@@ -50,12 +59,13 @@ const removeLocation = (location: string) => {
   );
 };
 
-
 watchDebounced(
   searchCity,
   async () => {
-    if (searchCity.value) {
+    if (searchCity.value.trim()) {
       await getCities();
+    } else {
+      optionsCity.value = [];
     }
   },
   { debounce: 300, maxWait: 500 },
@@ -63,56 +73,65 @@ watchDebounced(
 </script>
 
 <template>
-  <main class="mx-auto max-w-3xl px-8 py-12">
+  <main class="mx-auto w-full max-w-3xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
     <!-- Progress -->
-    <div class="mb-16">
-      <div class="mb-3 flex justify-between text-sm text-slate-500">
+    <div class="mb-10 sm:mb-16">
+      <div class="mb-3 flex justify-between text-xs text-slate-500 sm:text-sm">
         <span>20% Complete</span>
         <span>1 / 5</span>
       </div>
 
-      <div class="h-2 rounded-full bg-slate-200">
+      <div class="h-2 overflow-hidden rounded-full bg-slate-200">
         <div class="h-full w-1/5 rounded-full bg-blue-600"></div>
       </div>
     </div>
 
     <!-- Title -->
-    <div class="mb-12">
-      <h1 class="mt-3 text-5xl font-bold tracking-tight text-slate-900">
-        Pilih Lokasi
+    <div class="mb-8 sm:mb-12">
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900 sm:mt-3 sm:text-4xl lg:text-5xl">
+        Pilih Lokasi <span class="text-red-500">*</span>
       </h1>
 
-      <p class="mt-5 text-lg leading-8 text-slate-500">
-        Pilih lokasi yang Anda inginkan, dan kami akan membantu menemukan properti yang tepat.
+      <p class="mt-4 text-base leading-7 text-slate-500 sm:mt-5 sm:text-lg sm:leading-8">
+        Pilih lokasi yang Anda inginkan, dan kami akan membantu menemukan
+        properti yang tepat.
       </p>
     </div>
 
     <!-- Search -->
-    <div class="mb-10">
-      <div class="relative">
-        <div class="w-full rounded-2xl border py-1 border-slate-300 bg-white text-lg outline-none transition focus:border-blue-600">
-          <base-select
-            placeholder="Pilih lokasi yang Anda inginkan"
-            v-model="city"
-            v-model:search="searchCity"
-            :options="optionsCity"
-            @select="selectLocation"
-            border="none"
-          />
-        </div>
-
+    <div class="mb-8 sm:mb-10">
+      <div class="w-full rounded-2xl border border-slate-300 bg-white py-1 text-base outline-none transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100 sm:text-lg">
+        <base-select
+          v-model="city"
+          v-model:search="searchCity"
+          placeholder="Pilih lokasi yang Anda inginkan"
+          :options="optionsCity"
+          @select="selectLocation"
+          border="none"
+        />
       </div>
-      <div class="mt-5">
-        <!-- Selected Locations -->
-        <div class="mb-6 flex flex-wrap gap-3">
+
+      <!-- Selected Locations -->
+      <div v-if="preference.data.locations?.length" class="mt-5">
+        <p class="mb-3 text-sm font-medium text-slate-600">
+          Lokasi pilihan Anda
+        </p>
+
+        <div class="flex flex-wrap gap-2 sm:gap-3">
           <div
             v-for="location in preference.data.locations"
-            class="flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700"
+            :key="location"
+            class="flex max-w-full items-center gap-2 rounded-full bg-blue-50 py-2 pl-3 pr-2 text-sm font-medium text-blue-700 sm:pl-4"
           >
-            {{ location }}
+            <span class="break-words">
+              {{ location }}
+            </span>
 
-            <base-button @click="removeLocation(location)" class="bg-red-100 rounded-full">
-              <span class="h-2 w-2 i-fa7-solid:x"></span>
+            <base-button
+              class="shrink-0 rounded-full bg-red-100"
+              @click="removeLocation(location)"
+            >
+              <span class="h-3 w-3 i-fa7-solid:x"></span>
             </base-button>
           </div>
         </div>
@@ -120,10 +139,10 @@ watchDebounced(
     </div>
 
     <!-- Footer -->
-    <div class="mt-20 flex items-center justify-between border-t border-slate-200 pt-8">
+    <div class="mt-12 flex items-center justify-between gap-3 border-t border-slate-200 pt-6 sm:mt-20 sm:pt-8">
       <router-link
         to="/"
-        class="rounded-xl border border-slate-300 px-6 py-3 font-medium hover:bg-slate-100"
+        class="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100 sm:px-6 sm:text-base"
       >
         Back
       </router-link>
@@ -131,20 +150,19 @@ watchDebounced(
       <router-link
         v-if="preference.data.locations?.length"
         to="/customer-preferences/budget"
-        class="rounded-xl bg-primary px-8 py-3 font-semibold text-white"
+        class="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white transition sm:px-8 sm:text-base"
       >
         Continue
       </router-link>
-      <a
+
+      <button
         v-else
-        href="javascript:void(0)"
-        @click="toast('Please fill all required fields', {
-          color: 'danger',
-        });"
-        class="rounded-xl bg-gray-300 px-8 py-3 font-semibold text-white"
+        type="button"
+        class="inline-flex min-h-11 items-center justify-center rounded-xl bg-gray-300 px-6 py-3 text-sm font-semibold text-white sm:px-8 sm:text-base"
+        @click="toast('Pilih lokasi yang Anda inginkan', { color: 'danger' })"
       >
         Continue
-      </a>
+      </button>
     </div>
   </main>
 </template>
