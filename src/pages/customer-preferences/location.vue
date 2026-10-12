@@ -18,6 +18,7 @@ const isLoading = defineModel<boolean>('is-loading', { default: false });
 const city = ref('');
 const searchCity = ref('');
 const optionsCity = ref<ICityOption[]>([]);
+const showErrors = ref(false);
 
 const getCities = async () => {
   try {
@@ -70,6 +71,10 @@ watchDebounced(
   },
   { debounce: 300, maxWait: 500 },
 );
+
+const continueWithValidation = () => {
+  showErrors.value = true;
+};
 </script>
 
 <template>
@@ -110,6 +115,14 @@ watchDebounced(
           border="none"
         />
       </div>
+
+      <p
+        v-if="showErrors && !preference.data.locations?.length"
+        class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
+      >
+        <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+        Lokasi wajib diisi.
+      </p>
 
       <!-- Selected Locations -->
       <div v-if="preference.data.locations?.length" class="mt-5">
@@ -159,7 +172,7 @@ watchDebounced(
         v-else
         type="button"
         class="inline-flex min-h-11 items-center justify-center rounded-xl bg-gray-300 px-6 py-3 text-sm font-semibold text-white sm:px-8 sm:text-base"
-        @click="toast('Pilih lokasi yang Anda inginkan', { color: 'danger' })"
+        @click="continueWithValidation"
       >
         Continue
       </button>

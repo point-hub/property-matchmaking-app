@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
-import { toast } from '@/toast';
 
 const preference = useCustomerPreferenceStore();
 const showErrors = ref<boolean>(false);
@@ -19,11 +18,8 @@ const isCompleted = () => {
     || data.budget_min <= 0
     || data.budget_max == null
     || data.budget_max <= 0
+    || data.budget_min > data.budget_max
   ) {
-    return false;
-  }
-
-  if (data.budget_min > data.budget_max) {
     return false;
   }
 
@@ -31,67 +27,27 @@ const isCompleted = () => {
     return true;
   }
 
-  if (
+  return !(
     data.down_payment_min == null
     || data.down_payment_min <= 0
     || data.down_payment_max == null
     || data.down_payment_max <= 0
+    || data.down_payment_min > data.down_payment_max
     || data.monthly_payment_min == null
     || data.monthly_payment_min <= 0
     || data.monthly_payment_max == null
     || data.monthly_payment_max <= 0
+    || data.monthly_payment_min > data.monthly_payment_max
     || data.age == null
     || data.age <= 0
     || !data.marital_status
     || data.dependents == null
     || data.dependents < 0
-  ) {
-    return false;
-  }
-
-  if (data.down_payment_min > data.down_payment_max) {
-    return false;
-  }
-
-  if (data.monthly_payment_min > data.monthly_payment_max) {
-    return false;
-  }
-
-  return true;
+  );
 };
 
 const continueWithValidation = () => {
   showErrors.value = true;
-
-  const data = preference.data;
-
-  if (!isCompleted()) {
-    if (data.budget_min == null || data.budget_min <= 0) {
-      toast('Anggaran minimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (data.budget_max == null || data.budget_max <= 0) {
-      toast('Anggaran maksimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (data.budget_min > data.budget_max) {
-      toast('Anggaran maksimum harus lebih besar atau sama dengan anggaran minimum.', { color: 'danger' });
-    } else if (!data.is_cash && (data.down_payment_min == null || data.down_payment_min <= 0)) {
-      toast('Uang muka minimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (!data.is_cash && (data.down_payment_max == null || data.down_payment_max <= 0)) {
-      toast('Uang muka maksimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (!data.is_cash && data.down_payment_min! > data.down_payment_max!) {
-      toast('Uang muka maksimum harus lebih besar atau sama dengan uang muka minimum.', { color: 'danger' });
-    } else if (!data.is_cash && (data.monthly_payment_min == null || data.monthly_payment_min <= 0)) {
-      toast('Cicilan bulanan minimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (!data.is_cash && (data.monthly_payment_max == null || data.monthly_payment_max <= 0)) {
-      toast('Cicilan bulanan maksimum harus lebih dari Rp0.', { color: 'danger' });
-    } else if (!data.is_cash && data.monthly_payment_min! > data.monthly_payment_max!) {
-      toast('Cicilan bulanan maksimum harus lebih besar atau sama dengan cicilan minimum.', { color: 'danger' });
-    } else if (!data.is_cash && (data.age == null || data.age <= 0)) {
-      toast('Usia harus diisi dengan angka lebih dari 0.', { color: 'danger' });
-    } else if (!data.is_cash && !data.marital_status) {
-      toast('Silakan pilih status pernikahan Anda.', { color: 'danger' });
-    } else if (!data.is_cash && (data.dependents == null || data.dependents < 0)) {
-      toast('Jumlah tanggungan harus 0 atau lebih.', { color: 'danger' });
-    }
-  }
 };
 </script>
 
@@ -126,7 +82,7 @@ const continueWithValidation = () => {
     </div>
 
     <!-- Form Card -->
-    <div class="border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-6 lg:p-10 -mx-4">
+    <div class="-mx-4 border border-slate-200 bg-white p-4 shadow-sm sm:mx-0 sm:rounded-3xl sm:p-6 lg:p-10">
       <!-- Home Budget -->
       <section>
         <h2 class="text-xl font-bold text-slate-900 sm:text-2xl">
@@ -157,9 +113,10 @@ const continueWithValidation = () => {
 
             <p
               v-if="showErrors && (preference.data.budget_min == null || preference.data.budget_min <= 0)"
-              class="mt-2 text-xs leading-5 bg-red-100 px-4 py-2 sm:text-sm -mx-4"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              <base-icon icon="i-fa7-solid:warning" class="bg-red" /> Anggaran minimum harus lebih dari Rp0
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+              Anggaran minimum harus lebih dari Rp0
             </p>
           </div>
 
@@ -182,18 +139,18 @@ const continueWithValidation = () => {
 
             <p
               v-if="showErrors && (preference.data.budget_max == null || preference.data.budget_max <= 0)"
-              class="mt-2 flex items-start gap-1.5 text-xs leading-5 text-red-600 sm:text-sm"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              <span class="shrink-0">!</span>
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
               Anggaran maksimum harus lebih dari Rp0
             </p>
 
             <p
-              v-else-if="showErrors && ((preference.data.budget_min ?? 0) > (preference.data.budget_max ?? 0))"
-              class="mt-2 flex items-start gap-1.5 text-xs leading-5 text-red-600 sm:text-sm"
+              v-else-if="showErrors && preference.data.budget_min != null && preference.data.budget_max != null && preference.data.budget_min > preference.data.budget_max"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              <span class="shrink-0">!</span>
-              Anggaran maksimum harus sama dengan atau lebih besar dari anggaran minimum.
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+              Anggaran maksimum harus sama dengan atau lebih besar dari anggaran minimum
             </p>
           </div>
         </div>
@@ -206,7 +163,7 @@ const continueWithValidation = () => {
             type="checkbox"
             name="cashPurchase"
             class="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-          />
+          >
           <span class="text-sm leading-6 text-slate-600">
             Saya ingin membeli rumah secara tunai.
           </span>
@@ -228,6 +185,7 @@ const continueWithValidation = () => {
           </p>
 
           <div class="mt-5 grid grid-cols-1 gap-5 sm:mt-6 sm:grid-cols-2 sm:gap-6">
+            <!-- Minimum Down Payment -->
             <div class="min-w-0">
               <label class="mb-2 block text-sm font-medium text-slate-700">
                 DP Minimum <span class="text-red-500">*</span>
@@ -245,13 +203,15 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="preference.data.down_payment_min == null || preference.data.down_payment_min <= 0"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-if="showErrors && (preference.data.down_payment_min == null || preference.data.down_payment_min <= 0)"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                Masukkan DP minimum lebih dari Rp0.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Uang muka minimum harus lebih dari Rp0
               </p>
             </div>
 
+            <!-- Maximum Down Payment -->
             <div class="min-w-0">
               <label class="mb-2 block text-sm font-medium text-slate-700">
                 DP Maksimum <span class="text-red-500">*</span>
@@ -269,17 +229,19 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="preference.data.down_payment_max == null || preference.data.down_payment_max <= 0"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-if="showErrors && (preference.data.down_payment_max == null || preference.data.down_payment_max <= 0)"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                Masukkan DP maksimum lebih dari Rp0.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Uang muka maksimum harus lebih dari Rp0
               </p>
 
               <p
-                v-else-if="preference.data.down_payment_min != null && preference.data.down_payment_min > preference.data.down_payment_max"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-else-if="showErrors && preference.data.down_payment_min != null && preference.data.down_payment_max != null && preference.data.down_payment_min > preference.data.down_payment_max"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                DP maksimum harus sama dengan atau lebih besar dari DP minimum.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Uang muka maksimum harus sama dengan atau lebih besar dari uang muka minimum
               </p>
             </div>
           </div>
@@ -296,6 +258,7 @@ const continueWithValidation = () => {
           </p>
 
           <div class="mt-5 grid grid-cols-1 gap-5 sm:mt-6 sm:grid-cols-2 sm:gap-6">
+            <!-- Minimum Monthly Payment -->
             <div class="min-w-0">
               <label class="mb-2 block text-sm font-medium text-slate-700">
                 Cicilan Minimum <span class="text-red-500">*</span>
@@ -313,13 +276,15 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="preference.data.monthly_payment_min == null || preference.data.monthly_payment_min <= 0"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-if="showErrors && (preference.data.monthly_payment_min == null || preference.data.monthly_payment_min <= 0)"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                Masukkan cicilan minimum lebih dari Rp0.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Cicilan minimum harus lebih dari Rp0
               </p>
             </div>
 
+            <!-- Maximum Monthly Payment -->
             <div class="min-w-0">
               <label class="mb-2 block text-sm font-medium text-slate-700">
                 Cicilan Maksimum <span class="text-red-500">*</span>
@@ -337,17 +302,19 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="preference.data.monthly_payment_max == null || preference.data.monthly_payment_max <= 0"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-if="showErrors && (preference.data.monthly_payment_max == null || preference.data.monthly_payment_max <= 0)"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                Masukkan cicilan maksimum lebih dari Rp0.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Cicilan maksimum harus lebih dari Rp0
               </p>
 
               <p
-                v-else-if="preference.data.monthly_payment_min != null && preference.data.monthly_payment_min > preference.data.monthly_payment_max"
-                class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+                v-else-if="showErrors && preference.data.monthly_payment_min != null && preference.data.monthly_payment_max != null && preference.data.monthly_payment_min > preference.data.monthly_payment_max"
+                class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
-                Cicilan maksimum harus sama dengan atau lebih besar dari cicilan minimum.
+                <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+                Cicilan maksimum harus sama dengan atau lebih besar dari cicilan minimum
               </p>
             </div>
           </div>
@@ -387,10 +354,11 @@ const continueWithValidation = () => {
             </div>
 
             <p
-              v-if="preference.data.age == null || preference.data.age <= 0"
-              class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+              v-if="showErrors && (preference.data.age == null || preference.data.age <= 0)"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              Usia wajib diisi dengan angka lebih dari 0.
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+              Usia harus diisi dengan angka lebih dari 0
             </p>
           </div>
 
@@ -440,10 +408,11 @@ const continueWithValidation = () => {
             </div>
 
             <p
-              v-if="!preference.data.marital_status"
-              class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+              v-if="showErrors && !preference.data.marital_status"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              Silakan pilih status pernikahan Anda.
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+              Silakan pilih status pernikahan Anda
             </p>
           </div>
 
@@ -471,10 +440,11 @@ const continueWithValidation = () => {
             </div>
 
             <p
-              v-if="preference.data.dependents == null || preference.data.dependents < 0"
-              class="mt-2 text-xs leading-5 text-red-600 sm:text-sm"
+              v-if="showErrors && (preference.data.dependents == null || preference.data.dependents < 0)"
+              class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
             >
-              Masukkan jumlah tanggungan 0 atau lebih. Jika tidak ada, isi 0.
+              <base-icon icon="i-fa7-solid:warning" class="bg-red" />
+              Jumlah tanggungan harus 0 atau lebih. Jika tidak ada, isi 0
             </p>
           </div>
         </div>
