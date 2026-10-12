@@ -22,7 +22,7 @@ const onSubmit = async () => {
   showErrors.value = true;
 
   const name = preference.data.name?.trim();
-  const whatsapp = preference.data.whatsapp?.trim();
+  const whatsapp = preference.data.whatsapp;
 
   if (!name || !whatsapp) {
     return;
@@ -154,13 +154,13 @@ const onSubmit = async () => {
               inputmode="tel"
               autocomplete="tel"
               placeholder="Contoh: 081234567890"
-              :aria-invalid="showErrors && !preference.data.whatsapp?.trim()"
+              :aria-invalid="showErrors && !preference.data.whatsapp"
               class="w-full min-w-0 bg-transparent px-2 py-3 text-base text-slate-900 outline-none placeholder:text-sm placeholder:text-slate-400 sm:px-3"
             >
           </div>
 
           <p
-            v-if="showErrors && !preference.data.whatsapp?.trim()"
+            v-if="showErrors && !preference.data.whatsapp"
             class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
           >
             <base-icon icon="i-fa7-solid:warning" class="bg-red" />

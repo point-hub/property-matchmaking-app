@@ -4,7 +4,6 @@ import { ref } from 'vue';
 
 import { getCitiesApi } from '@/composables/api/locations/get-cities.api';
 import { useCustomerPreferenceStore } from '@/stores/customer-preference.store';
-import { toast } from '@/toast';
 
 interface ICityOption {
   _id: string;
