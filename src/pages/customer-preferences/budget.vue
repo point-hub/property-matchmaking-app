@@ -29,9 +29,9 @@ const isCompleted = () => {
 
   return !(
     data.down_payment_min == null
-    || data.down_payment_min <= 0
+    || data.down_payment_min < 0
     || data.down_payment_max == null
-    || data.down_payment_max <= 0
+    || data.down_payment_max < 0
     || data.down_payment_min > data.down_payment_max
     || data.monthly_payment_min == null
     || data.monthly_payment_min <= 0
@@ -203,11 +203,11 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="showErrors && (preference.data.down_payment_min == null || preference.data.down_payment_min <= 0)"
+                v-if="showErrors && (preference.data.down_payment_min == null || preference.data.down_payment_min < 0)"
                 class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
                 <base-icon icon="i-fa7-solid:warning" class="bg-red" />
-                Uang muka minimum harus lebih dari Rp0
+                Uang muka minimum harus diisi.
               </p>
             </div>
 
@@ -229,11 +229,11 @@ const continueWithValidation = () => {
               </div>
 
               <p
-                v-if="showErrors && (preference.data.down_payment_max == null || preference.data.down_payment_max <= 0)"
+                v-if="showErrors && (preference.data.down_payment_max == null || preference.data.down_payment_max < 0)"
                 class="mt-2 -mx-4 bg-red-100 px-4 py-2 text-xs leading-5 sm:mx-0 sm:text-sm"
               >
                 <base-icon icon="i-fa7-solid:warning" class="bg-red" />
-                Uang muka maksimum harus lebih dari Rp0
+                Uang muka maksimum harus diisi.
               </p>
 
               <p
