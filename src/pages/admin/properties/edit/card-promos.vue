@@ -38,9 +38,6 @@ const addPromo = () => {
     if (!name.value) {
       errorName.value = ['The name field is required.'];
     }
-    if (!description.value) {
-      errorDescription.value = ['The description field is required.'];
-    }
     return;
   }
 
