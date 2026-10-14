@@ -9,14 +9,15 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 720,
 
-  video: true,
-  videosFolder: 'cypress/videos',
-  videoCompression: 32,
+  video: false,
 
   reporter: 'cypress-mochawesome-reporter',
 
   reporterOptions: {
-    charts: true,
+    code: false,
+    charts: false,
+    saveJson: true,
+    reportDir: `cypress/reports/html/${process.env.REPORT_DIR || ''}`,
     reportPageTitle: 'Cypress Test Report',
     embeddedScreenshots: true,
     inlineAssets: true,
@@ -26,8 +27,11 @@ export default defineConfig({
   e2e: {
     specPattern: '**/*.feature',
     baseUrl: 'http://localhost:4173',
-
-    async setupNodeEvents(on, config) {
+    defaultBrowser: 'chrome',
+    async setupNodeEvents(
+      on: Cypress.PluginEvents,
+      config: Cypress.PluginConfigOptions,
+    ): Promise<Cypress.PluginConfigOptions> {
       await addCucumberPreprocessorPlugin(on, config);
 
       on(

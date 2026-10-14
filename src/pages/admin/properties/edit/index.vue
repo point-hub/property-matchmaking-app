@@ -58,8 +58,7 @@ const update = async () => {
   } catch (error) {
     const errorResponse = handleError(error);
     if (errorResponse.errors) {
-      form.errors.name = errorResponse.errors.name || [];
-      form.errors.notes = errorResponse.errors.notes || [];
+      form.errors = errorResponse.errors;
       form.errors.update_reason = errorResponse.errors.update_reason || [];
     }
     if (errorResponse.message) {
@@ -79,13 +78,13 @@ const update = async () => {
     <card-breadcrumbs />
 
     <card-form v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
-    <card-pricelists v-model:data="form.data" />
-    <card-land-titles v-model:data="form.data" />
-    <card-facilities v-model:data="form.data" />
-    <card-promos v-model:data="form.data" />
-    <card-info-developer v-model:data="form.data" />
-    <card-photos-gate v-model:data="form.data" />
-    <card-photos-building v-model:data="form.data" />
+    <card-pricelists v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-land-titles v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-facilities v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-promos v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-info-developer v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-photos-gate v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
+    <card-photos-building v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <card-internal-notes v-model:data="form.data" v-model:errors="form.errors" v-model:is-saving="isSaving" />
     <div class="flex gap-2">
       <base-button class="flex-1" :is-loading="isSaving" color="primary" @click="update">Update</base-button>

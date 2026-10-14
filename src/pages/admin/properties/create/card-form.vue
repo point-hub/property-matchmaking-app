@@ -180,6 +180,7 @@ watch(() => data.value.village, () => {
         required
         v-model="data.city"
         v-model:search="searchCity"
+        :errors="errors.city"
         :options="optionsCity"
       />
       <base-select
@@ -190,6 +191,7 @@ watch(() => data.value.village, () => {
         required
         v-model="data.district"
         v-model:search="searchDistrict"
+        :errors="errors.district"
         :options="optionsDistrict"
       />
       <base-select
@@ -200,6 +202,7 @@ watch(() => data.value.village, () => {
         required
         v-model="data.village"
         v-model:search="searchVillage"
+        :errors="errors.village"
         :options="optionsVillage"
       />
       <base-input layout="horizontal" label="Google Map Link" v-model="data.google_map_link" :errors="errors.google_map_link" :disabled="isSaving" />
