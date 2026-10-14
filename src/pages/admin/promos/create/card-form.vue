@@ -18,7 +18,7 @@ const isSaving = defineModel('is-saving', { default: false });
 </script>
 
 <template>
-  <base-card title="Promos">
+  <base-card title="Promo">
     <div class="flex flex-col gap-4 my-5">
       <base-input layout="horizontal" label="Name" required v-model="data.name" :errors="errors.name" :disabled="isSaving" />
       <base-input layout="horizontal" label="Description" v-model="data.description" :errors="errors.description" :disabled="isSaving" />

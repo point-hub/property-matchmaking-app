@@ -167,7 +167,7 @@ watch(() => data.value.village, () => {
 </script>
 
 <template>
-  <base-card title="Properties">
+  <base-card title="Property">
     <div class="flex flex-col gap-4 my-5">
       <base-input layout="horizontal" label="Code" required v-model="data.code" :errors="errors.code" :disabled="isSaving" />
       <base-input layout="horizontal" label="Name" required v-model="data.name" :errors="errors.name" :disabled="isSaving" />

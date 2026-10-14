@@ -16,7 +16,7 @@ const data = defineModel<Partial<IForm>>('data', {
 </script>
 
 <template>
-  <base-card title="Properties">
+  <base-card title="Property">
     <div class="flex flex-col gap-4">
       <base-input layout="horizontal" label="Code" v-model="data.code" readonly />
       <base-input layout="horizontal" label="Name" v-model="data.name" readonly />
