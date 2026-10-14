@@ -22,19 +22,36 @@ const promos = ref();
 onMounted(async () => {
   try {
     isLoading.value = true;
+
     const response = await getPromosApi({
       page: 1,
       page_size: 10,
     });
-    promos.value = response.data;
 
+    const masterPromos: IPromo[] = response.data;
+    const promoNames = new Set(
+      masterPromos.map((promo) => promo.name.trim().toLowerCase()),
+    );
+
+    const savedPromos = (data.value.promos ?? []).filter((promo) => {
+      const normalizedName = promo.name.trim().toLowerCase();
+
+      if (promoNames.has(normalizedName)) {
+        return false;
+      }
+
+      promoNames.add(normalizedName);
+      return true;
+    });
+
+    promos.value = [...masterPromos, ...savedPromos];
   } finally {
     isLoading.value = false;
   }
 });
 
 const addPromo = () => {
-  if (!name.value || !description.value) {
+  if (!name.value) {
     if (!name.value) {
       errorName.value = ['The name field is required.'];
     }

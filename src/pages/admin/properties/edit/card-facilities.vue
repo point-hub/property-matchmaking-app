@@ -25,16 +25,38 @@ const facilities = ref();
 onMounted(async () => {
   try {
     isLoading.value = true;
+
     const response = await getFacilitiesApi({
       page: 1,
       page_size: 10,
     });
-    facilities.value = response.data;
 
+    const masterFacilities: IFacility[] = response.data;
+    const facilityNames = new Set(
+      masterFacilities.map((facility) => facility.name.trim().toLowerCase()),
+    );
+
+    const savedFacilities = (data.value.facilities ?? [])
+      .filter((facilityName) => {
+        const normalizedName = facilityName.trim().toLowerCase();
+
+        if (facilityNames.has(normalizedName)) {
+          return false;
+        }
+
+        facilityNames.add(normalizedName);
+        return true;
+      })
+      .map((facilityName) => ({
+        name: facilityName,
+      }));
+
+    facilities.value = [...masterFacilities, ...savedFacilities];
   } finally {
     isLoading.value = false;
   }
 });
+
 
 const addFacility = () => {
   if (!name.value) {

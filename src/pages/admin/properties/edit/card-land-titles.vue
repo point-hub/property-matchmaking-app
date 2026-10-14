@@ -25,16 +25,40 @@ const landTitles = ref();
 onMounted(async () => {
   try {
     isLoading.value = true;
+
     const response = await getLandTitlesApi({
       page: 1,
       page_size: 10,
     });
-    landTitles.value = response.data;
 
+    const masterLandTitles: ILandTitle[] = response.data;
+    const landTitleNames = new Set(
+      masterLandTitles.map((landTitle) =>
+        landTitle.name.trim().toLowerCase(),
+      ),
+    );
+
+    const savedLandTitles = (data.value.land_titles ?? [])
+      .filter((landTitleName) => {
+        const normalizedName = landTitleName.trim().toLowerCase();
+
+        if (landTitleNames.has(normalizedName)) {
+          return false;
+        }
+
+        landTitleNames.add(normalizedName);
+        return true;
+      })
+      .map((landTitleName) => ({
+        name: landTitleName,
+      }));
+
+    landTitles.value = [...masterLandTitles, ...savedLandTitles];
   } finally {
     isLoading.value = false;
   }
 });
+
 
 const addLandTitle = () => {
   if (!name.value) {
