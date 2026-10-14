@@ -34,7 +34,7 @@ onMounted(async () => {
 });
 
 const addPromo = () => {
-  if (!name.value || !description.value) {
+  if (!name.value) {
     if (!name.value) {
       errorName.value = ['The name field is required.'];
     }
